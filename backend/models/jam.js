@@ -10,11 +10,11 @@ const GroupSchema = Schema({
     estils:[String],
     participantsSolistes:[User],
     participantsGrups: [Group],
-    email: {type: String, unique: true, lowercase:true},
-    fotoGrup: Image,
-    ubicacio:String,
+    dataIntencio: Date,
+    dataConfirmda: Date,
+    local:String,
     description: String,
-    video:String,
+    organitzador:User,
 
 })
 
