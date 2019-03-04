@@ -133,4 +133,8 @@ SOFTWARE.
 
 ---
 
-## Author Info
+## Authors Info
+Victor Piñón
+Gabri Gonzalez
+Jordi Cros
+Meritxell Basart
