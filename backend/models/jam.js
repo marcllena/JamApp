@@ -21,4 +21,4 @@ const GroupSchema = Schema({
 
 })
 
-module.exports = mongoose.model('Jam',ProductSchema)
+module.exports = mongoose.model('Jam',JamSchema)

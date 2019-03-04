@@ -18,4 +18,4 @@ const GroupSchema = Schema({
     estils:[String],
 })
 
-module.exports = mongoose.model('Group',ProductSchema)
+module.exports = mongoose.model('Group',GroupSchema)
