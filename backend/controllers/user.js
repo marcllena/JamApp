@@ -15,6 +15,9 @@ function signUp(req,res) {
         displayName: req.body.displayName
     })
 
+    if(req.body.password==null)
+        return res.status(500).send({message: `Rellena el campo password`})
+
     user.save((err) => {
         if(err)
             return res.status(500).send({message: `Error al crear el usuario: ${err}`})
