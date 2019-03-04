@@ -4,6 +4,8 @@ Esquema de la base de dades amb els camps que pot tindre cada Producte
  */
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const User= require('./user')
+
 
 const GroupSchema = Schema({
     name: String,
