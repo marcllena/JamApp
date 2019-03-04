@@ -1,6 +1,7 @@
 # JamAppAPI
 
-This is an API-REST using node.js mongoose, express and angular 
+This is a project based on MEAN stack, including a BackEnd using node.js mongoose and express and 
+a FrontEnd based on Angular.
 
 ---
 

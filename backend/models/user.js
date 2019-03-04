@@ -8,9 +8,18 @@ const bcrypt = require('bcrypt-nodejs')
 const crypto = require('crypto')
 
 const UserSchema = Schema({
+    username: String,
+    edat: Number,
     email: {type: String, unique: true, lowercase:true},
-    avatar: String,
     password: {type: String,select: false },
+    fotoPerfil: Image,
+    instrument:[String],
+    localitat:String,
+    ubicacio:String,
+    coordenades:[Number],
+    descripccio:String,
+    video:String,
+    estils:[String],
     signupDate: {type: Date, default: Date.now() },
     lastlogin: Date
 })
