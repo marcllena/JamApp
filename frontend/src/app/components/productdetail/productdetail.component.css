@@ -1,0 +1,20 @@
+.logout {
+  margin-bottom: 10px;
+  margin-top: 0px;
+}
+
+div {
+  background: #FAFAFA;
+  padding: 2em;
+  border-radius: 40px;
+  margin-bottom: 7px;
+  display: grid;
+}
+
+p {
+  margin-left: 20px;
+}
+
+button {
+  margin-top: 10px;
+}

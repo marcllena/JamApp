@@ -1,0 +1,11 @@
+<h2>Product Detail of {{product.name}}</h2>
+<button class="logout" (click)="goBack()" [routerLink]="['']">Log out</button>
+<div class="border border-secondary">
+  <span *ngIf="product.category === 'computers'"><img src="https://img.icons8.com/color/96/000000/laptop.png"></span>
+  <span *ngIf="product.category === 'phones'"><img src="https://img.icons8.com/dusk/64/000000/cell-phone.png"></span>
+  <span *ngIf="product.category === 'accessories'"><img src="https://img.icons8.com/ios/50/000000/headphones-filled.png"></span>
+  <h2>{{product.name}}</h2>
+  <p><b>Category:</b> {{product.category}}</p>
+  <p><b>Price:</b> {{product.price}} €</p>
+  <p><b>Description:</b>{{product.description}}</p>
+</div>
