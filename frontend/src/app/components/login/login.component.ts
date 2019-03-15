@@ -32,26 +32,25 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    document.body.classList.add('bg-img');
     this.validation_messages = {
       'email': [
         { type: 'required', message: 'Mail: Requerido' },
-        { type: 'error', message: 'Error: Ya existe una cuenta de usuario con este mail'} ,
+        { type: 'error', message: 'Error: No existe ningun usuario con esta dirreción de correo'} ,
         { type: 'pattern', message: 'Mail: Debe ser una dirección de correo válida' }
       ],
       'password': [
         { type: 'required', message: 'Contraseña: Requerida' },
         { type: 'pattern', message: 'Contraseña: Debe contener entre 4 y 8 carácteres, incluyendo un número como mínimo' },
-        { type: 'error', message: 'Contraseña: Ambas contraseñas deben coincidir'}
+        { type: 'error', message: 'Error: Contrasenya incorrecta'}
       ],
     }
   }
 
 
   login() {
-    console.log("Operació de registre realitzada al BackEnd:"+this.loginForm.value);
-    let user = new User(this.loginForm.value.email, this.loginForm.value.username, this.loginForm.value.password);
-    this.userService.signup(user)
+    console.log("Operació de login realitzada al BackEnd:"+this.loginForm.value);
+    let user = new User(this.loginForm.value.email, this.loginForm.value.password);
+    this.userService.signin(user)
       .subscribe(response => {
           console.log("Resposta del BackEnd"+response);
           if(response.status==200){
@@ -70,9 +69,15 @@ export class LoginComponent implements OnInit {
         },
         err => {
           console.log("Error del BackEnd"+err);
-          if(err.status==500) {
+          if(err.status==404) {
+            console.log("404");
+            this.loginForm.get("username").setErrors({
+              error: true,
+            });
+          }
+          else if(err.status==500) {
             console.log("500");
-            this.loginForm.get("email").setErrors({
+            this.loginForm.get("contrasenya").setErrors({
               error: true,
             });
           }
