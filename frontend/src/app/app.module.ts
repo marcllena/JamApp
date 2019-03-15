@@ -7,7 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProductsComponent } from './components/products/products.component';
 import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
 import { InterceptorService } from "./services/interceptor.service";
 import { ProductdetailComponent } from './components/productdetail/productdetail.component';
 import { RegistrationComponent } from './components/registration/registration.component';
@@ -17,7 +16,6 @@ import { RegistrationComponent } from './components/registration/registration.co
     AppComponent,
     ProductsComponent,
     LoginComponent,
-    RegisterComponent,
     ProductdetailComponent,
     RegistrationComponent,
   ],
