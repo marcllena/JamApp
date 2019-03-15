@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
+import {HttpClientModule} from '@angular/common/http';
 import { User } from "../models/user";
 import { Environment } from "./environment";
 
@@ -17,7 +18,7 @@ export class AuthService {
   }
 
   signup(user: User) {
-    return this.http.post(this.environment.urlUser + "signup", user)
+    return this.http.post(this.environment.urlUser + "signup", user, {observe: 'response'})
   }
 
   signin(user: User)  {

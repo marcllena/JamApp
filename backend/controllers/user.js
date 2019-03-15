@@ -15,14 +15,19 @@ function signUp(req,res) {
         displayName: req.body.displayName
     })
 
+    console.log("Petició de SignUp del seguent correu:"+req.body.email)
+
     if(req.body.password==null)
         return res.status(500).send({message: `Rellena el campo password`})
 
     user.save((err) => {
-        if(err)
+        if(err) {
+            console.log("Error al crear usuari:"+req.body.email+". Ja existeix un usuari amb el correu")
             return res.status(500).send({message: `Error al crear el usuario: ${err}`})
-            
 
+        }
+
+        console.log("Usuari: "+req.body.email+" agregat correctament")
         res.status(200).send({token: service.createToken(user)})
     })
 }

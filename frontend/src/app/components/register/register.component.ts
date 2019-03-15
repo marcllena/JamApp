@@ -63,7 +63,7 @@ export class RegisterComponent implements OnInit {
 
   register() {
     console.log(this.registerForm.value);
-    let user = new User(this.registerForm.value.displayName, this.registerForm.value.email, this.registerForm.value.password, this.registerForm.value.confirmPassword);
+    let user = new User(this.registerForm.value.displayName, this.registerForm.value.email, this.registerForm.value.password);
     this.userService.signup(user)
       .subscribe(
         res => {
