@@ -73,7 +73,9 @@ export class RegisterComponent implements OnInit {
           this.router.navigateByUrl("/api/product");
         },
         err => {
-          this.registerForm.get("email").setErrors({unique: true});
+          this.registerForm.get("email").setErrors({
+            error: true,
+          });
         });
   }
 
