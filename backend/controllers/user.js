@@ -10,33 +10,39 @@ const User = require('../models/user')
 const service = require('../services')
 
 function signUp(req,res) {
-    const user = new User({
+    const userNew = new User({
         email: req.body.email,
-        displayName: req.body.displayName
+        displayName: req.body.displayName,
+        password: req.body.password
     })
 
-    console.log("Petició de SignUp del seguent correu:"+req.body.email)
-
+    console.log("Petició de SignUp del seguent user:"+userNew)
     if(req.body.password==null)
         return res.status(500).send({message: `Rellena el campo password`})
-
-    user.save((err) => {
-        if(err) {
-            console.log("Error al crear usuari:"+req.body.email+". Ja existeix un usuari amb el correu")
-            return res.status(500).send({message: `Error al crear el usuario: ${err}`})
-
-        }
-
+    User.find({email: req.body.email}, (err, user) => {
+        console.log(user)
+        if(err){
+        return res.status(500).send({message: `Error al crear el administrador: ${err}`})}
+        if (!user.length){
+            userNew.save((err) => {
+                if(err) {
+                    console.log("Error al crear usuari:"+req.body.email+". Ja existeix un usuari amb el correu")
+                    return res.status(500).send({message: `Error al crear el usuario: ${err}`})
+                }
         console.log("Usuari: "+req.body.email+" agregat correctament")
         res.status(200).send({token: service.createToken(user)})
+    } )     }
+        else 
+            return res.status(409).send({message: `Email ya registrado`})
     })
 }
 function signIn(req,res) {
-    User.find({email: req.body.mail}, (err,user)=>{
+    User.find({email: req.body.email}, (err,user)=>{
+        console.log(user)
         if(err)
             return res.status(500).send({message: `Error en el logging: ${err}`})
 
-        if(!user)
+        if(!user.length)
             return res.status(404).send({message: `El usuario no existe`})
 
         req.user=user
