@@ -9,18 +9,14 @@ const crypto = require('crypto')
 const Group = require('./group')
 
 
-const UserSchema = Schema({
+var UserSchema = Schema({
     username: String,
     edat: Number,
     email: {type: String, unique: true, lowercase:true},
     password: {type: String,select: false },
     fotoPerfil: String,
-    instrument:[String],
     ubicacio:String,
     coordenades:[Number],
-    descripcio:String,
-    video:String,
-    estils:[String],
     signupDate: {type: Date, default: Date.now() },
     lastlogin: Date
 })
