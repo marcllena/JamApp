@@ -38,7 +38,7 @@ function signUp(req,res) {
 }
 
 function signIn(req,res) {
-    User.find({email: req.body.email}, (err,user)=>{
+    User.find({email: req.body.mail, password: req.body.password}, (err,user)=>{
         
         if(err)
             return res.status(500).send({message: `Error en el logging: ${err}`})
