@@ -49,13 +49,13 @@ export class LoginComponent implements OnInit {
 
   login() {
     console.log("Operació de login realitzada al BackEnd:"+this.loginForm.value);
-    let user = new User(this.loginForm.value.email, this.loginForm.value.password);
+    let user = new User(this.loginForm.value.email,'', this.loginForm.value.password);
     this.userService.signin(user)
       .subscribe(response => {
           console.log("Resposta del BackEnd"+response);
           if(response.status==200){
             //Operació Realitzada Correctament
-            let token = response['token'];
+            let token = response.body['token'];
             localStorage.setItem('token', token);
             this.router.navigateByUrl("/api/product");
           }
