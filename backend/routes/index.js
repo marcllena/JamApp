@@ -9,24 +9,17 @@ const api = express.Router()
 const auth = require('../middlewares/auth')
 const productCtrl = require('../controllers/product')
 const userCtrl = require('../controllers/user')
-const musicianCtrl = require('../controllers/musician')
+const adminCtrl = require('../controllers/admin')
 
 api.get('/product', productCtrl.getProducts)
+api.get('/getuser/:userId', userCtrl.getUser)
 api.get('/product/:productId', productCtrl.getProduct)
 api.post('/product', productCtrl.saveProduct)
 api.put('/product/:productId', productCtrl.updateProduct)
 api.delete('/product/:productId', productCtrl.deleteProduct)
-
-//CRUD User PATHS
-api.post('/signup', userCtrl.signUp)/*(req,res) =>{
-
-  userCtrl.signUp
-
-}*/
+api.post('/signup', userCtrl.signUp)
 api.post('/signin', userCtrl.signIn)
-
-api.post('/musician/signup',musicianCtrl.signUp)
-
+api.post('/admin', adminCtrl.createAdmin)
 api.get('/private', auth,(req,res) => {
   res.status(200).send({message: "Tienes acceso"})
 })
