@@ -57,6 +57,7 @@ export class LoginComponent implements OnInit {
             //Operació Realitzada Correctament
             let token = response.body['token'];
             localStorage.setItem('token', token);
+            localStorage.setItem('_id',response.body['_id']);
             this.router.navigateByUrl("/api/settings");
           }
           else {

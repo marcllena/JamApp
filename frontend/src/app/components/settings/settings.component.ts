@@ -16,6 +16,7 @@ export class SettingsComponent implements OnInit {
 
   goBack() {
     localStorage.removeItem('token');
+    localStorage.removeItem('_id');
     this.router.navigateByUrl('');
   }
 

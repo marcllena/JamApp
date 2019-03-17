@@ -51,7 +51,8 @@ function signIn(req,res) {
             if(isMatch) {
                 res.status(200).send({
                     message: "Te has logeado correctamente",
-                    token: service.createToken(user)
+                    token: service.createToken(user),
+                    _id: user[0]._id
                 })
             } else {
                 return res.status(400).send({message: `Wrong password`});
