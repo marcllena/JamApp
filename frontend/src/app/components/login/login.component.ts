@@ -3,7 +3,7 @@ import { AuthService } from "../../services/auth.service";
 import { HttpErrorResponse } from "@angular/common/http";
 import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {User} from "../../models/user";
+import { User } from "../../models/User";
 
 @Component({
   selector: 'app-login',
@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
             //Operació Realitzada Correctament
             let token = response.body['token'];
             localStorage.setItem('token', token);
-            this.router.navigateByUrl("/api/product");
+            this.router.navigateByUrl("/api/settings");
           }
           else {
             //Error desconegut
