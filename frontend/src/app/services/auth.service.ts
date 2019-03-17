@@ -22,6 +22,7 @@ export class AuthService {
   }
 
   signin(user: User)  {
+    //console.log(user);
     return this.http.post(this.environment.urlUser + "signin", user,{observe: 'response'})
   }
 }

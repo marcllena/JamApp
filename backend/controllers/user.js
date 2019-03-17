@@ -36,23 +36,30 @@ function signUp(req,res) {
             return res.status(409).send({message: `Email ya registrado`})
     })
 }
+
 function signIn(req,res) {
     User.find({email: req.body.email}, (err,user)=>{
-        console.log(user)
+        
         if(err)
             return res.status(500).send({message: `Error en el logging: ${err}`})
 
         if(!user.length)
             return res.status(404).send({message: `El usuario no existe`})
 
-        req.user=user
-        res.status(200).send({
-            message: "Te has logeado correctamente",
-            token: service.createToken(user)
-        })
 
-    })
-
+        user[0].comparePassword((req.body.password), function(err, isMatch) {
+            if (err) throw err;
+            if(isMatch) {
+                res.status(200).send({
+                    message: "Te has logeado correctamente",
+                    token: service.createToken(user)
+                })
+            } else {
+                return res.status(400).send({message: `Wrong password`})
+            }
+            
+        });
+    }).select('+password');
 }
 
 module.exports={
