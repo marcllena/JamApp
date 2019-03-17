@@ -16,6 +16,7 @@ const userBase = new mongoose.Schema({
     signupDate: {type: Date, default: Date.now() },
     lastlogin: Date}, 
     baseOptions);
+
 userBase.pre('save',function(next) {  
         let user=this;
         if(!user.isModified('password'))
@@ -33,12 +34,20 @@ userBase.pre('save',function(next) {
             })
         })
     
-    })
+});
+
+userBase.methods.comparePassword = function(candidatePassword, cb) {
+    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+        if (err) return cb(err);
+        cb(null, isMatch);
+    });
+};
+
 userBase.methods.gravatar = function () {
-        if(!this.email)
-            return'https://gravatar.com/avatar/?s=200&d=retro'
-    
-        const md5 = crypto.createHash('md5').update(this.email).digest('hex')
-        return `https://gravatar.com/avatar/${md5}?s=200&d=retro`
-    }
-module.exports = mongoose.model('User',userBase,)
+    if(!this.email)
+        return'https://gravatar.com/avatar/?s=200&d=retro'
+
+    const md5 = crypto.createHash('md5').update(this.email).digest('hex')
+    return `https://gravatar.com/avatar/${md5}?s=200&d=retro`
+};
+module.exports = mongoose.model('User',userBase);

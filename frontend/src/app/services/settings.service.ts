@@ -7,7 +7,7 @@ import { Environment } from "./environment";
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class SettingsService {
 
   environment: Environment;
   selectedUser: User;
@@ -17,12 +17,7 @@ export class AuthService {
     this.environment = new Environment();
   }
 
-  signup(user: User) {
-    return this.http.post(this.environment.urlUser + "signup", user, {observe: 'response'})
-  }
-
-  signin(user: User)  {
-    //console.log(user);
-    return this.http.post(this.environment.urlUser + "signin", user,{observe: 'response'})
-  }
+  /*getUser(_id: string) {
+    return this.http.get(this.environment.urlProduct + `/${_id}`);
+  }*/
 }

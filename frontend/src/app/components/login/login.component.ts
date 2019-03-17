@@ -3,7 +3,7 @@ import { AuthService } from "../../services/auth.service";
 import { HttpErrorResponse } from "@angular/common/http";
 import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {User} from "../../models/user";
+import { User } from "../../models/User";
 
 @Component({
   selector: 'app-login',
@@ -49,15 +49,15 @@ export class LoginComponent implements OnInit {
 
   login() {
     console.log("Operació de login realitzada al BackEnd:"+this.loginForm.value);
-    let user = new User(this.loginForm.value.email, this.loginForm.value.password);
+    let user = new User(this.loginForm.value.email,'', this.loginForm.value.password);
     this.userService.signin(user)
       .subscribe(response => {
           console.log("Resposta del BackEnd"+response);
           if(response.status==200){
             //Operació Realitzada Correctament
-            let token = response['token'];
+            let token = response.body['token'];
             localStorage.setItem('token', token);
-            this.router.navigateByUrl("/api/product");
+            this.router.navigateByUrl("/api/settings");
           }
           else {
             //Error desconegut

@@ -3,7 +3,7 @@ import { AuthService } from "../../services/auth.service";
 import { HttpErrorResponse } from "@angular/common/http";
 import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {User} from "../../models/user";
+import { User } from "../../models/User";
 import {passValidator} from "./validator";
 
 @Component({
@@ -72,9 +72,9 @@ export class RegistrationComponent implements OnInit {
       console.log("Resposta del BackEnd"+response);
       if(response.status==200){
         //Operació Realitzada Correctament
-        let token = response['token'];
+        let token = response.body['token'];
         localStorage.setItem('token', token);
-        this.router.navigateByUrl("/api/product");
+        this.router.navigateByUrl("/api/settings");
       }
       else {
         //Error desconegut
