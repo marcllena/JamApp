@@ -16,4 +16,8 @@ export class SettingsService {
     this.selectedUser = new User();
     this.environment = new Environment();
   }
+
+  /*getUser(_id: string) {
+    return this.http.get(this.environment.urlProduct + `/${_id}`);
+  }*/
 }

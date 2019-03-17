@@ -61,7 +61,18 @@ function signIn(req,res) {
     }).select('+password');
 }
 
+function getUser(req,res) {
+    User.findById(req.params.userId, (err,user)=>{
+        console.log(user);
+        if(err)
+            return res.status(500).send({message: `Error en el logging: ${err}`})
+
+        res.status(200).send(user);
+    });
+}
+
 module.exports={
     signUp,
-    signIn
+    signIn,
+    getUser
 }
