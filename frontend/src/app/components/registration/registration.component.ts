@@ -72,7 +72,7 @@ export class RegistrationComponent implements OnInit {
       console.log("Resposta del BackEnd"+response);
       if(response.status==200){
         //Operació Realitzada Correctament
-        let token = response['token'];
+        let token = response.body['token'];
         localStorage.setItem('token', token);
         this.router.navigateByUrl("/api/product");
       }

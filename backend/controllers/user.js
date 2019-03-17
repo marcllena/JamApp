@@ -46,16 +46,15 @@ function signIn(req,res) {
         if(!user.length)
             return res.status(404).send({message: `El usuario no existe`})
 
-
         user[0].comparePassword((req.body.password), function(err, isMatch) {
-            if (err) throw err;
+            //if (err) throw err;
             if(isMatch) {
                 res.status(200).send({
                     message: "Te has logeado correctamente",
                     token: service.createToken(user)
                 })
             } else {
-                return res.status(400).send({message: `Wrong password`})
+                return res.status(400).send({message: `Wrong password`});
             }
             
         });
