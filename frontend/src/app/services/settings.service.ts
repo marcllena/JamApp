@@ -17,6 +17,10 @@ export class SettingsService {
     this.environment = new Environment();
   }
 
+  putUser(user: User){
+    return this.http.put(this.environment.urlProduct + `/${user._id}`, user )
+  }
+
   /*getUser(_id: string) {
     return this.http.get(this.environment.urlProduct + `/${_id}`);
   }*/

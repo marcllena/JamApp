@@ -3,7 +3,17 @@
     <div class="col s5">
       <div class="card">
         <div class="card-content">
-          
+          <form #settingsForm="ngForm">
+            <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="settingsService.selectedUser._id">
+            <div class="row">
+              <div class="input-field col12">
+                <input type="text" name="name" #name="ngModel" [(ngModel)]="settingsService.selectedUser.name" placeholder="select and update name">
+              </div>
+              <div class="input-field col12">
+                  <input type="text" name="email" #name="ngModel" [(ngModel)]="settingsService.selectedUser.email" placeholder="select and update email">
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
