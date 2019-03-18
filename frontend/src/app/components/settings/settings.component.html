@@ -1,9 +1,9 @@
 <div class="container">
   <div class="row">
-    <div class="col s5">
+    <div class="col s2">
       <div class="card">
         <div class="card-content">
-          <form #settingsForm="ngForm">
+          <form #settingsForm="ngForm" (ngSubmit)="addUser(settingsForm)">
             <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="settingsService.selectedUser._id">
             <div class="row">
               <div class="input-field col12">
@@ -12,11 +12,38 @@
               <div class="input-field col12">
                   <input type="text" name="email" #name="ngModel" [(ngModel)]="settingsService.selectedUser.email" placeholder="select and update email">
               </div>
+              <div class="card-action">
+                <div class="input-field col s12">
+                  <button class="btn right" style="margin-left: 2px">Clean</button>
+                  <button class="btn right" (click)="resetForm(settingsForm)">Save</button>
+                </div>
+              </div>
             </div>
           </form>
         </div>
       </div>
     </div>
+    <div class="col s7">
+      <table>
+        <thead>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Options</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of settingsService.users">
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+            <td>
+              <a (click)="editUser(user)"></a>
+              <i class="material-icons">edit</i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col s10">
+      <button class="logout" (click)="goBack()">Log out</button>
+    </div>
   </div>
 </div>
-<button class="logout" (click)="goBack()">Log out</button>
