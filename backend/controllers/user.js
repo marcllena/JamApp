@@ -41,7 +41,7 @@ function signIn(req,res) {
     User.find({email: req.body.mail, password: req.body.password}, (err,user)=>{
         
         if(err)
-            return res.status(500).send({message: `Error en el logging: ${err}`})
+            return res.status(404).send({message: `Error en el logging: ${err}`})
 
         if(!user.length)
             return res.status(404).send({message: `El usuario no existe`})
@@ -55,7 +55,7 @@ function signIn(req,res) {
                     _id: user[0]._id
                 })
             } else {
-                return res.status(400).send({message: `Wrong password`});
+                return res.status(404).send({message: `Wrong password`});
             }
             
         });

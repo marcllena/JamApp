@@ -3,7 +3,7 @@ import { AuthService } from "../../services/auth.service";
 import { HttpErrorResponse } from "@angular/common/http";
 import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import { User } from "../../models/User";
+import { User } from "../../models/user";
 
 @Component({
   selector: 'app-login',
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
 
         password: new FormControl('', Validators.compose([
           Validators.required,
-          Validators.pattern(/^(?=.*\d).{4,8}$/)])),
+          Validators.pattern(/^(?=.*\d).{4,}$/)])),
       }
     )
   }
@@ -35,13 +35,13 @@ export class LoginComponent implements OnInit {
     this.validation_messages = {
       'email': [
         { type: 'required', message: 'Mail: Requerido' },
-        { type: 'error', message: 'Error: No existe ningun usuario con esta dirreción de correo'} ,
+        { type: 'error', message: 'Error: Correo o contraseña incorrecta'} ,
         { type: 'pattern', message: 'Mail: Debe ser una dirección de correo válida' }
       ],
       'password': [
         { type: 'required', message: 'Contraseña: Requerida' },
-        { type: 'pattern', message: 'Contraseña: Debe contener entre 4 y 8 carácteres, incluyendo un número como mínimo' },
-        { type: 'error', message: 'Error: Contrasenya incorrecta'}
+        { type: 'pattern', message: 'Contraseña: Debe contener más de 4, incluyendo un número como mínimo' },
+        { type: 'error', message: 'Error interno del server'}
       ],
     }
   }
@@ -70,15 +70,16 @@ export class LoginComponent implements OnInit {
         },
         err => {
           console.log("Error del BackEnd"+err);
+          //console.log(err);
           if(err.status==404) {
             console.log("404");
-            this.loginForm.get("username").setErrors({
-              error: true,
+            this.loginForm.get("email").setErrors({
+              error: true
             });
           }
           else if(err.status==500) {
             console.log("500");
-            this.loginForm.get("contrasenya").setErrors({
+            this.loginForm.get("password").setErrors({
               error: true,
             });
           }

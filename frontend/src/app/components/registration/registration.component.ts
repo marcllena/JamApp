@@ -3,7 +3,7 @@ import { AuthService } from "../../services/auth.service";
 import { HttpErrorResponse } from "@angular/common/http";
 import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import { User } from "../../models/User";
+import { User } from "../../models/user";
 import {passValidator} from "./validator";
 
 @Component({
@@ -87,9 +87,15 @@ export class RegistrationComponent implements OnInit {
     },
       err => {
         console.log("Error del BackEnd"+err);
-        if(err.status==500) {
-          console.log("500");
+        if(err.status==409) {
+          console.log("409");
           this.registerForm.get("email").setErrors({
+            error: true
+          });
+        }
+        else if(err.status==500) {
+          console.log("500");
+          this.registerForm.get("password").setErrors({
             error: true,
           });
         }
