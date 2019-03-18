@@ -22,12 +22,12 @@ function signUp(req,res) {
     User.find({email: req.body.email}, (err, user) => {
         console.log(user)
         if(err){
-        return res.status(500).send({message: `Error al crear el administrador: ${err}`})}
+        return res.status(500).send({message: `Error al crear el usuario: ${err}`})}
         if (!user.length){
             userNew.save((err) => {
                 if(err) {
                     console.log("Error al crear usuari:"+req.body.email+". Ja existeix un usuari amb el correu")
-                    return res.status(500).send({message: `Error al crear el usuario: ${err}`})
+                    return res.status(409).send({message: `Error al crear el usuario: ${err}`})
                 }
         console.log("Usuari: "+req.body.email+" agregat correctament")
         res.status(200).send({token: service.createToken(user)})
@@ -38,7 +38,7 @@ function signUp(req,res) {
 }
 
 function signIn(req,res) {
-    User.find({email: req.body.email}, (err,user)=>{
+    User.find({email: req.body.mail, password: req.body.password}, (err,user)=>{
         
         if(err)
             return res.status(404).send({message: `Error en el logging: ${err}`})
