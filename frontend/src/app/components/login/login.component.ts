@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   validation_messages: any;
+  error: number;
 
   constructor(private userService: AuthService, private router: Router, private formBuilder: FormBuilder) {
     this.loginForm = this.formBuilder.group({
@@ -26,7 +27,7 @@ export class LoginComponent implements OnInit {
 
         password: new FormControl('', Validators.compose([
           Validators.required,
-          Validators.pattern(/^(?=.*\d).{4,8}$/)])),
+          Validators.pattern(/^(?=.*\d).{4,}$/)])),
       }
     )
   }
@@ -40,7 +41,7 @@ export class LoginComponent implements OnInit {
       ],
       'password': [
         { type: 'required', message: 'Contraseña: Requerida' },
-        { type: 'pattern', message: 'Contraseña: Debe contener entre 4 y 8 carácteres, incluyendo un número como mínimo' },
+        { type: 'pattern', message: 'Contraseña: Debe contener más de 4, incluyendo un número como mínimo' },
         { type: 'error', message: 'Error: Contrasenya incorrecta'}
       ],
     }
@@ -70,19 +71,25 @@ export class LoginComponent implements OnInit {
         },
         err => {
           console.log("Error del BackEnd"+err);
+          //console.log(err);
           if(err.status==404) {
-            console.log("404");
+            this.error = 404;
+            /*console.log("404");
             this.loginForm.get("username").setErrors({
-              error: true,
-            });
+              error: true
+            });*/
           }
-          else if(err.status==500) {
+          /*else if(err.status==500) {
             console.log("500");
             this.loginForm.get("contrasenya").setErrors({
               error: true,
             });
-          }
+          }*/
         });
+  }
+
+  resetError() {
+    this.error = 0;
   }
 
 }
