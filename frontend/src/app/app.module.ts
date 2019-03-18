@@ -11,6 +11,7 @@ import { InterceptorService } from "./services/interceptor.service";
 import { ProductdetailComponent } from './components/productdetail/productdetail.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { UserlistComponent } from './components/userlist/userlist.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { SettingsComponent } from './components/settings/settings.component';
     ProductdetailComponent,
     RegistrationComponent,
     SettingsComponent,
+    UserlistComponent,
   ],
   imports: [
     BrowserModule,

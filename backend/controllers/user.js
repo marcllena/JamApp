@@ -79,8 +79,20 @@ function getUser(req,res) {
     });
 }
 
+function getUsers(req,res) {
+    User.find( (err,users)=>{
+        console.log("Peticio per obtindre tots els usuaris");
+        if(err)
+            return res.status(500).send({message: `Error en el logging: ${err}`})
+
+        res.status(200).send(users);
+    });
+}
+
+
 module.exports={
     signUp,
     signIn,
-    getUser
+    getUser,
+    getUsers
 }
