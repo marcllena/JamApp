@@ -38,23 +38,30 @@ function signUp(req,res) {
 }
 
 function signIn(req,res) {
-    User.find({email: req.body.mail, password: req.body.password}, (err,user)=>{
+    console.log("Petició de SignIn del seguent user:"+req.body.email)
+    User.find({email: req.body.email}, (err,user)=>{
         
-        if(err)
+        if(err) {
+            console.log("Error en el logging")
             return res.status(404).send({message: `Error en el logging: ${err}`})
+        }
 
-        if(!user.length)
+        if(!user.length) {
+            console.log("El usuario no existe")
             return res.status(404).send({message: `El usuario no existe`})
+        }
 
         user[0].comparePassword((req.body.password), function(err, isMatch) {
             //if (err) throw err;
             if(isMatch) {
+                console.log("Login Correcte")
                 res.status(200).send({
                     message: "Te has logeado correctamente",
                     token: service.createToken(user),
                     _id: user[0]._id
                 })
             } else {
+                console.log("Password Incorrecte")
                 return res.status(404).send({message: `Wrong password`});
             }
             

@@ -12,6 +12,7 @@ export class User {
   video:String;
   estils:[String];
 
+
   constructor( email = '', username = '', password = '') {
     this.email = email;
     this.username = username;

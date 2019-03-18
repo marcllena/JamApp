@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
       'password': [
         { type: 'required', message: 'Contraseña: Requerida' },
         { type: 'pattern', message: 'Contraseña: Debe contener más de 4, incluyendo un número como mínimo' },
-        { type: 'error', message: 'Error interno del server'}
+        { type: 'error', message: 'Error: Correo o contraseña incorrecta'} ,
       ],
     }
   }
@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     console.log("Operació de login realitzada al BackEnd:"+this.loginForm.value);
-    let user = new User(this.loginForm.value.email,'', this.loginForm.value.password);
+    let user = new User(this.loginForm.value.email,"", this.loginForm.value.password);
     this.userService.signin(user)
       .subscribe(response => {
           console.log("Resposta del BackEnd"+response);
@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
           //console.log(err);
           if(err.status==404) {
             console.log("404");
-            this.loginForm.get("email").setErrors({
+            this.loginForm.get("password").setErrors({
               error: true
             });
           }
