@@ -87,9 +87,15 @@ export class RegistrationComponent implements OnInit {
     },
       err => {
         console.log("Error del BackEnd"+err);
-        if(err.status==500) {
-          console.log("500");
+        if(err.status==409) {
+          console.log("409");
           this.registerForm.get("email").setErrors({
+            error: true
+          });
+        }
+        else if(err.status==500) {
+          console.log("500");
+          this.registerForm.get("password").setErrors({
             error: true,
           });
         }
