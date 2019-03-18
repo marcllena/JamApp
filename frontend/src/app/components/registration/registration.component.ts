@@ -3,7 +3,7 @@ import { AuthService } from "../../services/auth.service";
 import { HttpErrorResponse } from "@angular/common/http";
 import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import { User } from "../../models/User";
+import { User } from "../../models/user";
 import {passValidator} from "./validator";
 
 @Component({
