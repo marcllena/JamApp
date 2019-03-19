@@ -9,7 +9,8 @@
 <div class="limiter">
   <div class="container-login100">
     <div class="wrap-login100 p-l-20 p-r-20 p-t-20 p-b-20">
-
+      <p></p>
+      <p></p>
 					<span class="login100-form-title">
 						Llista de Usuaris de JamApp
 					</span>
@@ -28,8 +29,8 @@
       <ul *ngIf="users" id="menu">
         <li *ngFor="let user of users">
           <p>{{user.email}}    {{user.userType}}</p>
-          <button type="button" class="signout_btn pull-right" id="btnEditar"><i class="fa fa-pencil"></i>Editar</button>
-          <button type="button" class="signout_btn pull-right" id="btnEliminar"><i class="fa fa-trash"></i>Eliminar</button>
+          <button type="button" routerLink="/" class="list_btn2 pull-right" id="btnEliminar"><i class="fa fa-trash"></i>Eliminar</button>
+          <button type="button" routerLink="/" class="list_btn1 pull-right" id="btnEditar"><i class="fa fa-pencil"></i>Editar</button>
         </li>
         <li class="no-bullet">
 

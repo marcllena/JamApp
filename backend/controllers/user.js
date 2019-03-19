@@ -12,7 +12,7 @@ const service = require('../services')
 function signUp(req,res) {
     const userNew = new User({
         email: req.body.email,
-        displayName: req.body.displayName,
+        username: req.body.username,
         password: req.body.password
     })
 
