@@ -11,10 +11,23 @@ export class SettingsService {
 
   environment: Environment;
   selectedUser: User;
+  users: User[];
 
   constructor(private http: HttpClient) {
     this.selectedUser = new User();
     this.environment = new Environment();
+  }
+
+  putUser(user: User){
+    return this.http.put(this.environment.urlProduct + `/${user._id}`, user )
+  }
+
+  getUsers() {
+    return this.http.get(this.environment.urlUser);
+  }
+
+  postUser(user: User) {
+    return this.http.post(this.environment.urlUser, user)
   }
 
   /*getUser(_id: string) {
