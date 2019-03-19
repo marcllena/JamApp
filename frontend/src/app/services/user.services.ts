@@ -13,9 +13,7 @@ export class UserServices {
   constructor(private http: HttpClient) {
     this.environment = new Environment();
   }
-
   obtainUsers() {
     return this.http.get(this.environment.urlUser + "getusers", {observe: 'response'})
   }
-
 }

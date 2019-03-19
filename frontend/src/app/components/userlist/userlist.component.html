@@ -26,9 +26,10 @@
       </div>
       <p></p>
       <p></p>
+      <pre *ngIf="users" class="list_titles">Nombre de Usuario     Email    Tipo de Usuario </pre>
       <ul *ngIf="users" id="menu">
-        <li *ngFor="let user of users">
-          <p>{{user.email}}    {{user.userType}}</p>
+        <li  class="list_items" *ngFor="let user of users">
+          <pre>{{user.username}}    {{user.email}}    {{user.userType}} </pre>
           <button type="button" routerLink="/" class="list_btn2 pull-right" id="btnEliminar"><i class="fa fa-trash"></i>Eliminar</button>
           <button type="button" routerLink="/" class="list_btn1 pull-right" id="btnEditar"><i class="fa fa-pencil"></i>Editar</button>
         </li>
