@@ -24,9 +24,9 @@ export class AuthService {
     return this.http.post(this.environment.urlUser + "signin", user,{observe: 'response'})
   }
 
-  checksignin()  {
+  checksignin(token)  {
     const headers = {
-      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      'Authorization': `Bearer ${token}`,
     }
     return this.http.get(this.environment.urlUser + "checktoken",{headers: headers, observe: "response"})
   }

@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     let token =localStorage.getItem('token');
     if(token!=null) {
-      this.comprobarLogin();
+      this.comprobarLogin(token);
     }
     this.validation_messages = {
       'email': [
@@ -90,9 +90,9 @@ export class LoginComponent implements OnInit {
         });
   }
 
-  comprobarLogin() {
+  comprobarLogin(token) {
       console.log("Operació de comprobació de login realitzada al BackEnd:" + this.loginForm.value);
-      this.userService.checksignin()
+      this.userService.checksignin(token)
         .subscribe(response => {
             console.log("Resposta del BackEnd" + response);
             if (response.status == 200) {
