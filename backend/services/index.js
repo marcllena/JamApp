@@ -11,7 +11,7 @@ const config = require('../config')
 
 function createToken(user) {
     const payload = {
-        sub: user,
+        sub: user._id,
         iat:moment.unix(),
         exp:moment().add(14,'days').unix(),
     }
@@ -22,8 +22,8 @@ function createToken(user) {
 function decodeToken(token){
     const decode = new Promise((resolve,reject) => {
     try{
-        const payload = jwt.decode(token, config.SECRET_TOKEN ) 
-
+        const payload = jwt.decode(token, config.SECRET_TOKEN )
+        console.log(`payload: ${payload.sub}`)
         if(payload.exp <= moment.unix()) {
             reject({
                 status: 401,
@@ -39,7 +39,7 @@ function decodeToken(token){
             message: 'Invalid Token'
         })
     }
-    }) 
+    })
     return decode;
 }
 module.exports = {

@@ -15,7 +15,6 @@ function isAdmin(req,res, next){
     console.log(token)
     services.decodeToken(token)
         .then(response =>{
-
             req.user=response
             next()
         })
