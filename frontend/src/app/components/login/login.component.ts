@@ -32,6 +32,10 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    let token =localStorage.getItem('token');
+    if(token!=null) {
+      this.comprobarLogin();
+    }
     this.validation_messages = {
       'email': [
         { type: 'required', message: 'Mail: Requerido' },
@@ -87,41 +91,36 @@ export class LoginComponent implements OnInit {
   }
 
   comprobarLogin() {
-    console.log("Operació de comprobació de login realitzada al BackEnd:"+this.loginForm.value);
-    this.userService.checksignin()
-      .subscribe(response => {
-          console.log("Resposta del BackEnd"+response);
-          if(response.status==200){
-            //Operació Realitzada Correctament
-            let token = response.body['token'];
-            localStorage.setItem('token', token);
-            localStorage.setItem('_id',response.body['_id']);
-            this.router.navigateByUrl("/api/settings");
-          }
-          else {
-            //Error desconegut
-            console.log("Error");
-            this.loginForm.get("username").setErrors({
-              error: true,
-            });
-          }
-        },
-        err => {
-          console.log("Error del BackEnd"+err);
-          //console.log(err);
-          if(err.status==404) {
-            console.log("404");
-            this.loginForm.get("password").setErrors({
-              error: true
-            });
-          }
-          else if(err.status==500) {
-            console.log("500");
-            this.loginForm.get("password").setErrors({
-              error: true,
-            });
-          }
-        });
+      console.log("Operació de comprobació de login realitzada al BackEnd:" + this.loginForm.value);
+      this.userService.checksignin()
+        .subscribe(response => {
+            console.log("Resposta del BackEnd" + response);
+            if (response.status == 200) {
+              //El usuari ja te login
+              this.router.navigateByUrl("/api/settings");
+            } else {
+              //Error desconegut
+              console.log("Error");
+              this.loginForm.get("username").setErrors({
+                error: true,
+              });
+            }
+          },
+          err => {
+            console.log("Error del BackEnd" + err);
+            //console.log(err);
+            if (err.status == 404) {
+              console.log("404");
+              this.loginForm.get("password").setErrors({
+                error: true
+              });
+            } else if (err.status == 500) {
+              console.log("500");
+              this.loginForm.get("password").setErrors({
+                error: true,
+              });
+            }
+          });
   }
 
 }

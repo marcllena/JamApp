@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import {HttpClientModule} from '@angular/common/http';
 import { User } from "../models/user";
 import { Environment } from "./environment";
 
@@ -26,6 +25,9 @@ export class AuthService {
   }
 
   checksignin()  {
-    return this.http.get(this.environment.urlUser + "checktoken",{observe: 'response'})
+    const headers = {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    }
+    return this.http.get(this.environment.urlUser + "checktoken",{headers: headers, observe: "response"})
   }
 }
