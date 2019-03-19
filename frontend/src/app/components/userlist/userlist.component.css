@@ -184,7 +184,7 @@ iframe {
 }
 
 .wrap-login100 {
-  width: 500px;
+  width: 1000px;
   background: #fff;
   border-radius: 10px;
   overflow: hidden;
@@ -205,6 +205,7 @@ iframe {
   color: #333333;
   line-height: 1.2;
   text-align: center;
+  width: 100%;
 }
 
 
@@ -318,7 +319,7 @@ iframe {
 }
 
 .wrap-login100-form-btn {
-  width: 100%;
+  width: 50%;
   display: block;
   position: relative;
   z-index: 1;
@@ -481,4 +482,23 @@ iframe {
     padding-left: 15px;
     padding-right: 15px;
   }
+}
+/*//////////////////////////////////////////////////////////////////
+[ List ]*/
+li {
+  display:inline;
+  padding: 10px 30px;
+}
+.btn {
+  background-color: DodgerBlue; /* Blue background */
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  padding: 12px 16px; /* Some padding */
+  font-size: 16px; /* Set a font size */
+  cursor: pointer; /* Mouse pointer on hover */
+}
+
+/* Darker background on mouse-over */
+.btn:hover {
+  background-color: RoyalBlue;
 }

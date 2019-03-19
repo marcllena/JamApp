@@ -8,13 +8,13 @@
 <body>
 <div class="limiter">
   <div class="container-login100">
-    <div class="wrap-login100 p-l-55 p-r-55 p-t-165 p-b-54">
+    <div class="wrap-login100 p-l-20 p-r-20 p-t-20 p-b-20">
 
-      <form class="login100-form validate-form">
-					<span class="login100-form-title p-b-49">
+					<span class="login100-form-title">
 						Llista de Usuaris de JamApp
 					</span>
-        </form>
+      <p></p>
+      <p></p>
       <div class="container-login100-form-btn">
         <div class="wrap-login100-form-btn">
           <div class="login100-form-bgbtn"></div>
@@ -23,11 +23,15 @@
           </button>
         </div>
       </div>
-      <ul *ngIf="users">
+      <p></p>
+      <p></p>
+      <ul *ngIf="users" id="menu">
         <li *ngFor="let user of users">
-          <p>{{user.email}}    {{user.userType}}</p> <button  type="submit">
-          Eliminar
-        </button>
+          <p>{{user.email}}    {{user.userType}}</p>
+          <button type="button" class="signout_btn pull-right" id="btnEditar"><i class="fa fa-pencil"></i>Editar</button>
+          <button type="button" class="signout_btn pull-right" id="btnEliminar"><i class="fa fa-trash"></i>Eliminar</button>
+        </li>
+        <li class="no-bullet">
 
         </li>
       </ul>
