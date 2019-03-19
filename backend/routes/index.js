@@ -22,7 +22,7 @@ api.post('/signup', userCtrl.signUp)
 api.post('/signin', userCtrl.signIn)
 api.post('/admin', adminCtrl.createAdmin)
 api.get('/private', auth,(req,res) => {
-  res.status(200).send({message: "Tienes acceso"})
+  res.status(200).send({message: `Tienes acceso ${req.user}`})
 })
 
 module.exports =  api
