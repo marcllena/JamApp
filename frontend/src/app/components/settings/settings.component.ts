@@ -16,7 +16,6 @@ export class SettingsComponent implements OnInit {
   constructor(private settingsService: SettingsService,private router: Router) { }
 
   ngOnInit() {
-    this.getUsers();
   }
 
   addUser(form: NgForm){
@@ -30,7 +29,7 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  getUsers(){
+  getUsers(){ //Aquesta funcio ja no fa falta, es fa al component userlist
     this.settingsService.getUsers()
     .subscribe(res =>{
       this.settingsService.users = res as User[];
