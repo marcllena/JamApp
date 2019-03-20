@@ -20,11 +20,7 @@ api.put('/product/:productId', productCtrl.updateProduct)
 api.delete('/product/:productId', productCtrl.deleteProduct)
 api.post('/signup', userCtrl.signUp)
 api.post('/signin', userCtrl.signIn)
-api.get('/checktoken', auth,(req,res) => {
-  res.status(200).send({
-    message: `Tienes acceso`,})
-    //token: service.createToken(user)})
-})
+api.get('/checktoken', auth, userCtrl.refreshToken)// recibe el token en el header
 
 api.post('/admin', adminCtrl.createAdmin)
 api.get('/private', auth,(req,res) => {

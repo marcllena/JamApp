@@ -17,9 +17,10 @@ function signUp(req,res) {
     })
 
     console.log("Petició de SignUp del seguent user:"+userNew)
+    //console.log(userNew._id)
     if(req.body.password==null)
         return res.status(500).send({message: `Rellena el campo password`})
-    User.find({email: req.body.email}, (err, user) => {
+    User.find({email: req.body.email}).lean().exec(function(err, user) {
         console.log(user)
         if(err){
         return res.status(500).send({message: `Error al crear el usuario: ${err}`})}
@@ -30,7 +31,7 @@ function signUp(req,res) {
                     return res.status(409).send({message: `Error al crear el usuario: ${err}`})
                 }
         console.log("Usuari: "+req.body.email+" agregat correctament")
-        res.status(200).send({token: service.createToken(user)})
+        res.status(200).send({token: service.createToken(userNew)})
     } )     }
         else 
             return res.status(409).send({message: `Email ya registrado`})
@@ -40,7 +41,7 @@ function signUp(req,res) {
 function signIn(req,res) {
     console.log("Petició de SignIn del seguent user:"+req.body.email)
     User.find({email: req.body.email}, (err,user)=>{
-        
+
         if(err) {
             console.log("Error en el logging")
             return res.status(404).send({message: `Error en el logging: ${err}`})
@@ -64,7 +65,7 @@ function signIn(req,res) {
                 console.log("Password Incorrecte")
                 return res.status(404).send({message: `Wrong password`});
             }
-            
+
         });
     }).select('+password');
 }
@@ -89,10 +90,25 @@ function getUsers(req,res) {
     });
 }
 
+function refreshToken(req,res) {
+    User.findById(req.user).lean().exec(function (err, user) {
+        if (err)
+            return res.status(404).send({message: `Id incorrecto: ${err}`})
+        console.log("Login Correcte, Token Validat")
+
+        res.status(200).send({
+            message: "Te has logeado correctamente",
+            token: service.createToken(user)
+        })
+    })
+
+}//200 si ok 404 si no hi user o hi ha un error (igual que al login)
+
 
 module.exports={
     signUp,
     signIn,
     getUser,
-    getUsers
+    getUsers,
+    refreshToken
 }

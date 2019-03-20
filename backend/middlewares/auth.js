@@ -12,14 +12,15 @@ function isAuth(req,res, next){
     }
 
     const token = req.headers.authorization.split(" ")[1] //Bearer + token, per aixo poso [1]
-    console.log(token)
+    //console.log(`auth token ${token}`)
     services.decodeToken(token)
         .then(response =>{
             req.user=response
             next()
         })
         .catch(response=>{
-            res.status(response.status)
+            return res.status(response.status).send({message: `No tienes acceso`})
+
         })
 
 }

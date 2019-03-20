@@ -8,6 +8,8 @@ que utilitzen la llibreria de jwt. Utilitzem un promesa que s'utilitza al Middle
 const jwt = require('jwt-simple')
 const moment = require('moment')
 const config = require('../config')
+const User = require('../models/user')
+const service= this
 
 function createToken(user) {
     const payload = {
@@ -15,34 +17,48 @@ function createToken(user) {
         iat:moment.unix(),
         exp:moment().add(14,'days').unix(),
     }
-
+    //console.log(`create token payload.sub: ${payload.sub}`)
     return jwt.encode(payload,config.SECRET_TOKEN)
 }
+
+function createTokenFromID(id) {
+    User.findById(id).lean().exec(function (err, user) {
+        if (err)
+            return res.status(404).send({message: `Id incorrecto: ${err}`})
+        return createToken(user)
+    })
+}
+
 
 function decodeToken(token){
     const decode = new Promise((resolve,reject) => {
     try{
         const payload = jwt.decode(token, config.SECRET_TOKEN )
-        console.log(`payload: ${payload.sub}`)
+        //console.log(`decode token payload.sub: ${payload.sub}`)
+        //console.log(`payload: ${payload}`)
         if(payload.exp <= moment.unix()) {
             reject({
                 status: 401,
                 message: 'El token ha expirado'
             })
         }
+        //console.log(`decode token payload.sub: ${payload.sub}`)
     resolve(payload.sub)
     }
     catch(err)
     {
         reject({
-            status: 500,
+            status: 403,
             message: 'Invalid Token'
         })
     }
     })
     return decode;
 }
+
+
 module.exports = {
     createToken, 
-    decodeToken
+    decodeToken,
+    createTokenFromID
 }
