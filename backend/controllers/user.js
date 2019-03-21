@@ -55,10 +55,10 @@ function signIn(req,res) {
         user[0].comparePassword((req.body.password), function(err, isMatch) {
             //if (err) throw err;
             if(isMatch) {
-                console.log("Login Correcte")
+                console.log("Login Correcte " )
                 res.status(200).send({
                     message: "Te has logeado correctamente",
-                    token: service.createToken(user),
+                    token: service.createToken(user[0]),
                     _id: user[0]._id
                 })
             } else {
