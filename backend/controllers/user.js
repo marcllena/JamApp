@@ -23,7 +23,7 @@ function signUp(req,res) {
     User.find({email: req.body.email}).lean().exec(function(err, user) {
         console.log(user)
         if(err){
-        return res.status(500).send({message: `Error al crear el usuario: ${err}`})}
+            return res.status(500).send({message: `Error al crear el usuario: ${err}`})}
         if (!user.length){
             userNew.save((err) => {
                 if(err) {
@@ -93,7 +93,11 @@ function getUsers(req,res) {
 function refreshToken(req,res) {
     User.findById(req.user).lean().exec(function (err, user) {
         if (err)
-            return res.status(404).send({message: `Id incorrecto: ${err}`})
+            return res.status(500).send({message: `Error refreshing token: ${err}`})
+        if (!user){
+            return res.status(404).send({message: `Incorrect ID`})
+        }
+
         console.log("Login Correcte, Token Validat")
 
         res.status(200).send({

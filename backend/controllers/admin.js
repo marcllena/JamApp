@@ -11,7 +11,7 @@ const service = require('../services')
 function createAdmin (req,res){
     const admin = new Admin({
         email: req.body.email,
-        displayName: req.body.displayName,
+        username: req.body.username,
         password: req.body.password
     })
     //La funció fins no funcionara fins que estigui la classe configurada a ./models/admin - falta herencia

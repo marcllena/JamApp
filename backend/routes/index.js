@@ -7,6 +7,7 @@ estan implementades
 const express = require('express')
 const api = express.Router()
 const auth = require('../middlewares/auth')
+const isAdmin = require('../middlewares/admin')
 const productCtrl = require('../controllers/product')
 const userCtrl = require('../controllers/user')
 const adminCtrl = require('../controllers/admin')
@@ -22,7 +23,9 @@ api.post('/signup', userCtrl.signUp)
 api.post('/signin', userCtrl.signIn)
 api.get('/checktoken', auth, userCtrl.refreshToken)// recibe el token en el header
 
-api.post('/admin', adminCtrl.createAdmin)
+api.post('/admin/signup', adminCtrl.createAdmin)
+api.get('/a', isAdmin, userCtrl.refreshToken)
+
 api.get('/private', auth,(req,res) => {
   res.status(200).send({message: `Tienes acceso ${req.user}`})
 })
