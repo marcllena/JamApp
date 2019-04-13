@@ -1,0 +1,8 @@
+{
+  "name": "frontend",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular",
+  "id": "04c812c9"
+}
