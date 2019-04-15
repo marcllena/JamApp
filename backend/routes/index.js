@@ -10,13 +10,13 @@ const api = express.Router()
 const auth = require('../middlewares/auth')
 const isAdmin = require('../middlewares/admin')
 
-const productCtrl = require('../controllers/product')
 const userCtrl = require('../controllers/user')
-const adminCtrl = require('../controllers/admin')
 
 const apiUsers= require('./users')
+const apiAdmin= require('./admin')
 
 api.use('/user',apiUsers)
+api.use('/admin',apiAdmin)
 
 
 //ARA ESTAN A apiUsers (backend/routes/users.js)
@@ -28,7 +28,6 @@ api.post('/signin', userCtrl.signIn)
 
 api.get('/checktoken', auth, userCtrl.refreshToken)// recibe el token en el header
 
-api.post('/admin/signup', adminCtrl.createAdmin)
 api.get('/a', isAdmin, userCtrl.refreshToken)
 
 api.get('/private', auth,(req,res) => {
