@@ -14,6 +14,6 @@ export class UserServices {
     this.environment = new Environment();
   }
   obtainUsers() {
-    return this.http.get(this.environment.urlUser + "getusers", {observe: 'response'})
+    return this.http.get(this.environment.urlUser + "user", {observe: 'response'})
   }
 }

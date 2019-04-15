@@ -6,21 +6,26 @@ estan implementades
  */
 const express = require('express')
 const api = express.Router()
+
 const auth = require('../middlewares/auth')
 const isAdmin = require('../middlewares/admin')
+
 const productCtrl = require('../controllers/product')
 const userCtrl = require('../controllers/user')
 const adminCtrl = require('../controllers/admin')
 
-api.get('/product', productCtrl.getProducts)
-api.get('/getuser/:userId', userCtrl.getUser)
-api.get('/getusers', userCtrl.getUsers)
-api.get('/product/:productId', productCtrl.getProduct)
-api.post('/product', productCtrl.saveProduct)
-api.put('/product/:productId', productCtrl.updateProduct)
-api.delete('/product/:productId', productCtrl.deleteProduct)
+const apiUsers= require('./users')
+
+api.use('/user',apiUsers)
+
+
+//ARA ESTAN A apiUsers (backend/routes/users.js)
+//api.get('/getuser/:userId', userCtrl.getUser)
+//api.get('/getusers', userCtrl.getUsers)
+
 api.post('/signup', userCtrl.signUp)
 api.post('/signin', userCtrl.signIn)
+
 api.get('/checktoken', auth, userCtrl.refreshToken)// recibe el token en el header
 
 api.post('/admin/signup', adminCtrl.createAdmin)
