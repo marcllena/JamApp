@@ -3,6 +3,9 @@
     <ion-title>
       Register Form
     </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="api/signin"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -41,13 +44,13 @@
           <span class="focus-input100" data-symbol="&#xf190;"></span>
         </div>
 
-          <div class="wrap-input100 validate-input" data-validate="Password is required">
-            <select>
-              <span class="label-input100">Perfil de Usuario</span>
-              <option value="musician">Músico</option>
-              <option value="user">Usuario</option>
-            </select>
-          </div>
+        <ion-item>
+          <ion-label>Perfil de Usuario</ion-label>
+          <ion-select value="music" okText="Aceptar" cancelText="Cancelar">
+            <ion-select-option value="music">Músico</ion-select-option>
+            <ion-select-option value="user">Usuario</ion-select-option>
+          </ion-select>
+        </ion-item>
         </form>
         <pre></pre>
 
@@ -77,22 +80,11 @@
         <div class="container-login100-form-btn">
           <div class="wrap-login100-form-btn">
             <div class="login100-form-bgbtn"></div>
-            <button (click)="registrarse()" [disabled]="registerForm.invalid" class="login100-form-btn" type="submit">
-              Registrarse
-            </button>
+            <ion-button color="primary" (click)="registrarse()" [disabled]="registerForm.invalid" expand="block">Registrarse</ion-button>
           </div>
         </div>
 
         <pre></pre>
-        <div class="container-login100-form-btn">
-          <div class="wrap-login100-form-btn">
-            <div class="login100-form-bgbtn"></div>
-            <button  routerLink="/" class="login100-form-btn" type="submit">
-              Cancelar
-            </button>
-          </div>
-        </div>
-
         <div class="txt1 text-center p-t-54 p-b-20">
 						<span>
 							Registrarse mediante:
