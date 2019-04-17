@@ -11,7 +11,8 @@ const routes: Routes = [
   { path: 'api/signup', component: RegistrationComponent },
   { path: 'api/settings', component: SettingsComponent, canActivate: [MyguardGuard] },
   { path: 'api/userlist', component: UserlistComponent, canActivate: [MyguardGuard] },
-  { path: '', redirectTo: '/api/signin', pathMatch: 'full' }
+  { path: '', redirectTo: '/api/signin', pathMatch: 'full' },
+  { path: 'api/menu', loadChildren: './components/main/menu/menu.module#MenuPageModule' },
 ];
 
 @NgModule({
