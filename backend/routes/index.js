@@ -11,6 +11,7 @@ const isAdmin = require('../middlewares/admin')
 const productCtrl = require('../controllers/product')
 const userCtrl = require('../controllers/user')
 const adminCtrl = require('../controllers/admin')
+const musicCtrl = require('../controllers/musician')
 
 api.get('/product', productCtrl.getProducts)
 api.get('/getuser/:userId', userCtrl.getUser)
@@ -25,7 +26,7 @@ api.get('/checktoken', auth, userCtrl.refreshToken)// recibe el token en el head
 
 api.post('/admin/signup', adminCtrl.createAdmin)
 api.get('/a', isAdmin, userCtrl.refreshToken)
-
+api.post('/musician/groups/add', musicCtrl.createGroup)
 api.get('/private', auth,(req,res) => {
   res.status(200).send({message: `Tienes acceso ${req.user}`})
 })
