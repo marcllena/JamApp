@@ -7,24 +7,84 @@ Al registrar o fer login, se'ns proporciona un token que s'utilitza en les opera
 
 const mongoose = require('mongoose')
 const User = require('../models/user')
+const Musician = require('../models/musician')
+const Admin = require('../models/admin')
+const Room = require('../models/room')
 const service = require('../services')
 
-//registre, rep al body els parametres de nom, password i email i el camp userType 0 si user, 1 si music, 2 si sala, 3 si admin
+//registre, rep al body els parametres de nom, password i email
+// a més, el camp userType 0 si user, 1 si music, 2 si sala, 3 si admin
 function register(req,res) {
-    if (req.body.userType == 0) signUp(req,res);
-    if (req.body.userType == 1) console.log('Solicitud de crear music');
+    //if (req.body.userType == 0) signUp(req,res);
+    //if (req.body.userType == 1) console.log('Solicitud de crear music');
+    switch (req.body.userType){
+        case '0':
+            signUp(req,res);
+            break;
+        case '1':
+            console.log('Crear music');
+            res.status(200).send({message : 'Registre music'})
+            break;
+        default:
+            console.log('default');
+            break;
+    }
 
 
 }
 
+//registre, rep al body els parametres de nom, password i email
+// a més, el camp userType 0 si user, 1 si music, 2 si sala, 3 si admin
 function signUp(req,res) {
-    const userNew = new User({
-        email: req.body.email,
-        username: req.body.username,
-        password: req.body.password
-    })
+    var userNew;
+    switch (req.body.userType){
 
-    console.log("Petició de SignUp del seguent user:"+userNew)
+        case '0'://cas usuari
+            userNew = new User({
+                email: req.body.email,
+                username: req.body.username,
+                password: req.body.password
+            })
+            break;
+
+        case '1'://cas music
+            userNew = new Musician({
+                email: req.body.email,
+                username: req.body.username,
+                password: req.body.password
+            })
+            break;
+
+        case '2'://cas sala
+            userNew = new Room({
+                email: req.body.email,
+                username: req.body.username,
+                password: req.body.password
+            })
+            break;
+
+        case '3'://cas admin per crear admin s'ha de incorporar el camp pass amb un password conegut pels admins
+            if ((req.body.pass)&&(req.body.pass=='password')) {
+                userNew = new Admin({
+                    email: req.body.email,
+                    username: req.body.username,
+                    password: req.body.password
+                })
+            }
+            else
+                return res.status(403).send({message: `No tienes acceso`})
+            break;
+
+        default://cas per defecte usuari
+            userNew = new User({
+                email: req.body.email,
+                username: req.body.username,
+                password: req.body.password
+            })
+            break;
+    }
+
+    console.log("Petició de SignUp del seguent user: "+userNew.email)
     if(req.body.password==null)
         return res.status(500).send({message: `Rellena el campo password`})
     User.find({email: req.body.email}).lean().exec(function(err, user) {
