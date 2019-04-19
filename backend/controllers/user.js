@@ -9,6 +9,14 @@ const mongoose = require('mongoose')
 const User = require('../models/user')
 const service = require('../services')
 
+//registre, rep al body els parametres de nom, password i email i el camp userType 0 si user, 1 si music, 2 si sala, 3 si admin
+function register(req,res) {
+    if (req.body.userType == 0) signUp(req,res);
+    if (req.body.userType == 1) console.log('Solicitud de crear music');
+
+
+}
+
 function signUp(req,res) {
     const userNew = new User({
         email: req.body.email,
@@ -17,7 +25,6 @@ function signUp(req,res) {
     })
 
     console.log("Petició de SignUp del seguent user:"+userNew)
-    //console.log(userNew._id)
     if(req.body.password==null)
         return res.status(500).send({message: `Rellena el campo password`})
     User.find({email: req.body.email}).lean().exec(function(err, user) {
@@ -110,6 +117,7 @@ function refreshToken(req,res) {
 
 
 module.exports={
+    register,
     signUp,
     signIn,
     getUser,

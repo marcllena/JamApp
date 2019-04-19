@@ -23,7 +23,7 @@ api.use('/admin',apiAdmin)
 //api.get('/getuser/:userId', userCtrl.getUser)
 //api.get('/getusers', userCtrl.getUsers)
 
-api.post('/signup', userCtrl.signUp)
+api.post('/signup', userCtrl.register)//registre, rep al body els parametres de nom, password i email i el camp userType 0 si user, 1 si music, 2 si sala, 3 si admin
 api.post('/signin', userCtrl.signIn)
 
 api.get('/checktoken', auth, userCtrl.refreshToken)// recibe el token en el header
