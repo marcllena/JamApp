@@ -11,6 +11,7 @@ const MusicianSchema = UserBase.discriminator('Musician', new mongoose.Schema({
     instrument:[String],
     ubicacio:String,
     coordenades:[Number],
+    grups: [[{ type: mongoose.Schema.Types.ObjectId, ref: 'Group'}]],
     descripcio:String,
     video:String,
     estils:[String]
