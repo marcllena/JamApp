@@ -1,9 +1,13 @@
 var express = require('express');
-var router = express.Router();
+var apiUsers = express.Router();
+const userCtrl = require('../controllers/user')
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+apiUsers.get('/', userCtrl.getUsers)
 
-module.exports = router;
+
+
+apiUsers.get('/:userId', userCtrl.getUser) //GET user by ID
+
+
+module.exports =  apiUsers
