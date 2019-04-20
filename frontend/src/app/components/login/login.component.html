@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>JamApp Login</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Login Form
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
 <div class="limiter">
   <div class="container-login100">
     <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
@@ -45,9 +46,7 @@
         <div class="container-login100-form-btn">
           <div class="wrap-login100-form-btn">
             <div class="login100-form-bgbtn"></div>
-            <button (click)="login()" [disabled]="loginForm.invalid" class="login100-form-btn" type="submit">
-              Iniciar Sesión
-            </button>
+            <ion-button color="primary" (click)="login()" [disabled]="loginForm.invalid" expand="block"> Iniciar Sesión</ion-button>
           </div>
         </div>
 
@@ -103,7 +102,4 @@
 <!--===============================================================================================-->
 <script src="vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
-
-</body>
-</html>
-
+</ion-content>

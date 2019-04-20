@@ -43,4 +43,8 @@ export class UserlistComponent implements OnInit {
         });
   }
 
+  editarUser(){}
+
+  eliminarUser(){}
+
 }

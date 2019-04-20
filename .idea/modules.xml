@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/JamAppAPI.iml" filepath="$PROJECT_DIR$/.idea/JamAppAPI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/JamApp.iml" filepath="$PROJECT_DIR$/.idea/JamApp.iml" />
     </modules>
   </component>
 </project>

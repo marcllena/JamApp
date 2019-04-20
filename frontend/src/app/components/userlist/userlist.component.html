@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>JamApp Login</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Lista de Usuarios
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
 <div class="limiter">
   <div class="container-login100">
     <div class="wrap-login100 p-l-20 p-r-20 p-t-20 p-b-20">
@@ -19,24 +20,43 @@
       <div class="container-login100-form-btn">
         <div class="wrap-login100-form-btn">
           <div class="login100-form-bgbtn"></div>
-          <button (click)="llistaUsers()" class="login100-form-btn" type="submit">
-           Obtener Usuarios
-          </button>
+          <ion-button color="primary" (click)="llistaUsers()" expand="block">Obtener Usuarios</ion-button>
         </div>
       </div>
       <p></p>
       <p></p>
-      <pre *ngIf="users" class="list_titles">Nombre de Usuario     Email    Tipo de Usuario </pre>
-      <ul *ngIf="users" id="menu">
-        <li  class="list_items" *ngFor="let user of users">
-          <pre>{{user.username}}    {{user.email}}    {{user.userType}} </pre>
-          <button type="button" routerLink="/" class="list_btn2 pull-right" id="btnEliminar"><i class="fa fa-trash"></i>Eliminar</button>
-          <button type="button" routerLink="/" class="list_btn1 pull-right" id="btnEditar"><i class="fa fa-pencil"></i>Editar</button>
-        </li>
-        <li class="no-bullet">
-
-        </li>
-      </ul>
+      <ion-list-header *ngIf="users" >
+        <ion-label>Nombre del Usuario</ion-label>
+        <ion-label>Email</ion-label>
+        <ion-label>Tipo de Usuario</ion-label>
+        <ion-label> </ion-label>
+        <ion-label> </ion-label>
+        <ion-label> </ion-label>
+      </ion-list-header>
+      <ion-list *ngFor="let user of users">
+        <ion-item>
+          <ion-label>{{user.username}}</ion-label>
+          <ion-label>{{user.email}}</ion-label>
+          <ion-label>{{user.userType}}</ion-label>
+          <ion-checkbox></ion-checkbox>
+          <ion-button class="list-buttons" color="primary" (click)="editarUser()" >
+            Editar
+            <ion-icon slot="icon-only" name="create"></ion-icon>
+          </ion-button>
+          <ion-button class="list-buttons" color="primary" (click)="eliminarUser()">
+            Eliminar
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+      <p></p>
+      <p></p>
+      <div class="container-login100-form-btn">
+        <div class="wrap-login100-form-btn">
+          <div class="login100-form-bgbtn"></div>
+          <ion-button *ngIf="users" color="primary" (click)="EliminarUsers()" expand="block">Eliminar Usuarios Seleccionados</ion-button>
+        </div>
+      </div>
   </div>
 </div>
 
@@ -59,6 +79,5 @@
 <script src="vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
 </div>
-</body>
-</html>
+</ion-content>
 
