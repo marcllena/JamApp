@@ -213,10 +213,18 @@ else {
 }
 })
 }
-
+function searchFiltered(req, res) {
+    Group.find({}, (err,group)=>{
+        if(req.body.estils!=null){
+            //Aqui shan dimplementar filtres.
+        }
+        return res.status(200).send({message: 'Resultat de la cerca', group})
+    })
+}
 module.exports={
     createGroup,
     answerRequest,
     editGroup,
-    deleteMember
+    deleteMember,
+    searchFiltered
 }
