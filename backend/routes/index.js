@@ -11,6 +11,7 @@ const isAdmin = require('../middlewares/admin')
 const productCtrl = require('../controllers/product')
 const userCtrl = require('../controllers/user')
 const adminCtrl = require('../controllers/admin')
+const groupCtrl = require('../controllers/group')
 const musicCtrl = require('../controllers/musician')
 
 api.get('/product', productCtrl.getProducts)
@@ -23,10 +24,13 @@ api.delete('/product/:productId', productCtrl.deleteProduct)
 api.post('/signup', userCtrl.signUp)
 api.post('/signin', userCtrl.signIn)
 api.get('/checktoken', auth, userCtrl.refreshToken)// recibe el token en el header
-
+api.post('/musician/signup', musicCtrl.signUp)
 api.post('/admin/signup', adminCtrl.createAdmin)
 api.get('/a', isAdmin, userCtrl.refreshToken)
-api.post('/musician/groups/add', musicCtrl.createGroup)
+api.post('/musician/groups/add', groupCtrl.createGroup)
+api.post('/group/answerRequest', groupCtrl.answerRequest)
+api.post('/group/deleteMember', groupCtrl.deleteMember)
+api.post('/group/edit', groupCtrl.editGroup)
 api.get('/private', auth,(req,res) => {
   res.status(200).send({message: `Tienes acceso ${req.user}`})
 })
