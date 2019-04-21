@@ -34,12 +34,12 @@ api.get('/checktoken', auth, userCtrl.refreshToken)// recibe el token en el head
 api.post('/musician/signup', musicCtrl.signUp)
 api.post('/admin/signup', adminCtrl.createAdmin)
 api.get('/a', isAdmin, userCtrl.refreshToken)
-api.post('/musician/groups/add', groupCtrl.createGroup)
-api.get('/group/search', groupCtrl.searchFiltered)
-api.post('/group/answerRequest', groupCtrl.answerRequest)
-api.post('/group/deleteMember', groupCtrl.deleteMember)
-api.post('/group/edit', groupCtrl.editGroup)
-api.post('/musician/requestMembership', musicCtrl.requestMembership)
+api.post('/musician/groups/add', groupCtrl.createGroup)  //create a new group
+api.get('/group/search', groupCtrl.searchFiltered) //search a group
+api.post('/group/answerRequest', groupCtrl.answerRequest) //a group respond a request 
+api.post('/group/deleteMember', groupCtrl.deleteMember) //delete a member from a group
+api.post('/group/edit', groupCtrl.editGroup) //edit a group
+api.post('/musician/requestMembership', musicCtrl.requestMembership) //a musician request to participate in a group
 api.get('/private', auth,(req,res) => {
   res.status(200).send({message: `Tienes acceso ${req.user}`})
 })

@@ -12,7 +12,8 @@ const Group = require('../models/group')
 
 
 function createGroup(req, res) {
-    Musician.find({email: req.body.email}, (err,user)=>{ //canviar User per Musician!!!!
+    //Musician.find({email: req.body.email}, (err,user)=>{ //canviar User per Musician!!!!
+    User.find({email: req.body.email}, (err,user)=>{
 
         if(err) {
             return res.status(500).send({message: `Error en trobar usuari: ${err}`})
@@ -32,8 +33,11 @@ function createGroup(req, res) {
                 description: req.body.description
             });
             newGroup.integrants.push(user[0]);
-            for(var i=0; i<req.body.styles.length;i++){
+            /*for(var i=0; i<req.body.styles.length;i++){
             newGroup.estils.push(req.body.styles[i])
+            }*/
+            for(var i=0; i<req.body.estils.length;i++){
+                newGroup.estils.push(req.body.estils[i])
             }
             newGroup.save((err) => {
                 if(err) {
