@@ -23,7 +23,8 @@ export class GrupListPage implements OnInit {
       .subscribe(response =>{
         console.log("Resposta del backend"+response.body);
         if(response.status==200){
-          this.groups = response.body;
+          this.groups = response.body['group'];
+          console.log(this.groups);
         }
         else{
           console.log("Error desconegut");
