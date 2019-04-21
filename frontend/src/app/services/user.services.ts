@@ -20,4 +20,8 @@ export class UserServices {
   obtainGroups(){
     return this.http.get(this.environment.urlUser + "group/search", {observe: 'response'})
   }
+
+  requestMemberShip(){
+    return this.http.post(this.environment.urlUser + "musician/requestMembership", {observe: 'response'})
+  }
 }

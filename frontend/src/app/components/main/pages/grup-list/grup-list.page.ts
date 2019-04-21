@@ -24,7 +24,6 @@ export class GrupListPage implements OnInit {
         console.log("Resposta del backend"+response.body);
         if(response.status==200){
           this.groups = response.body['group'];
-          console.log(this.groups);
         }
         else{
           console.log("Error desconegut");
@@ -35,7 +34,21 @@ export class GrupListPage implements OnInit {
       });
   }
 
-  requestMembership(){}
+  requestMembership(){
+    console.log("Operacio de demanar afegirse a un grup realitzada al Backend: ");
+    this.userService.requestMemberShip()
+      .subscribe(response => {
+        console.log("Resposta del backend "+ response)
+        if(response == 200){
+          console.log("Solicitud enviada correctament");
+        }
+      },err=>{
+        if(err.status == 500){
+          console.log("Error");
+          
+        }
+      })
+  }
 
   createGroup(){}
 
