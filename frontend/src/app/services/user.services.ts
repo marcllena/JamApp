@@ -16,4 +16,8 @@ export class UserServices {
   obtainUsers() {
     return this.http.get(this.environment.urlUser + "user", {observe: 'response'})
   }
+
+  obtainGroups(){
+    return this.http.get(this.environment.urlUser + "group/search", {observe: 'response'})
+  }
 }
