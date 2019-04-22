@@ -46,9 +46,10 @@
 
         <ion-item>
           <ion-label>Perfil de Usuario</ion-label>
-          <ion-select value="music" okText="Aceptar" cancelText="Cancelar">
-            <ion-select-option value="music">Músico</ion-select-option>
+          <ion-select formControlName="profile" value="user" okText="Aceptar" cancelText="Cancelar">
             <ion-select-option value="user">Usuario</ion-select-option>
+            <ion-select-option value="music">Músico</ion-select-option>
+            <ion-select-option value="room">Sala</ion-select-option>
           </ion-select>
         </ion-item>
         </form>

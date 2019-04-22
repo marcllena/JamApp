@@ -11,6 +11,7 @@ export class User {
   descripcio:String;
   video:String;
   estils:[String];
+  userType:number;
 
 
   constructor( email = '', username = '', password = '') {

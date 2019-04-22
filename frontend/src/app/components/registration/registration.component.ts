@@ -34,7 +34,8 @@ export class RegistrationComponent implements OnInit {
           Validators.required,
           Validators.pattern(/^(?=.*\d).{4,8}$/)])),
 
-        confirmPassword: ['', passValidator]
+        confirmPassword: ['', passValidator],
+        profile:''
       }
     )
   }
@@ -62,11 +63,23 @@ export class RegistrationComponent implements OnInit {
       ]
     }
     }
-
-
+  
   registrarse() {
     console.log("Operació de registre realitzada al BackEnd:"+this.registerForm.value);
     let user = new User(this.registerForm.value.email, this.registerForm.value.username, this.registerForm.value.password);
+    
+    switch(this.registerForm.value.profile){
+      case "user":
+        user.userType = 0;
+        break;
+      case "music":
+        user.userType = 1;
+        break;
+      case "room":
+        user.userType = 2;
+        break;
+    }
+    
     this.userService.signup(user)
       .subscribe(response => {
       console.log("Resposta del BackEnd"+response);
