@@ -35,7 +35,10 @@ export class RegistrationComponent implements OnInit {
           Validators.pattern(/^(?=.*\d).{4,8}$/)])),
 
         confirmPassword: ['', passValidator],
-        profile:''
+
+        profile:'',
+
+        adminPassword:''
       }
     )
   }
@@ -63,7 +66,35 @@ export class RegistrationComponent implements OnInit {
       ]
     }
     }
+
+  //Perque surti la posibilitat d'admin
+  adminCandidate = false;
+  userReps = 0; //numero de cops que li dona a user a la combinacio correcta de botons
   
+  //Augmentem el userReps
+  incUserReps() {
+    if(this.registerForm.value.profile == "room" && this.userReps == 0){
+      this.userReps ++;
+    } 
+    else if (this.registerForm.value.profile == "music" && this.userReps == 1){
+      this.userReps ++;
+    }
+    else if (this.registerForm.value.profile == "room" && this.userReps == 2){
+      this.userReps ++;
+    } 
+    else if (this.registerForm.value.profile == "music" && this.userReps == 3){
+      this.userReps ++;
+    } 
+    else {
+      this.userReps = 0;
+    }
+
+    if(this.userReps > 3){
+      this.adminCandidate = true;
+    }
+  }
+
+
   registrarse() {
     console.log("Operació de registre realitzada al BackEnd:"+this.registerForm.value);
     let user = new User(this.registerForm.value.email, this.registerForm.value.username, this.registerForm.value.password);
@@ -77,6 +108,10 @@ export class RegistrationComponent implements OnInit {
         break;
       case "room":
         user.userType = 2;
+        break;
+      case "admin":
+        user.userType = 3;
+        user.pass = this.registerForm.value.adminPassword;
         break;
     }
     

@@ -44,12 +44,19 @@
           <span class="focus-input100" data-symbol="&#xf190;"></span>
         </div>
 
+        <div *ngIf="this.registerForm.value.profile=='admin'"class="wrap-input100">
+          <span class="label-input100">Contraseña de admin</span>
+          <input class="input100" type="password" formControlName="adminPassword" placeholder="Escribe la contraseña">
+          <span class="focus-input100" data-symbol="&#xf190;"></span>
+        </div>
+
         <ion-item>
           <ion-label>Perfil de Usuario</ion-label>
-          <ion-select formControlName="profile" value="user" okText="Aceptar" cancelText="Cancelar">
+          <ion-select (ionChange)="incUserReps()" value="user" formControlName="profile" okText="Aceptar" cancelText="Cancelar">
             <ion-select-option value="user">Usuario</ion-select-option>
             <ion-select-option value="music">Músico</ion-select-option>
             <ion-select-option value="room">Sala</ion-select-option>
+            <ion-select-option *ngIf="adminCandidate" value="admin">Admin</ion-select-option>
           </ion-select>
         </ion-item>
         </form>
