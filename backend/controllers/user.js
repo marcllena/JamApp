@@ -18,10 +18,10 @@ function register(req,res) {
     //if (req.body.userType == 0) signUp(req,res);
     //if (req.body.userType == 1) console.log('Solicitud de crear music');
     switch (req.body.userType){
-        case '0':
+        case 0:
             signUp(req,res);
             break;
-        case '1':
+        case 1:
             console.log('Crear music');
             res.status(200).send({message : 'Registre music'})
             break;
@@ -37,9 +37,10 @@ function register(req,res) {
 // a més, el camp userType 0 si user, 1 si music, 2 si sala, 3 si admin
 function signUp(req,res) {
     var userNew;
+    console.log(req.body);
     switch (req.body.userType){
 
-        case '0'://cas usuari
+        case 0://cas usuari
             userNew = new User({
                 email: req.body.email,
                 username: req.body.username,
@@ -47,7 +48,7 @@ function signUp(req,res) {
             })
             break;
 
-        case '1'://cas music
+        case 1://cas music
             userNew = new Musician({
                 email: req.body.email,
                 username: req.body.username,
@@ -55,7 +56,7 @@ function signUp(req,res) {
             })
             break;
 
-        case '2'://cas sala
+        case 2://cas sala
             userNew = new Room({
                 email: req.body.email,
                 username: req.body.username,
@@ -63,7 +64,7 @@ function signUp(req,res) {
             })
             break;
 
-        case '3'://cas admin per crear admin s'ha de incorporar el camp pass amb un password conegut pels admins
+        case 3://cas admin per crear admin s'ha de incorporar el camp pass amb un password conegut pels admins
             if ((req.body.pass)&&(req.body.pass=='password')) {
                 userNew = new Admin({
                     email: req.body.email,
