@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'api/userlist', component: UserlistComponent, canActivate: [MyguardGuard] },
   { path: '', redirectTo: '/api/signin', pathMatch: 'full' },
   { path: 'api/menu', loadChildren: './components/main/menu/menu.module#MenuPageModule' },
+
 ];
 
 @NgModule({
