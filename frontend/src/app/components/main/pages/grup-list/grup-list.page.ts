@@ -50,6 +50,8 @@ export class GrupListPage implements OnInit {
       })
   }
 
-  createGroup(){}
+  createGroup(){
+    this.router.navigateByUrl("api/grupCreate");
+  }
 
 }

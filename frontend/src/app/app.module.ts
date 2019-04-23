@@ -14,6 +14,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { UserlistComponent } from './components/userlist/userlist.component';
+import { GrupCreateComponent } from './components/grup-create/grup-create.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { UserlistComponent } from './components/userlist/userlist.component';
     RegistrationComponent,
     SettingsComponent,
     UserlistComponent,
+    GrupCreateComponent,
   ],
   entryComponents: [],
   imports: [
