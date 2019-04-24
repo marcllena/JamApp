@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-grup-create',
@@ -7,8 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GrupCreateComponent implements OnInit {
 
-  constructor() { }
+  createGroupForm: FormGroup;
+
+  constructor(private formBuilder: FormBuilder) { 
+    this.createGroupForm = this.formBuilder.group({
+      name:'',
+      email:'',
+      description:''
+    })
+  }
 
   ngOnInit() {}
+
+  guardar() {}
 
 }
