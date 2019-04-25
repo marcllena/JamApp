@@ -20,12 +20,7 @@ export class SettingsComponent implements OnInit {
 
   addUser(form: NgForm){
     if(form.value._id){
-      this.settingsService.putUser(form.value)
-        .subscribe(res =>{
-          this.resetForm(form);
-          M.toast({html: 'Usuario actualizado'});
-          this.getUsers();
-        })
+
     }
   }
 
