@@ -123,7 +123,7 @@ export class RegistrationComponent implements OnInit {
         let token = response.body['token'];
         localStorage.setItem('token', token);
         localStorage.setItem('_id',response.body['_id']);
-        this.router.navigateByUrl("/api/settings");
+        this.router.navigateByUrl("/api/menu/home");
       }
       else {
         //Error desconegut
