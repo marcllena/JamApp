@@ -1,13 +1,14 @@
 var express = require('express');
 var apiUsers = express.Router();
 const userCtrl = require('../controllers/user')
+const auth = require('../middlewares/auth')
 
 /* GET users listing. */
-apiUsers.get('/', userCtrl.getUsers)
+apiUsers.get('/', auth, userCtrl.getUsers)
 
 
 
-apiUsers.get('/:userId', userCtrl.getUser) //GET user by ID
+apiUsers.get('/:userId', auth, userCtrl.getUser) //GET user by ID
 
 
 module.exports =  apiUsers

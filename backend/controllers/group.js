@@ -13,13 +13,13 @@ const Group = require('../models/group')
 
 function createGroup(req, res) {
     //Musician.find({email: req.body.email}, (err,user)=>{ //canviar User per Musician!!!!
-    User.find({email: req.body.email}, (err,user)=>{
+    User.findById( req.user, (err,user)=>{
 
         if(err) {
             return res.status(500).send({message: `Error en trobar usuari: ${err}`})
         }
 
-        if(!user.length) {
+        if(user==null) {
             console.log("El usuario no existe")
             return res.status(404).send({message: `El usuario no existe`})
         }

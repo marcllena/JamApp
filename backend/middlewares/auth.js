@@ -6,6 +6,8 @@ On estan implementades les operacions d'autentificació.
 
 const services = require('../services')
 
+
+//Si OK et posa a req.user l'Id de l'usuari
 function isAuth(req,res, next){
     if(!req.headers.authorization){
         return res.status(403).send({message: `No tienes autorización`})

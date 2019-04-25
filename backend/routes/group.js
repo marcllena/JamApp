@@ -1,17 +1,18 @@
 var express = require('express');
 var apiGroup = express.Router();
 const groupCtrl = require('../controllers/group');
+const auth = require('../middlewares/auth');
 
 
-api.post('/answerRequest', groupCtrl.answerRequest) //a group respond a request
+apiGroup.post('/answerRequest', auth,  groupCtrl.answerRequest) //a group respond a request
 
 
 
 
-api.delete('/', groupCtrl.deleteMember) //delete a member from a group
-api.put('/', groupCtrl.editGroup) //edit a group
-api.post('/', groupCtrl.createGroup)  //create a new group
-api.get('/', groupCtrl.searchFiltered) //search a group
+apiGroup.delete('/', auth, groupCtrl.deleteMember) //delete a member from a group
+apiGroup.put('/', auth, groupCtrl.editGroup) //edit a group
+apiGroup.post('/', auth, groupCtrl.createGroup)  //create a new group
+apiGroup.get('/', auth, groupCtrl.searchFiltered) //search a group
 
 
 module.exports =  apiGroup
