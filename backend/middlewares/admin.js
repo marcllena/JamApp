@@ -17,10 +17,10 @@ function isAdmin(req,res, next){
     console.log(token)
     services.decodeToken(token)
         .then(response =>{
-            User.findById(response, function (err, admin) {
+            Admin.findById(response, function (err, admin) {
                 if(err){
                     return res.status(403).send({message: `1.No tienes acceso`})}
-                if(!admin.email)
+                if(admin==null)
                     return res.status(403).send({message: `2.No tienes acceso`})
                 req.user=response
                 next()
