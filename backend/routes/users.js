@@ -7,10 +7,11 @@ const auth = require('../middlewares/auth')
 
 
 apiUsers.get('/:userId', auth, userCtrl.getUser);//GET user by ID
+apiUsers.put('/:userId', auth, userCtrl.updateUser);
 
 
 
-apiUsers.delete('/', userCtrl.deleteUsers);
+apiUsers.delete('/', auth, userCtrl.deleteUsers);// DELETE users, le llega un vector de IDs llamado IdList
 /* GET users listing. */
 apiUsers.get('/', auth, userCtrl.getUsers);
 

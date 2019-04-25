@@ -204,6 +204,23 @@ function deleteUsers(req,res){
     })
 }
 
+function updateUser(req,res){
+    console.log('PUT /api/user/:userId')
+
+    let userId = req.params.userId;
+    let update = req.body;
+
+    User.findByIdAndUpdate(userId,update,(err, userUpdated) => {
+        if(err)
+            return res.status(500).send({message: `Error updating the user: ${err}`})
+
+        if(!userUpdated)
+            return res.status(404).send({message: `User does not exist`})
+
+        res.status(200).send({user: userUpdated})
+    })
+}
+
 
 module.exports={
     signUp,
@@ -211,5 +228,6 @@ module.exports={
     getUser,
     getUsers,
     refreshToken,
-    deleteUsers
+    deleteUsers,
+    updateUser
 }
