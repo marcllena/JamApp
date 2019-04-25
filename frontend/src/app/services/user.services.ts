@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { User } from "../models/user";
 import { Environment } from "./environment";
+import { Group } from "../models/group";
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,18 @@ export class UserServices {
     this.environment = new Environment();
   }
   obtainUsers() {
-    return this.http.get(this.environment.urlUser + "getusers", {observe: 'response'})
+    return this.http.get(this.environment.urlUser + "user", {observe: 'response'})
+  }
+
+  obtainGroups(){
+    return this.http.get(this.environment.urlUser + "group/search", {observe: 'response'})
+  }
+
+  requestMemberShip(){
+    return this.http.post(this.environment.urlUser + "musician/requestMembership", {observe: 'response'})
+  }
+
+  createGroup(group: Group){
+    return this.http.post(this.environment.urlUser + "musician/groups/add", group, {observe: 'response'})
   }
 }

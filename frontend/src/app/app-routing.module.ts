@@ -5,6 +5,7 @@ import { MyguardGuard } from "./myguard.guard";
 import {RegistrationComponent} from "./components/registration/registration.component";
 import { SettingsComponent } from './components/settings/settings.component';
 import {UserlistComponent} from "./components/userlist/userlist.component";
+import { GrupCreateComponent } from "./components/grup-create/grup-create.component";
 
 const routes: Routes = [
   { path: 'api/signin', component: LoginComponent },
@@ -13,6 +14,8 @@ const routes: Routes = [
   { path: 'api/userlist', component: UserlistComponent, canActivate: [MyguardGuard] },
   { path: '', redirectTo: '/api/signin', pathMatch: 'full' },
   { path: 'api/menu', loadChildren: './components/main/menu/menu.module#MenuPageModule' },
+  { path: 'api/grupCreate', component: GrupCreateComponent},
+
 ];
 
 @NgModule({
