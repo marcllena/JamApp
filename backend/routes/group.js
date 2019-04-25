@@ -11,7 +11,7 @@ apiGroup.post('/answerRequest', auth,  groupCtrl.answerRequest) //a group respon
 
 apiGroup.delete('/', auth, groupCtrl.deleteMember) //delete a member from a group
 apiGroup.put('/', auth, groupCtrl.editGroup) //edit a group
-apiGroup.post('/', auth, groupCtrl.createGroup)  //create a new group
+apiGroup.post('/', auth, groupCtrl.createGroup)  //create a new group with name, estils, description
 apiGroup.get('/', auth, groupCtrl.searchFiltered) //search a group
 
 

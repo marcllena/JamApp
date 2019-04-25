@@ -24,9 +24,9 @@ api.use('/group', apiGroup);
 
 
 
-api.post('/signup', userCtrl.signUp)//registre, rep al body els parametres de nom, password i email i el camp userType 0 si user, 1 si music, 2 si sala, 3 si admin
-api.post('/signin', userCtrl.signIn)
-api.get('/checktoken', auth, userCtrl.refreshToken)// recibe el token en el header
+api.post('/signup', userCtrl.signUp);//registre, rep al body els parametres de nom, password i email i el camp userType 0 si user, 1 si music, 2 si sala, 3 si admin
+api.post('/signin', userCtrl.signIn);
+api.get('/checktoken', auth, userCtrl.refreshToken);// recibe el token en el header
 
 //ARA ESTAN A apiUsers (backend/routes/users.js)
 //api.get('/getuser/:userId', userCtrl.getUser)

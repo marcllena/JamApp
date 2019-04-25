@@ -12,6 +12,7 @@ const Admin = require('../models/admin')
 const Room = require('../models/room')
 const service = require('../services')
 
+/*
 //registre, rep al body els parametres de nom, password i email
 // a més, el camp userType 0 si user, 1 si music, 2 si sala, 3 si admin
 function register(req,res) {
@@ -30,8 +31,8 @@ function register(req,res) {
             break;
     }
 
-
 }
+*/
 
 //registre, rep al body els parametres de nom, password i email
 // a més, el camp userType 0 si user, 1 si music, 2 si sala, 3 si admin
@@ -174,14 +175,41 @@ function refreshToken(req,res) {
         })
     })
 
-}//200 si ok 404 si no hi user o hi ha un error (igual que al login)
+}//200 si ok 404 si no hi ha user o hi ha un error (igual que al login)
+
+//le llega un vector de IDs como IdList
+function deleteUsers(req,res){
+    console.log('DELETE /api/user')
+
+    User.find({ '_id': { $in: req.body.IdList}}, function(err, users){
+        if(err)
+            return res.status(500).send({message: `Error searching the users: ${err}`})
+
+        if(users.length==0)
+            return res.status(404).send({message: `There ase no users`});
+        var notRemoved;
+        for(var i=0;i<users.length;i++){
+            users[i].remove(err => {
+                if (err) notRemoved.push(users[i].name);
+            })
+        }
+        if ((notRemoved==null)||(notRemoved.length===0)) return res.status(200).send({message: 'Users removed correctly'});
+        else {
+            var msg='';
+            for(var i=0;i<notRemoved.length;i++) {
+                msg=msg+notRemoved[i];
+            }
+            return res.status().send({message: `Error removing some users:${msg}`})
+        }
+    })
+}
 
 
 module.exports={
-    register,
     signUp,
     signIn,
     getUser,
     getUsers,
-    refreshToken
+    refreshToken,
+    deleteUsers
 }
