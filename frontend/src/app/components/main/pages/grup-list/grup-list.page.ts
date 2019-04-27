@@ -19,7 +19,8 @@ export class GrupListPage implements OnInit {
 
   llistaGrups(){
     console.log("Operacio de demanar grups realitzada al Backend: ");
-    this.userService.obtainGroups()
+    let token =localStorage.getItem('token');
+    this.userService.obtainGroups(token)
       .subscribe(response =>{
         console.log("Resposta del backend"+response.body);
         if(response.status==200){

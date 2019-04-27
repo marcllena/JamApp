@@ -18,8 +18,11 @@ export class UserServices {
     return this.http.get(this.environment.urlUser + "user", {observe: 'response'})
   }
 
-  obtainGroups(){
-    return this.http.get(this.environment.urlUser + "group/search", {observe: 'response'})
+  obtainGroups(token){
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+    }
+    return this.http.get(this.environment.urlUser + "group", {headers: headers, observe: "response"})
   }
 
   requestMemberShip(){
