@@ -1,65 +1,38 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
-import {ToolbarService} from "../../../../services/toolbar.service";
-import {Platform,NavController} from "@ionic/angular";
+import { Component, ViewChild, ElementRef } from '@angular/core';
 
-import {
-  GoogleMaps,
-  GoogleMap,
-  GoogleMapsEvent,
-  LatLng,
-  MarkerOptions,
-  Marker
-} from "@ionic-native/google-maps";
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 
+declare var google;
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
+  templateUrl: 'home.page.html',
+  styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage {
 
-  @ViewChild('map') element;
+  @ViewChild('map') mapElement: ElementRef;
+  map: any;
+  marker:any
 
-  constructor(private toolbarService: ToolbarService, public googleMaps: GoogleMaps, public plt: Platform,
-              public nav: NavController) { }
+  constructor(
+    private geolocation: Geolocation,
+    private nativeGeocoder: NativeGeocoder) {
+  }
 
   ngOnInit() {
-    /*this.plt.ready().then(() => {
-      this.initMap();
-    });*/
+    this.loadMap();
   }
 
-  ngAfterViewInit() {
-
+  loadMap() {
+      //Queda pendent obtindre la ubicació del usuari, dependent si es browser o app
+      this.map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 41.2800161 , lng: 1.9766294},
+        zoom: 12
+      });
+    this.marker = new google.maps.Marker({position: {lat: 41.2800161 , lng: 1.9766294}, map: this.map});
   }
 
-  initMap() {
-
-    let map: GoogleMap = this.googleMaps.create(this.element.nativeElement);
-
-    map.one(GoogleMapsEvent.MAP_READY).then((data: any) => {
-
-      let coordinates: LatLng = new LatLng(33.6396965, -84.4304574);
-
-      let position = {
-        target: coordinates,
-        zoom: 17
-      };
-
-      map.animateCamera(position);
-
-      let markerOptions: MarkerOptions = {
-        position: coordinates,
-        icon: "assets/images/icons8-Marker-64.png",
-        title: 'Our first POI'
-      };
-
-      const marker = map.addMarker(markerOptions)
-        .then((marker: Marker) => {
-          marker.showInfoWindow();
-        });
-    })
-  }
 
 }
