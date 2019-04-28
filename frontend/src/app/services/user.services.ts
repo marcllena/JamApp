@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { User } from "../models/user";
 import { Environment } from "./environment";
 import { Group } from "../models/group";
@@ -14,8 +14,19 @@ export class UserServices {
   constructor(private http: HttpClient) {
     this.environment = new Environment();
   }
-  obtainUsers() {
-    return this.http.get(this.environment.urlUser + "user", {observe: 'response'})
+  obtainUsers(token) {
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+    }
+    return this.http.get(this.environment.urlUser + "user", {headers: headers,observe: 'response'})
+  }
+  deleteUsers(token,idsList) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Authorization': `Bearer ${token}`,'Content-Type': 'application/json' }),
+      body: idsList,
+
+    };
+    return this.http.delete(this.environment.urlUser + "user",httpOptions)
   }
 
   obtainGroups(token){

@@ -524,3 +524,6 @@ li {
 .list-buttons{
   padding: 12px 16px;
 }
+.checkbox{
+  position: relative;
+}
