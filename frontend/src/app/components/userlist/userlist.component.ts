@@ -28,7 +28,6 @@ export class UserlistComponent implements OnInit {
     this.userService.obtainUsers()
       .subscribe(response => {
           console.log("Resposta del BackEnd"+response.body);
-          console.log("Proba"+response.body[0].email);
           if(response.status==200){
               this.users=response.body;
           }
