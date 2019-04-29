@@ -4,18 +4,18 @@
 Conte totes les rutes, requerint el controlador (productCtrl) que es on
 estan implementades 
  */
-const express = require('express')
-const api = express.Router()
+const express = require('express');
+const api = express.Router();
 
-const auth = require('../middlewares/auth')
-const isAdmin = require('../middlewares/admin')
+const auth = require('../middlewares/auth');
+const isAdmin = require('../middlewares/admin');
 
-const userCtrl = require('../controllers/user')
+const userCtrl = require('../controllers/user');
 
-const apiUsers= require('./users')
-const apiAdmin= require('./admin')
-const apiMusician = require('./musician')
-const apiGroup = require('./group')
+const apiUsers= require('./users');
+const apiAdmin= require('./admin');
+const apiMusician = require('./musician');
+const apiGroup = require('./group');
 
 api.use('/user',apiUsers);
 api.use('/admin',apiAdmin);
@@ -46,10 +46,10 @@ api.get('/checktoken', auth, userCtrl.refreshToken);// recibe el token en el hea
 //ARA ESTA a /routes/musician.js
 //api.post('/musician/requestMembership', musicCtrl.requestMembership) //a musician request to participate in a group
 
-api.get('/a', isAdmin, userCtrl.refreshToken)
+api.get('/a', isAdmin, userCtrl.refreshToken);
 
 api.get('/private', auth,(req,res) => {
   res.status(200).send({message: `Tienes acceso ${req.user}`})
-})
+});
 
-module.exports =  api
+module.exports =  api;
