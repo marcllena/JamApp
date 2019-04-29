@@ -13,7 +13,7 @@ apiUsers.put('/:userId', isMeOrAdmin, userCtrl.updateUser);//UPDATE user
 
 
 
-apiUsers.delete('/', auth, isAdmin, userCtrl.deleteUsers);// DELETE users, le llega un vector de IDs llamado IdList
+apiUsers.delete('/',/* auth,*/ isAdmin, userCtrl.deleteUsers);// DELETE users, le llega un vector de IDs llamado IdList
 /* GET users listing. */
 apiUsers.get('/', auth, userCtrl.getUsers);//GET all users
 

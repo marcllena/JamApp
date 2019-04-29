@@ -14,7 +14,7 @@ function isAdmin(req,res, next){
         return res.status(403).send({message: `No tienes autorización`})
     }
     const token = req.headers.authorization.split(" ")[1] //Bearer + token, per aixo poso [1]
-    console.log(token)
+    //console.log(token)
     services.decodeToken(token)
         .then(response =>{
             Admin.findById(response, function (err, admin) {
