@@ -9,7 +9,7 @@ const mongoose = require('mongoose')
 const Admin = require('../models/admin')
 const User = require('../models/user')
 
-function isAdmin(req,res, next){
+function isMeOrAdmin(req,res, next){
     if(!req.headers.authorization){
         return res.status(403).send({message: `No tienes autorización`})
     }
@@ -20,9 +20,9 @@ function isAdmin(req,res, next){
             Admin.findById(response, function (err, admin) {
                 if(err){
                     return res.status(403).send({message: `1.No tienes acceso`})}
-                if(admin==null)
+                if((admin==null)&&(req.params.userId!=response))
                     return res.status(403).send({message: `2.No tienes acceso`})
-                req.user=response
+                req.user=response;
                 next()
             })
         })
@@ -33,4 +33,4 @@ function isAdmin(req,res, next){
 }
 
 
-module.exports= isAdmin
+module.exports= isMeOrAdmin;

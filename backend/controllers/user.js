@@ -46,7 +46,7 @@ function signUp(req,res) {
                 email: req.body.email,
                 username: req.body.username,
                 password: req.body.password
-            })
+            });
             break;
 
         case 1://cas music
@@ -54,7 +54,7 @@ function signUp(req,res) {
                 email: req.body.email,
                 username: req.body.username,
                 password: req.body.password
-            })
+            });
             break;
 
         case 2://cas sala
@@ -62,7 +62,7 @@ function signUp(req,res) {
                 email: req.body.email,
                 username: req.body.username,
                 password: req.body.password
-            })
+            });
             break;
 
         case 3://cas admin per crear admin s'ha de incorporar el camp pass amb un password conegut pels admins
@@ -82,24 +82,24 @@ function signUp(req,res) {
                 email: req.body.email,
                 username: req.body.username,
                 password: req.body.password
-            })
+            });
             break;
     }
 
-    console.log("Petició de SignUp del seguent user: "+userNew.email)
+    console.log("Petició de SignUp del seguent user: "+userNew.email);
     if(req.body.password==null)
-        return res.status(500).send({message: `Rellena el campo password`})
+        return res.status(500).send({message: `Rellena el campo password`});
     User.find({email: req.body.email}).lean().exec(function(err, user) {
-        console.log(user)
+        console.log(user);
         if(err){
             return res.status(500).send({message: `Error al crear el usuario: ${err}`})}
         if (!user.length){
             userNew.save((err) => {
                 if(err) {
-                    console.log("Error al crear usuari:"+req.body.email+". Ja existeix un usuari amb el correu")
+                    console.log("Error al crear usuari:"+req.body.email+". Ja existeix un usuari amb el correu");
                     return res.status(409).send({message: `Error al crear el usuario: ${err}`})
                 }
-        console.log("Usuari: "+req.body.email+" agregat correctament")
+        console.log("Usuari: "+req.body.email+" agregat correctament");
         res.status(200).send({token: service.createToken(userNew)})
     } )     }
         else 
@@ -108,30 +108,30 @@ function signUp(req,res) {
 }
 
 function signIn(req,res) {
-    console.log("Petició de SignIn del seguent user:"+req.body.email)
+    console.log("Petició de SignIn del seguent user:"+req.body.email);
     User.find({email: req.body.email}, (err,user)=>{
 
         if(err) {
-            console.log("Error en el logging")
+            console.log("Error en el logging");
             return res.status(404).send({message: `Error en el logging: ${err}`})
         }
 
         if(!user.length) {
-            console.log("El usuario no existe")
+            console.log("El usuario no existe");
             return res.status(404).send({message: `El usuario no existe`})
         }
 
         user[0].comparePassword((req.body.password), function(err, isMatch) {
             //if (err) throw err;
             if(isMatch) {
-                console.log("Login Correcte " )
+                console.log("Login Correcte " );
                 res.status(200).send({
                     message: "Te has logeado correctamente",
                     token: service.createToken(user[0]),
                     _id: user[0]._id
                 })
             } else {
-                console.log("Password Incorrecte")
+                console.log("Password Incorrecte");
                 return res.status(404).send({message: `Wrong password`});
             }
 
@@ -143,7 +143,7 @@ function getUser(req,res) {
     User.findById(req.params.userId, (err,user)=>{
         console.log(user);
         if(err)
-            return res.status(500).send({message: `Error en el logging: ${err}`})
+            return res.status(500).send({message: `Error en el logging: ${err}`});
 
         res.status(200).send(user);
     });
@@ -153,7 +153,7 @@ function getUsers(req,res) {
     User.find( (err,users)=>{
         console.log("Peticio per obtindre tots els usuaris");
         if(err)
-            return res.status(500).send({message: `Error en el logging: ${err}`})
+            return res.status(500).send({message: `Error en el logging: ${err}`});
 
         res.status(200).send(users);
     });
@@ -162,12 +162,12 @@ function getUsers(req,res) {
 function refreshToken(req,res) {
     User.findById(req.user).lean().exec(function (err, user) {
         if (err)
-            return res.status(500).send({message: `Error refreshing token: ${err}`})
+            return res.status(500).send({message: `Error refreshing token: ${err}`});
         if (!user){
             return res.status(404).send({message: `Incorrect ID`})
         }
 
-        console.log("Login Correcte, Token Validat")
+        console.log("Login Correcte, Token Validat");
 
         res.status(200).send({
             message: "Te has logeado correctamente",
@@ -179,11 +179,11 @@ function refreshToken(req,res) {
 
 //le llega un vector de IDs como IdList
 function deleteUsers(req,res){
-    console.log('DELETE /api/user')
+    console.log('DELETE /api/user');
 
     User.find({ '_id': { $in: req.body.IdList}}, function(err, users){
         if(err)
-            return res.status(500).send({message: `Error searching the users: ${err}`})
+            return res.status(500).send({message: `Error searching the users: ${err}`});
 
         if(users.length==0)
             return res.status(404).send({message: `There ase no users`});
@@ -193,29 +193,30 @@ function deleteUsers(req,res){
                 if (err) notRemoved.push(users[i].name);
             })
         }
-        if ((notRemoved==null)||(notRemoved.length===0)) return res.status(200).send({message: 'Users removed correctly'});
+        //if (notRemoved==undefined) return res.status(200).send({message: 'Users removed correctly'});
+        if ((notRemoved==undefined)||(notRemoved.length==0)) return res.status(200).send({message: 'Users removed correctly'});
         else {
             var msg='';
             for(var i=0;i<notRemoved.length;i++) {
                 msg=msg+notRemoved[i];
             }
-            return res.status().send({message: `Error removing some users:${msg}`})
+            return res.status(206).send({message: `Error removing some users:${msg}`})
         }
     })
 }
 
 function updateUser(req,res){
-    console.log('PUT /api/user/:userId')
+    console.log('PUT /api/user/:userId');
 
     let userId = req.params.userId;
     let update = req.body;
 
     User.findByIdAndUpdate(userId,update,{new: true}, (err, userUpdated) => {
         if(err)
-            return res.status(500).send({message: `Error updating the user: ${err}`})
+            return res.status(500).send({message: `Error updating the user: ${err}`});
 
         if(!userUpdated)
-            return res.status(404).send({message: `User does not exist`})
+            return res.status(404).send({message: `User does not exist`});
 
         res.status(200).send({user: userUpdated})
     })
@@ -230,4 +231,4 @@ module.exports={
     refreshToken,
     deleteUsers,
     updateUser
-}
+};
