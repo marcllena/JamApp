@@ -2,6 +2,8 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
+import {ToolbarService} from "../../../../services/toolbar.service";
+import { Platform } from '@ionic/angular';
 
 declare var google;
 
@@ -15,20 +17,79 @@ export class HomePage {
   @ViewChild('map') mapElement: ElementRef;
   map: any;
   marker:any
+  latitud: number;
+  longitud: number;
 
   constructor(
     private geolocation: Geolocation,
-    private nativeGeocoder: NativeGeocoder) {
+    private nativeGeocoder: NativeGeocoder,
+    private toolbarService: ToolbarService,
+    public platform: Platform
+  ) {
   }
 
   ngOnInit() {
-    this.loadMap();
+    //Si es un mobil
+    if(this.platform.is('cordova')){
+      this.geolocation.getCurrentPosition().then((resp) => {
+        this.latitud = resp.coords.latitude;
+        this.longitud = resp.coords.longitude;
+        this.loadMap();
+      }).catch((error) => {
+        console.log('Error getting location', error);
+      });
+    }
+    else if(this.platform.is('desktop')){
+      console.log("Probaaaa ");
+      this.geolocation.getCurrentPosition().then((resp) => {
+        //No entra a la funcion*****************************************************************
+        this.latitud = resp.coords.latitude;
+        this.longitud = resp.coords.longitude;
+        console.log("Probaaaa "+this.latitud+" Long:"+this.longitud);
+        this.loadMap();
+      }).catch((error) => {
+        console.log('Error getting location', error);
+      });
+    }
+    else{
+      this.latitud = 41.2800161;
+      this.longitud = 1.9766294;
+    }
+  }
+
+  refresh(){
+    if(this.platform.is('cordova')){
+      this.geolocation.getCurrentPosition().then((resp) => {
+        this.latitud = resp.coords.latitude;
+        this.longitud = resp.coords.longitude;
+        this.loadMap();
+      }).catch((error) => {
+        console.log('Error getting location', error);
+      });
+    }
+    else if(this.platform.is('desktop')){
+      console.log("Probaaaa ");
+      //No entra a la funcion*****************************************************************
+      this.geolocation.getCurrentPosition().then((resp) => {
+        this.latitud = resp.coords.latitude;
+        this.longitud = resp.coords.longitude;
+        console.log("Probaaaa "+this.latitud+" Long:"+this.longitud);
+        this.loadMap();
+      }).catch((error) => {
+        console.log('Error getting location', error);
+      });
+    }
+    else{
+      this.latitud = 41.2800161;
+      this.longitud = 1.9766294;
+    }
   }
 
   loadMap() {
+
       //Queda pendent obtindre la ubicació del usuari, dependent si es browser o app
       this.map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 41.2800161 , lng: 1.9766294},
+        center: {lat: this.latitud , lng: this.longitud},
         zoom: 12
       });
     this.marker = new google.maps.Marker({position: {lat: 41.2800161 , lng: 1.9766294}, map: this.map});
