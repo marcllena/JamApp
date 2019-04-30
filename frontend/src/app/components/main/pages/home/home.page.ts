@@ -39,7 +39,7 @@ export class HomePage {
         console.log('Error getting location', error);
       });
     }
-    else if(this.platform.is('desktop')){
+    /*else if(this.platform.is('desktop')){
       console.log("Probaaaa ");
       this.geolocation.getCurrentPosition().then((resp) => {
         //No entra a la funcion*****************************************************************
@@ -50,10 +50,11 @@ export class HomePage {
       }).catch((error) => {
         console.log('Error getting location', error);
       });
-    }
+    }*/
     else{
       this.latitud = 41.2800161;
       this.longitud = 1.9766294;
+      this.loadMap();
     }
   }
 
