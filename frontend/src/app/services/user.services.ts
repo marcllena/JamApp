@@ -43,4 +43,7 @@ export class UserServices {
   createGroup(group: Group){
     return this.http.post(this.environment.urlUser + "musician/groups/add", group, {observe: 'response'})
   }
+  getUserLocation(){
+      return this.http.get("http://ip-api.com/json/", {observe: 'response'})
+    }
 }
