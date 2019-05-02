@@ -5,12 +5,15 @@ On estan implementades totes les operacions dels usuaris. Així, aqui s'accedeix
 Al registrar o fer login, se'ns proporciona un token que s'utilitza en les operacions registrades
 */
 
-const mongoose = require('mongoose')
-const User = require('../models/user')
-const Musician = require('../models/musician')
-const Admin = require('../models/admin')
-const Room = require('../models/room')
-const service = require('../services')
+const mongoose = require('mongoose');
+const User = require('../models/user');
+const Musician = require('../models/musician');
+const Admin = require('../models/admin');
+const Room = require('../models/room');
+const service = require('../services');
+const config = require('../config');
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr(config.SECRET_TOKEN);
 
 /*
 //registre, rep al body els parametres de nom, password i email
@@ -53,7 +56,9 @@ function signUp(req,res) {
             userNew = new Musician({
                 email: req.body.email,
                 username: req.body.username,
-                password: req.body.password
+                password: req.body.password,
+                latitud: -360,
+                longitud: -360
             });
             break;
 
@@ -85,7 +90,7 @@ function signUp(req,res) {
             });
             break;
     }
-
+    console.log(userNew);
     console.log("Petició de SignUp del seguent user: "+userNew.email);
     if(req.body.password==null)
         return res.status(500).send({message: `Rellena el campo password`});
@@ -128,7 +133,7 @@ function signIn(req,res) {
                 res.status(200).send({
                     message: "Te has logeado correctamente",
                     token: service.createToken(user[0]),
-                    _id: user[0]._id
+                    _id: cryptr.encrypt(user[0]._id)
                 })
             } else {
                 console.log("Password Incorrecte");
@@ -143,8 +148,7 @@ function getUser(req,res) {
     User.findById(req.params.userId, (err,user)=>{
         console.log(user);
         if(err)
-            return res.status(500).send({message: `Error en el logging: ${err}`});
-
+            return res.status(500).send({message: `Error searching the user: ${err}`});
         res.status(200).send(user);
     });
 }
@@ -154,7 +158,6 @@ function getUsers(req,res) {
         console.log("Peticio per obtindre tots els usuaris");
         if(err)
             return res.status(500).send({message: `Error en el logging: ${err}`});
-
         res.status(200).send(users);
     });
 }
@@ -217,9 +220,27 @@ function updateUser(req,res){
 
         if(!userUpdated)
             return res.status(404).send({message: `User does not exist`});
-
         res.status(200).send({user: userUpdated})
     })
+}
+
+function setLocation(req,res){
+    const userId = cryptr.decrypt(req.params.userId);
+    User.findById(userId, (err,user)=>{
+        console.log(user);
+        if(err)
+            return res.status(500).send({message: `Error searching the user: ${err}`});
+        if(user==null) return res.status(404).send({message: `User not found`});
+        user.latitud=req.body.latitud;
+        user.longitud=req.body.longitud;
+        user.save((err,userStored) => {
+            if(err)
+                return res.status(500).send({message: `Error saving changes: ${err}`});
+            res.status(200).send({user: userStored});
+
+        });
+        //return
+    });
 }
 
 
@@ -230,5 +251,6 @@ module.exports={
     getUsers,
     refreshToken,
     deleteUsers,
-    updateUser
+    updateUser,
+    setLocation
 };

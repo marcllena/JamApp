@@ -4,5 +4,5 @@ Guarda la configuració, com el Port o la URL de la base de dades
 module.exports={
     port: process.env.PORT || 3000,
     db: process.env.MONGODB ||  'mongodb://localhost:27017/jamapp',
-    SECRET_TOKEN: 'miclavedetokens'
+    SECRET_TOKEN: '¡¡¡Sup3rCl4v3J4mAPP!!!'
 }

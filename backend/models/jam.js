@@ -2,10 +2,10 @@
 /*
 Esquema de la base de dades amb els camps que pot tindre cada Producte
  */
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
-const Group = require('./group')
-const User= require('./user')
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const Group = require('./group');
+const User= require('./user');
 
 
 const GroupSchema = Schema({
@@ -15,10 +15,10 @@ const GroupSchema = Schema({
     participantsGrups: [Group],
     dataIntencio: Date,
     dataConfirmda: Date,
-    local:String,
+    local:{ type: Schema.Types.ObjectId, ref: 'Room' },
     description: String,
     organitzador:User,
 
-})
+});
 
 module.exports = mongoose.model('Jam',JamSchema)

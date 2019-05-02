@@ -4,10 +4,13 @@
 On estan implementades les operacions d'autentificació.
 */
 
-const services = require('../services')
-const mongoose = require('mongoose')
-const Admin = require('../models/admin')
-const User = require('../models/user')
+const services = require('../services');
+const mongoose = require('mongoose');
+const Admin = require('../models/admin');
+const User = require('../models/user');
+const config = require('../config');
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr(config.SECRET_TOKEN);
 
 function isMeOrAdmin(req,res, next){
     if(!req.headers.authorization){
@@ -20,7 +23,8 @@ function isMeOrAdmin(req,res, next){
             Admin.findById(response, function (err, admin) {
                 if(err){
                     return res.status(403).send({message: `1.No tienes acceso`})}
-                if((admin==null)&&(req.params.userId!=response))
+                const userId=cryptr.decrypt(req.params.userId);
+                if((admin==null)&&(userId!=response))
                     return res.status(403).send({message: `2.No tienes acceso`})
                 req.user=response;
                 next()

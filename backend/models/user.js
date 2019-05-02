@@ -1,7 +1,10 @@
 'use strict'
 
-const mongoose = require('mongoose')
-const bcrypt = require('bcrypt-nodejs')
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt-nodejs');
+const config = require('../config');
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr(config.SECRET_TOKEN);
 const crypto = require('crypto')
 const baseOptions = {
     discriminatorKey: 'userType',
@@ -9,6 +12,7 @@ const baseOptions = {
 }
 
 const userBase = new mongoose.Schema({
+        //id: String,
         username: String,
         edat: Number,
         email: {type: String, unique: true, lowercase:true},
@@ -16,6 +20,14 @@ const userBase = new mongoose.Schema({
         signupDate: {type: Date, default: Date.now() },
         lastlogin: Date},
     baseOptions);
+
+userBase.set('toJSON', {
+    //virtuals: true,
+    transform: (doc, ret, options) => {
+        delete ret.__v;
+        ret._id = cryptr.encrypt(ret._id);
+    },
+});
 
 userBase.pre('save',function(next) {
     let user=this;

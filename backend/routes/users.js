@@ -3,13 +3,14 @@ var apiUsers = express.Router();
 const userCtrl = require('../controllers/user');
 const auth = require('../middlewares/auth');
 const isAdmin = require('../middlewares/admin');
-const isMeOrAdmin = require('../middlewares/meOrAdmin')
+const isMeOrAdmin = require('../middlewares/meOrAdmin');
 
 // /api/user
 
 
 apiUsers.get('/:userId', auth, userCtrl.getUser);//GET user by ID
 apiUsers.put('/:userId', isMeOrAdmin, userCtrl.updateUser);//UPDATE user
+apiUsers.post('/location/:userId', isMeOrAdmin, userCtrl.setLocation);//Set user location latitud and longitud
 
 
 
