@@ -5,10 +5,10 @@ Funcions que utilitzarem a varies parts del programa. Posem les de crear i desco
 que utilitzen la llibreria de jwt. Utilitzem un promesa que s'utilitza al Middlewares
 */
 
-const jwt = require('jwt-simple')
-const moment = require('moment')
-const config = require('../config')
-const User = require('../models/user')
+const jwt = require('jwt-simple');
+const moment = require('moment');
+const config = require('../config');
+const User = require('../models/user');
 const service= this
 
 function createToken(user) {
