@@ -1,4 +1,4 @@
-import configParam from '../../../../configParam';
+import configParam from '../../../configParam';
 
 export class Environment {
 

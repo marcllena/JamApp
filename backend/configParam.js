@@ -1,7 +1,6 @@
 function constants() {
   return {
-    CORS_IP: 'localhost',//localhost
-    BACKEND_IP: 'localhost',
+    CORS_IP: 'localhost'//localhost
   }
 }
 module.exports={
