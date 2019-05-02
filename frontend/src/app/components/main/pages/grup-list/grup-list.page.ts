@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ToolbarService} from "../../../../services/toolbar.service";
 import { UserServices } from "../../../../services/user.services";
 import {Router} from "@angular/router";
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-grup-list',
@@ -13,7 +13,7 @@ export class GrupListPage implements OnInit {
 
   groups: Object;
 
-  constructor(private toolbarService: ToolbarService, private router: Router,private userService: UserServices) { }
+  constructor(private alertController: AlertController,private toolbarService: ToolbarService, private router: Router,private userService: UserServices) { }
 
   ngOnInit() {
   }
@@ -36,20 +36,43 @@ export class GrupListPage implements OnInit {
       });
   }
 
-  requestMembership(){
-    console.log("Operacio de demanar afegirse a un grup realitzada al Backend: ");
-    this.userService.requestMemberShip()
-      .subscribe(response => {
-        console.log("Resposta del backend "+ response)
-        if(response == 200){
-          console.log("Solicitud enviada correctament");
+  async requestMembership(group){
+    const alert = await this.alertController.create({
+      header: 'Unirse al grupo:',
+      subHeader: group.name,
+      inputs: [
+        {
+          name: 'message',
+          type: 'text',
+          placeholder: 'Mensaje'
         }
-      },err=>{
-        if(err.status == 500){
-          console.log("Error");
-          
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        }, {
+          text: 'Send',
+          handler: () => {
+            console.log("Operacio de demanar afegirse a un grup realitzada al Backend: ");
+            this.userService.requestMemberShip()
+              .subscribe(response => {
+                console.log("Resposta del backend "+ response)
+                if(response == 200){
+                  console.log("Solicitud enviada correctament");
+                }
+              },err=>{
+                if(err.status == 500){
+                  console.log("Error");
+                  
+                }
+              })
+          }
         }
-      })
+      ]
+    });
+
+    await alert.present();
   }
 
   createGroup(){
