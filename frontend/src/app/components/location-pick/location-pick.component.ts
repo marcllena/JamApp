@@ -113,6 +113,8 @@ export class LocationPickComponent implements OnInit {
       else{
         this.updateMarkerPosition();
       }
+      //SetLocation
+
     });
   }
   placeNewMarker(){
@@ -127,6 +129,25 @@ export class LocationPickComponent implements OnInit {
   }
   updateMarkerPosition(){
     this.marker.setPosition(new google.maps.LatLng( this.clickedLatitud, this.clickedLongitud ));
+  }
+  setLocation(){
+    console.log("Operació de demanar usuaris realitzada al BackEnd:");
+    let token =localStorage.getItem('token');
+    this.userService.setLocation(token,this.clickedLongitud,this.clickedLatitud)
+      .subscribe(response => {
+          console.log("Resposta del BackEnd"+response.body);
+          if(response.status==200){
+
+          }
+          else {
+            //Error desconegut
+            console.log("Error");
+          }
+        },
+        err => {
+          console.log("Error del BackEnd"+err);
+          //console.log(err);
+        });
   }
 
 }

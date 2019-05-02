@@ -45,5 +45,11 @@ export class UserServices {
   }
   getUserLocation(){
       return this.http.get("http://ip-api.com/json/", {observe: 'response'})
+  }
+  setLocation(token,lon,lan) {
+    const headers = {
+      'Authorization': `Bearer ${token}`,
     }
+    return this.http.post(this.environment.urlUser + "user", '{ "latitud":'+lan+',"longitud":'+lon+'}',{headers: headers,observe: 'response'})
+  }
 }
