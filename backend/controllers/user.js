@@ -206,9 +206,10 @@ function updateUser(req,res){
 }
 
 function setLocation(req,res){
-    const userId = cryptr.decrypt(req.params.userId);
+    let userId;
+    if (req.params.userId) userId = cryptr.decrypt(req.params.userId);
+    else userId = req.user;
     User.findById(userId, (err,user)=>{
-        console.log(user);
         if(err)
             return res.status(500).send({message: `Error searching the user: ${err}`});
         if(user==null) return res.status(404).send({message: `User not found`});
@@ -217,10 +218,8 @@ function setLocation(req,res){
         user.save((err,userStored) => {
             if(err)
                 return res.status(500).send({message: `Error saving changes: ${err}`});
-            res.status(200).send({user: userStored});
-
+            return res.status(200).send({user: userStored});
         });
-        //return
     });
 }
 
