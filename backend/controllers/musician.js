@@ -9,7 +9,7 @@ const User = require('../models/user')
 const service = require('../services')
 const Group = require('../models/group')
 
-function signUp(req,res) {
+/*function signUp(req,res) {
     const musician = new Musician({
         email: req.body.email,
         username: req.body.displayName,
@@ -23,7 +23,8 @@ function signUp(req,res) {
 
         res.status(200).send({token: service.createToken(musician)})
     })
-}
+}*/
+
 function requestMembership(req, res){
     Group.findById(req.body.idGroup, (err,group)=>{
         if(err){
@@ -48,8 +49,10 @@ function requestMembership(req, res){
  estil/s que toquin i descripció,
 la resta es farà en un altre mètode que sigui per editar el grup*/
 
+
+
 module.exports={
-    signUp,
+    //signUp,
     requestMembership/*,
     signIn*/
 }

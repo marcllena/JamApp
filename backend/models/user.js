@@ -41,7 +41,7 @@ userBase.pre('save',function(next) {
             if(err)
                 return next(err);
 
-            user.password= hash
+            user.password= hash;
             next()
         })
     })

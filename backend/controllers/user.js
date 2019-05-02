@@ -15,27 +15,6 @@ const config = require('../config');
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr(config.SECRET_TOKEN);
 
-/*
-//registre, rep al body els parametres de nom, password i email
-// a més, el camp userType 0 si user, 1 si music, 2 si sala, 3 si admin
-function register(req,res) {
-    //if (req.body.userType == 0) signUp(req,res);
-    //if (req.body.userType == 1) console.log('Solicitud de crear music');
-    switch (req.body.userType){
-        case 0:
-            signUp(req,res);
-            break;
-        case 1:
-            console.log('Crear music');
-            res.status(200).send({message : 'Registre music'})
-            break;
-        default:
-            console.log('default');
-            break;
-    }
-
-}
-*/
 
 //registre, rep al body els parametres de nom, password i email
 // a més, el camp userType 0 si user, 1 si music, 2 si sala, 3 si admin
@@ -57,8 +36,8 @@ function signUp(req,res) {
                 email: req.body.email,
                 username: req.body.username,
                 password: req.body.password,
-                latitud: -360,
-                longitud: -360
+                latitud: null,
+                longitud: null
             });
             break;
 
@@ -66,12 +45,14 @@ function signUp(req,res) {
             userNew = new Room({
                 email: req.body.email,
                 username: req.body.username,
-                password: req.body.password
+                password: req.body.password,
+                latitud: null,
+                longitud: null
             });
             break;
 
         case 3://cas admin per crear admin s'ha de incorporar el camp pass amb un password conegut pels admins
-            if ((req.body.pass)&&(req.body.pass=='password')) {
+            if ((req.body.pass)&&(req.body.pass==='password')) {
                 userNew = new Admin({
                     email: req.body.email,
                     username: req.body.username,
@@ -189,7 +170,7 @@ function deleteUsers(req,res){
             return res.status(500).send({message: `Error searching the users: ${err}`});
 
         if(users.length==0)
-            return res.status(404).send({message: `There ase no users`});
+            return res.status(404).send({message: `There are no users`});
         var notRemoved;
         for(var i=0;i<users.length;i++){
             users[i].remove(err => {
@@ -243,6 +224,23 @@ function setLocation(req,res){
     });
 }
 
+function getUsersLocation(req,res){
+    Musician.find({}, '_id username latitud longitud', (err,musicians)=>{
+        if(err)
+            return res.status(500).send({message: `Error searching musicians: ${err}`});
+
+        Room.find({}, '_id name latitud longitud', (err,rooms)=>{
+            if(err)
+                return res.status(500).send({message: `Error searching rooms: ${err}`});
+
+            res.status(200).send({
+                musicians: musicians,
+                rooms: rooms
+            });
+        });
+    });
+}
+
 
 module.exports={
     signUp,
@@ -252,5 +250,6 @@ module.exports={
     refreshToken,
     deleteUsers,
     updateUser,
-    setLocation
+    setLocation,
+    getUsersLocation
 };
