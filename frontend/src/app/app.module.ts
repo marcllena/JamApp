@@ -18,6 +18,7 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { SettingsComponent } from './components/settings/settings.component';
 import { UserlistComponent } from './components/userlist/userlist.component';
 import { GrupCreateComponent } from './components/grup-create/grup-create.component';
+import { LocationPickComponent } from './components/location-pick/location-pick.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { GrupCreateComponent } from './components/grup-create/grup-create.compon
     SettingsComponent,
     UserlistComponent,
     GrupCreateComponent,
+    LocationPickComponent
   ],
   entryComponents: [],
   imports: [
