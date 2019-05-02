@@ -2,7 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Geolocation} from "@ionic-native/geolocation/ngx";
 import {NativeGeocoder} from "@ionic-native/native-geocoder/ngx";
 import {ToolbarService} from "../../services/toolbar.service";
-import {Platform} from "@ionic/angular";
+import {Platform, ToastController} from "@ionic/angular";
 import {UserServices} from "../../services/user.services";
 
 declare var google;
@@ -29,6 +29,7 @@ export class LocationPickComponent implements OnInit {
     private nativeGeocoder: NativeGeocoder,
     private toolbarService: ToolbarService,
     public platform: Platform,
+    public toastController: ToastController,
     private userService: UserServices,
   ) {
     this.clickedLatitud= -360;
@@ -113,7 +114,7 @@ export class LocationPickComponent implements OnInit {
       else{
         this.updateMarkerPosition();
       }
-      //SetLocation
+      this.setLocation();
 
     });
   }
@@ -134,12 +135,16 @@ export class LocationPickComponent implements OnInit {
     console.log("Operació de demanar usuaris realitzada al BackEnd:");
     let token =localStorage.getItem('token');
     this.userService.setLocation(token,this.clickedLongitud,this.clickedLatitud)
-      .subscribe(response => {
-          console.log("Resposta del BackEnd"+response.body);
-          if(response.status==200){
-
-          }
-          else {
+      .subscribe(async response => {
+          console.log("Resposta del BackEnd" + response.body);
+          if (response.status == 200) {
+            const toast = await this.toastController.create({
+              message: "Usuario Eliminado Correctamente",
+              duration: 2000,
+              position: 'bottom',
+            });
+            toast.present();
+          } else {
             //Error desconegut
             console.log("Error");
           }
