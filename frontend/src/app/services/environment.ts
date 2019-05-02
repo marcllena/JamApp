@@ -1,7 +1,7 @@
-import configParam from '../../../../configParam';
+import configParam from '../../../configParam';
 
 export class Environment {
 
-  urlUser: string = "http://"+configParam.constants().BACKEND_IP+":3001/api/";
+  urlUser: string = "http://"+configParam.constants().BACKEND_IP+":3000/api/";
   //urlUser: string = "http://localhost:3001/api/";
 }

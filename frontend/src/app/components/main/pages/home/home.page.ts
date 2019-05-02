@@ -90,10 +90,20 @@ export class HomePage {
   loadMap() {
       this.map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: this.latitud , lng: this.longitud},
-        zoom: 12
+        zoom: 12,
+        styles: [
+          {
+            "featureType": "poi",
+            "stylers": [
+              { "visibility": "off" }
+            ]
+          }
+        ]
       });
     this.marker = new google.maps.Marker({position: {lat: 41.2800161 , lng: 1.9766294}, map: this.map});
   }
+
+
 
 
 }

@@ -9,7 +9,7 @@ const bodyParser = require('body-parser')
 const app = express()
 const api = require('./routes')
 const cors= require('cors')
-const configParam = require('../configParam')
+const configParam = require('./configParam')
 
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin",`http://${configParam.constants().CORS_IP}:8100`);

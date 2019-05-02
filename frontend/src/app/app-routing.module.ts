@@ -6,6 +6,7 @@ import {RegistrationComponent} from "./components/registration/registration.comp
 import { SettingsComponent } from './components/settings/settings.component';
 import {UserlistComponent} from "./components/userlist/userlist.component";
 import { GrupCreateComponent } from "./components/grup-create/grup-create.component";
+import {LocationPickComponent} from "./components/location-pick/location-pick.component";
 
 const routes: Routes = [
   { path: 'api/signin', component: LoginComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/api/signin', pathMatch: 'full' },
   { path: 'api/menu', loadChildren: './components/main/menu/menu.module#MenuPageModule' },
   { path: 'api/grupCreate', component: GrupCreateComponent},
+  { path: 'api/changeLocation', component: LocationPickComponent},
 
 ];
 

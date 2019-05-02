@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ToolbarService} from "../../../../services/toolbar.service";
 import { UserServices } from "../../../../services/user.services";
 import {Router} from "@angular/router";
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-grup-list',
