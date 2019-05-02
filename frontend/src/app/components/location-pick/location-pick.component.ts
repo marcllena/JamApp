@@ -2,7 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Geolocation} from "@ionic-native/geolocation/ngx";
 import {NativeGeocoder} from "@ionic-native/native-geocoder/ngx";
 import {ToolbarService} from "../../services/toolbar.service";
-import {Platform} from "@ionic/angular";
+import {Platform, ToastController} from "@ionic/angular";
 import {UserServices} from "../../services/user.services";
 
 declare var google;
@@ -23,11 +23,13 @@ export class LocationPickComponent implements OnInit {
   clickedLongitud: number;
 
 
+
   constructor(
     private geolocation: Geolocation,
     private nativeGeocoder: NativeGeocoder,
     private toolbarService: ToolbarService,
     public platform: Platform,
+    public toastController: ToastController,
     private userService: UserServices,
   ) {
     this.clickedLatitud= -360;
@@ -106,14 +108,51 @@ export class LocationPickComponent implements OnInit {
     google.maps.event.addListener(this.map,"click", (event) => {
       this.clickedLongitud=event.latLng.lng();
       this.clickedLatitud=event.latLng.lat();
-      this.placeMarker();
+      if(this.marker==null) {
+        this.placeNewMarker();
+      }
+      else{
+        this.updateMarkerPosition();
+      }
+      this.setLocation();
+
     });
   }
-  placeMarker(){
-    var marker = new google.maps.Marker({
+  placeNewMarker(){
+    var image = {
+      url: '../../../assets/markers/music-marker.png',
+    }
+      this.marker = new google.maps.Marker({
       position: {lat: this.clickedLatitud , lng: this.clickedLongitud},
+      //icon: image, //De moment deixem la imatge per defecte
       map: this.map,
     });
+  }
+  updateMarkerPosition(){
+    this.marker.setPosition(new google.maps.LatLng( this.clickedLatitud, this.clickedLongitud ));
+  }
+  setLocation(){
+    console.log("Operació de demanar usuaris realitzada al BackEnd:");
+    let token =localStorage.getItem('token');
+    this.userService.setLocation(token,this.clickedLongitud,this.clickedLatitud)
+      .subscribe(async response => {
+          console.log("Resposta del BackEnd" + response.body);
+          if (response.status == 200) {
+            const toast = await this.toastController.create({
+              message: "Usuario Eliminado Correctamente",
+              duration: 2000,
+              position: 'bottom',
+            });
+            toast.present();
+          } else {
+            //Error desconegut
+            console.log("Error");
+          }
+        },
+        err => {
+          console.log("Error del BackEnd"+err);
+          //console.log(err);
+        });
   }
 
 }
