@@ -55,4 +55,7 @@ export class UserServices {
     }
     return this.http.post(this.environment.urlUser + "user", '{ "latitud":'+lan+',"longitud":'+lon+'}',{headers: headers,observe: 'response'})
   }
+  getLocations() {
+    return this.http.get(this.environment.urlUser + "user/location",{observe: 'response'})
+  }
 }
