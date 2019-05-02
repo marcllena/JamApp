@@ -23,6 +23,7 @@ export class LocationPickComponent implements OnInit {
   clickedLongitud: number;
 
 
+
   constructor(
     private geolocation: Geolocation,
     private nativeGeocoder: NativeGeocoder,
@@ -106,14 +107,26 @@ export class LocationPickComponent implements OnInit {
     google.maps.event.addListener(this.map,"click", (event) => {
       this.clickedLongitud=event.latLng.lng();
       this.clickedLatitud=event.latLng.lat();
-      this.placeMarker();
+      if(this.marker==null) {
+        this.placeNewMarker();
+      }
+      else{
+        this.updateMarkerPosition();
+      }
     });
   }
-  placeMarker(){
-    var marker = new google.maps.Marker({
+  placeNewMarker(){
+    var image = {
+      url: '../../../assets/markers/music-marker.png',
+    }
+      this.marker = new google.maps.Marker({
       position: {lat: this.clickedLatitud , lng: this.clickedLongitud},
+      //icon: image, //De moment deixem la imatge per defecte
       map: this.map,
     });
+  }
+  updateMarkerPosition(){
+    this.marker.setPosition(new google.maps.LatLng( this.clickedLatitud, this.clickedLongitud ));
   }
 
 }
