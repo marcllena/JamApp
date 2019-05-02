@@ -53,12 +53,17 @@ export class GrupListPage implements OnInit {
           role: 'cancel'
         }, {
           text: 'Send',
-          handler: () => {
+          handler: data => {
             console.log("Operacio de demanar afegirse a un grup realitzada al Backend: ");
-            this.userService.requestMemberShip()
+            let req = {
+              idGroup: group._id,
+              message: data.message
+            }
+            let token = localStorage.getItem('token');
+            this.userService.requestMembership(token,req)
               .subscribe(response => {
                 console.log("Resposta del backend "+ response)
-                if(response == 200){
+                if(response.status == 200){
                   console.log("Solicitud enviada correctament");
                 }
               },err=>{
