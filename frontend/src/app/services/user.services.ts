@@ -36,8 +36,11 @@ export class UserServices {
     return this.http.get(this.environment.urlUser + "group", {headers: headers, observe: "response"})
   }
 
-  requestMemberShip(){
-    return this.http.post(this.environment.urlUser + "musician/requestMembership", {observe: 'response'})
+  requestMembership(token,req){
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+    }
+    return this.http.post(this.environment.urlUser + "musician/requestMembership",req, {headers: headers,observe: 'response'})
   }
 
   createGroup(group: Group){
