@@ -41,6 +41,7 @@ function requestMembership(req, res){
                     return res.status(500).send({message: `Error al guardar el grup: ${err}`})
                 }
                 else { 
+                    console.log("Solicitud guardada correctament");
                     return res.status(200).send({message: 'Request acceptat'})
                 }
             }))

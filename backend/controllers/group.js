@@ -225,10 +225,28 @@ function searchFiltered(req, res) {
         return res.status(200).send({message: 'Resultat de la cerca', group})
     })
 }
+
+function searchGroup(req,res) {
+    Group.find({}, (err,groups)=>{
+        let selectedGroups = [];
+        let userId;
+        if (req.params.userId) userId = cryptr.decrypt(req.params.userId);
+        else userId = req.user;
+        groups.forEach(group => {
+            group.integrants.forEach(id =>{
+                if(id == userId){
+                    selectedGroups.push(group);
+                }
+            })
+        });
+        return res.status(200).send({message: 'Resultat de la cerca', selectedGroups})
+    })
+}
 module.exports={
     createGroup,
     answerRequest,
     editGroup,
     deleteMember,
-    searchFiltered
+    searchFiltered,
+    searchGroup
 }
