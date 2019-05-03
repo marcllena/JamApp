@@ -36,6 +36,13 @@ export class UserServices {
     return this.http.get(this.environment.urlUser + "group/all", {headers: headers, observe: "response"})
   }
 
+  obtainMyGroups(token){
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+    }
+    return this.http.get(this.environment.urlUser + "group/mygroups", {headers: headers, observe: "response"})
+  }
+
   requestMembership(token,req){
     const headers = {
       'Authorization': `Bearer ${token}`,

@@ -66,6 +66,21 @@
     </div>
   </div>
 
+  <div *ngFor="let request of requests">
+    <ion-card *ngFor="let solicitud of request.solicituds">
+        <ion-card-header>
+            <ion-card-title>Solicitud de grupo</ion-card-title>
+          <ion-card-subtitle>{{request.name}}</ion-card-subtitle>
+        </ion-card-header>
+        <div >
+            <ion-card-content>
+                {{solicitud.missatge}}
+            </ion-card-content>
+        </div>
+      </ion-card>
+  </div>
+  
+
   <div id="dropDownSelect1"></div>
 
 <!--===============================================================================================-->

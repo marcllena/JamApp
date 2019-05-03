@@ -12,10 +12,12 @@ import { ModalController, AlertController } from '@ionic/angular';
 export class GrupListPage implements OnInit {
 
   groups: Object;
+  requests: Object;
 
   constructor(private alertController: AlertController,private toolbarService: ToolbarService, private router: Router,private userService: UserServices) { }
 
   ngOnInit() {
+    this.getRequests();
   }
 
   llistaGrups(){
@@ -82,6 +84,27 @@ export class GrupListPage implements OnInit {
 
   createGroup(){
     this.router.navigateByUrl("api/grupCreate");
+  }
+
+  // VEURE SOLICITUDS DELS MEUS GRUPS
+
+  getRequests(){
+    console.log("Operacio de demanar grups realitzada al Backend: ");
+    let token =localStorage.getItem('token');
+    this.userService.obtainMyGroups(token)
+      .subscribe(response =>{
+        console.log("Resposta del backend"+response.body);
+        if(response.status==200){
+          console.log(response.body['group'])
+          this.requests = response.body['group'];
+        }
+        else{
+          console.log("Error desconegut");
+        }
+      },
+      err=>{
+        console.log("Error del backed: "+ err);
+      });
   }
 
 }
