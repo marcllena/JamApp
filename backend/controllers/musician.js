@@ -31,7 +31,10 @@ function requestMembership(req, res){
             return res.status(500).send({message: 'Error al buscar grup'})
         }
         else{
-            group.solicituds.push({id: req.body.id, missatge: req.body.message});
+            let userId;
+            if (req.params.userId) userId = cryptr.decrypt(req.params.userId);
+            else userId = req.user;
+            group.solicituds.push({id: userId, missatge: req.body.message});
             group.save((err=>{
                 if(err) {
                     console.log("Error al guardar grup")
