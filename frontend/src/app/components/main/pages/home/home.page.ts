@@ -6,7 +6,7 @@ import {ToolbarService} from "../../../../services/toolbar.service";
 import { Platform } from '@ionic/angular';
 import { UserServices } from "../../../../services/user.services";
 import {HttpResponse} from "@angular/common/http";
-
+import * as io from 'socket.io-client';
 declare var google;
 
 @Component({
@@ -24,7 +24,7 @@ export class HomePage {
   userList:any;
   markersListUsers: any;
   markersListSalas: any;
-
+  socket
   constructor(
     private geolocation: Geolocation,
     private nativeGeocoder: NativeGeocoder,
@@ -39,6 +39,8 @@ export class HomePage {
   }
 
   ngOnInit() {
+  this.socket = io.connect('http://localhost:3000') //S'ha de cnaviar a una variable per desplegar
+  this.socket.emit("idUser","Hola")
   this.obtindreUbicacio();
   }
 
