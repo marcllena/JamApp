@@ -34,17 +34,21 @@ function requestMembership(req, res){
             let userId;
             if (req.params.userId) userId = cryptr.decrypt(req.params.userId);
             else userId = req.user;
-            group.solicituds.push({id: userId, missatge: req.body.message});
-            group.save((err=>{
-                if(err) {
-                    console.log("Error al guardar grup")
-                    return res.status(500).send({message: `Error al guardar el grup: ${err}`})
-                }
-                else { 
-                    console.log("Solicitud guardada correctament");
-                    return res.status(200).send({message: 'Request acceptat'})
-                }
-            }))
+            User.findById(userId, (err,u) => {
+                console.log(u.username)
+                group.solicituds.push({id: userId, missatge: req.body.message, username: u.username});
+                group.save((err=>{
+                    if(err) {
+                        console.log("Error al guardar grup")
+                        return res.status(500).send({message: `Error al guardar el grup: ${err}`})
+                    }
+                    else { 
+                        console.log("Solicitud guardada correctament");
+                        return res.status(200).send({message: 'Request acceptat'})
+                    }
+                }))
+            })
+            
         }
     })
 }

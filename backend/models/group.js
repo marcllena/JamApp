@@ -13,7 +13,7 @@ const GroupSchema = Schema({
     email: {type: String, unique: true, lowercase:true},
     fotoGrup: String,
     integrants:[{ type: mongoose.Schema.Types.ObjectId, ref: 'Musician'}],
-    solicituds: [{id: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Musician'}], missatge: String}],
+    solicituds: [{id: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Musician'}], missatge: String, username: String}],
     latitud: Number,
     longitud: Number,
     description: String,

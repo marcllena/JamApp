@@ -10,11 +10,12 @@ export class Group {
     ubicacio: string;
     description: string;
     video: string;
-    estils: [string];
+    estils: string[];
 
-    constructor(name = '', email='',description='') {
+    constructor(name = '', email='',description='', estils=[]) {
         this.name = name;
         this.email = email;
         this.description = description;
+        this.estils = estils;
     }
 }

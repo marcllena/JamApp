@@ -95,7 +95,6 @@ export class GrupListPage implements OnInit {
       .subscribe(response =>{
         console.log("Resposta del backend"+response.body);
         if(response.status==200){
-          console.log(response.body['group'])
           this.requests = response.body['group'];
         }
         else{
