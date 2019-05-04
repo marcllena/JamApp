@@ -13,8 +13,12 @@ const Group = require('../models/group')
 
 function createGroup(req, res) {
     //Musician.find({email: req.body.email}, (err,user)=>{ //canviar User per Musician!!!!
-    User.findById( req.user, (err,user)=>{
-
+    console.log("creando grupo");
+    let userId;
+    if (req.params.userId) userId = cryptr.decrypt(req.params.userId);
+    else userId = req.user;
+    User.findById( userId, (err,user)=>{
+        console.log("usuario encontrado");
         if(err) {
             return res.status(500).send({message: `Error en trobar usuari: ${err}`})
         }
@@ -29,7 +33,7 @@ function createGroup(req, res) {
         if(group==null){
             const newGroup = new Group({
                 name: req.body.name,
-                email: user[0].email, // El grup adopta el correu del creador fins que ell no n'espeficiqui un altre.
+                email: user.email, // El grup adopta el correu del creador fins que ell no n'espeficiqui un altre.
                 description: req.body.description
             });
             newGroup.integrants.push(user[0]);
@@ -45,8 +49,8 @@ function createGroup(req, res) {
                     return res.status(500).send({message: `Error al crear el grup: ${err}`})
                 }
                 else { 
-                    user[0].grups.push(newGroup);
-                    user[0].save((err)=>{
+                    user.grups.push(newGroup);
+                    user.save((err)=>{
                         if(err) {
                             console.log("Error al actualitzar usuari amb nou grup:")
                             return res.status(500).send({message: `Error al actualitzar el usuario: ${err}`})
