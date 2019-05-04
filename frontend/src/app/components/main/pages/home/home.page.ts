@@ -40,7 +40,7 @@ export class HomePage {
 
   ngOnInit() {
   this.socket = io.connect('http://localhost:3000') //S'ha de cnaviar a una variable per desplegar
-  this.socket.emit("idUser","Hola")
+  this.socket.emit("idUser",localStorage.getItem("token"))
   this.obtindreUbicacio();
   }
 
