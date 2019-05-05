@@ -126,7 +126,28 @@ export class GrupListPage implements OnInit {
       err=>{
         console.log("Error del backed: "+ err);
       });
+  }
 
+  denyRequest(request,solicitud){
+    let req = {
+      idGrup: request._id,
+      id: solicitud.id,
+      decisio: false
+    }
+    let token =localStorage.getItem('token');
+    this.userService.answerRequest(token,req)
+      .subscribe(response =>{
+        console.log("Resposta del backend"+response.body);
+        if(response.status==200){
+          this.requests = response.body['group'];
+        }
+        else{
+          console.log("Error desconegut");
+        }
+      },
+      err=>{
+        console.log("Error del backed: "+ err);
+      });
   }
 
 }
