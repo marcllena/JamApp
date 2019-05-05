@@ -77,51 +77,51 @@ function createGroup(req, res) {
 function answerRequest(req, res) {
     Group.findById(req.body.idGrup, (err, group)=>{
         console.log(group)
-if(group==null){
-    return res.status(404).send({message: `Grup no trobat`})
-}
-else {
-    //Buscar la request del usuari
-    var trobat=-1;
-    for(var i=0; i<group.solicituds.length;i++){
-        if(group.solicituds[i].id.toString() == req.body.id){
-            trobat = i;
-            break
+    if(group==null){
+        return res.status(404).send({message: `Grup no trobat`})
+    }
+    else {
+        //Buscar la request del usuari
+        var trobat=-1;
+        for(var i=0; i<group.solicituds.length;i++){
+            if(group.solicituds[i].id.toString() == req.body.id){
+                trobat = i;
+                break
+            }
+        }
+        if(trobat!=-1){
+            console.log(req.body.decisio)
+            if(req.body.decisio == true){
+                group.integrants.push(group.solicituds[trobat].id)
+                group.solicituds.splice(trobat,1);
+                    group.save((err) => {
+                        if(err) {
+                            console.log("Error al guardar grup:"+req.body.name)
+                            return res.status(500).send({message: `Error al guardar el grup: ${err}`})
+                        }
+                        else { 
+                            return res.status(200).send({message: 'Usuari acceptat'})
+                        }
+                    })
+            }
+            else if(req.body.decisio == false){
+                group.solicituds.splice(trobat,1);
+                    group.save((err) => {
+                        if(err) {
+                            console.log("Error al guardar grup:")
+                            return res.status(500).send({message: `Error al guardar el grup: ${err}`})
+                        }
+                        else { 
+                            return res.status(200).send({message: 'Usuari rebutjat'})
+                        }
+                    })
+            }
+            else{return res.status(404).send({message: `Falta decisio!`})}
+        }
+        else{
+            return res.status(404).send({message: `No tobada`})
         }
     }
-    if(trobat!=-1){
-        console.log(req.body.decisio)
-        if(req.body.decisio == true){
-            group.integrants.push(group.solicituds[trobat].id)
-            group.solicituds.splice(trobat,1);
-                group.save((err) => {
-                    if(err) {
-                        console.log("Error al guardar grup:"+req.body.name)
-                        return res.status(500).send({message: `Error al guardar el grup: ${err}`})
-                    }
-                    else { 
-                        return res.status(200).send({message: 'Usuari acceptat'})
-                    }
-                })
-        }
-        else if(req.body.decisio == false){
-            group.solicituds.splice(trobat,1);
-                group.save((err) => {
-                    if(err) {
-                        console.log("Error al guardar grup:")
-                        return res.status(500).send({message: `Error al guardar el grup: ${err}`})
-                    }
-                    else { 
-                        return res.status(200).send({message: 'Usuari rebutjat'})
-                    }
-                })
-        }
-        else{return res.status(404).send({message: `Falta decisio!`})}
-    }
-    else{
-        return res.status(404).send({message: `No tobada`})
-    }
-}
 })
 }
 function deleteMember(req,res) {

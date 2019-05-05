@@ -77,7 +77,7 @@
               {{solicitud.missatge}}
           </ion-card-content>
       </div>
-      <ion-button color="medium" size="small" strong="true">Aceptar</ion-button>
+      <ion-button color="medium" size="small" (click)="acceptRequest(request,solicitud)" strong="true">Aceptar</ion-button>
       <ion-button color="medium" size="small">Rechazar</ion-button>
     </ion-card>
   </div>

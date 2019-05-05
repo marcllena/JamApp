@@ -50,12 +50,20 @@ export class UserServices {
     return this.http.post(this.environment.urlUser + "musician/requestMembership",req, {headers: headers,observe: 'response'})
   }
 
+  answerRequest(token,req){
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+    }
+    return this.http.post(this.environment.urlUser + "group/answerRequest",req, {headers: headers,observe: 'response'})
+  }
+
   createGroup(token,group){
     const headers = {
       'Authorization': `Bearer ${token}`,
     }
     return this.http.post(this.environment.urlUser + "group/", group, {headers: headers,observe: 'response'})
   }
+
   getUserLocation(){
       return this.http.get("http://ip-api.com/json/", {observe: 'response'})
   }
