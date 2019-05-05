@@ -75,7 +75,7 @@ function createGroup(req, res) {
     })
 }
 function answerRequest(req, res) {
-    Group.findById(req.body.id, (err, group)=>{
+    Group.findById(req.body.idGrup, (err, group)=>{
         console.log(group)
 if(group==null){
     return res.status(404).send({message: `Grup no trobat`})
@@ -84,12 +84,13 @@ else {
     //Buscar la request del usuari
     var trobat=-1;
     for(var i=0; i<group.solicituds.length;i++){
-        if(group.solicituds[i].id.equals(req.body.id)){
+        if(group.solicituds[i].id.toString() == req.body.id){
             trobat = i;
             break
         }
     }
     if(trobat!=-1){
+        console.log(req.body.decisio)
         if(req.body.decisio == true){
             group.integrants.push(group.solicituds[trobat].id)
             group.solicituds.splice(trobat,1);
@@ -103,11 +104,11 @@ else {
                     }
                 })
         }
-        if(req.body.decisio == false){
+        else if(req.body.decisio == false){
             group.solicituds.splice(trobat,1);
                 group.save((err) => {
                     if(err) {
-                        console.log("Error al guardar grup:"+req.body.name)
+                        console.log("Error al guardar grup:")
                         return res.status(500).send({message: `Error al guardar el grup: ${err}`})
                     }
                     else { 
@@ -115,9 +116,10 @@ else {
                     }
                 })
         }
+        else{return res.status(404).send({message: `Falta decisio!`})}
     }
     else{
-        return res.status(404).send({message: `Request no trobada`})
+        return res.status(404).send({message: `No tobada`})
     }
 }
 })
