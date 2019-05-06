@@ -18,7 +18,18 @@
 </ion-header>
 
 <ion-content>
-
+  <div>
+    <ion-card class="card" *ngIf="userClicked">
+      <ion-card-header>
+        <ion-card-title>Usuari: {{userClicked.username}}</ion-card-title>
+      </ion-card-header>
+      <div >
+        <ion-card-content>
+          Tipos de Usuari: {{userClicked.userType}}
+        </ion-card-content>
+      </div>
+    </ion-card>
+  </div>
   <div class="map-wrapper">
     <div #map id="map"></div>
   </div>

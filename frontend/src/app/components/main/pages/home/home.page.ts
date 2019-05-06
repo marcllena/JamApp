@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
+import { NativeGeocoder,  NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 import {ToolbarService} from "../../../../services/toolbar.service";
 import { Platform } from '@ionic/angular';
 import { UserServices } from "../../../../services/user.services";
@@ -24,6 +24,8 @@ export class HomePage {
   userList:any;
   markersListUsers: any;
   markersListSalas: any;
+  userClicked:any;
+
   socket
   constructor(
     private geolocation: Geolocation,
@@ -154,6 +156,7 @@ export class HomePage {
             for (let i = 0; i < this.markersListUsers.length; i++) {
               google.maps.event.addListener(this.markersListUsers[i], 'click', () =>{
                 console.log("Click al usuari " + this.userList.musicians[i].username)
+                this.userClicked=this.userList.musicians[i];
               });
             }
           }

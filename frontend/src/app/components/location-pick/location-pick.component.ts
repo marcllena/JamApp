@@ -132,14 +132,14 @@ export class LocationPickComponent implements OnInit {
     this.marker.setPosition(new google.maps.LatLng( this.clickedLatitud, this.clickedLongitud ));
   }
   setLocation(){
-    console.log("Operació de demanar usuaris realitzada al BackEnd:");
+    console.log("Operació fixar posició realitzada al BackEnd:");
     let token =localStorage.getItem('token');
     this.userService.setLocation(token,this.clickedLongitud,this.clickedLatitud)
       .subscribe(async response => {
           console.log("Resposta del BackEnd" + response.body);
           if (response.status == 200) {
             const toast = await this.toastController.create({
-              message: "Usuario Eliminado Correctamente",
+              message: "Posicion Fijada Correctamente",
               duration: 2000,
               position: 'bottom',
             });
