@@ -149,5 +149,8 @@ export class GrupListPage implements OnInit {
         console.log("Error del backed: "+ err);
       });
   }
+  chat() {
+    this.router.navigateByUrl("/api/chat1to1")
+  }
 
 }

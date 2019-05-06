@@ -4,7 +4,6 @@ const socket = require('socket.io')
 const services = require('../services')
 
 var websockets = function websockets(server) {
-    console.log("websockets")
     var io = socket(server);
 io.on('connection',function(socket){
     
@@ -39,8 +38,12 @@ io.on('connection',function(socket){
     
             io.sockets.emit('user',send);//send to connected socket*/
     });
-    socket.on('chat',function(message, name, type, dest){//send messages
-        io.sockets.emit('chat',message, name,  type, dest);
+    socket.on('chat1to1',function(message, dest){//send messages 1 to 1 musician
+        //aqui he de fer que es comprovi que el desti estigui connectat
+        //si ho esta, amb el nickname trobar l'id del usuari i trobarli el socket
+            //enviarli el missatge
+        //guardar els missatges a la conversa (creant una nova o sobreescribint) i la conversa a la BBDD(save o update)
+        io.sockets.emit('chat1to1',message);
         console.log("Recibiendo y reenviando");
     });
 });}

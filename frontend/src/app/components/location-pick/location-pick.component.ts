@@ -133,6 +133,7 @@ export class LocationPickComponent implements OnInit {
   }
   setLocation(){
     console.log("Operació fixar posició realitzada al BackEnd:");
+    console.log("Latitud: "+this.clickedLatitud+", Longitud: "+this.clickedLongitud);
     let token =localStorage.getItem('token');
     this.userService.setLocation(token,this.clickedLongitud,this.clickedLatitud)
       .subscribe(async response => {
