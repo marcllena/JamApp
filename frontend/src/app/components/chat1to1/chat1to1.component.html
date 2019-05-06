@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Chat
+      Chat with {{destination}}
     </ion-title>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="api/menu/home"></ion-back-button>
@@ -9,5 +9,10 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-
+  <ion-item>
+    <ion-button >
+      <ion-icon slot="icon-only" name ="send"></ion-icon>
+    </ion-button>
+    <ion-input type="text" placeholder="Escribe el mensaje..."></ion-input>
+  </ion-item>
 </ion-content>

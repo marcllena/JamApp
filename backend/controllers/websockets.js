@@ -10,7 +10,7 @@ io.on('connection',function(socket){
     socket.on('idUser', function(idUser){
         services.decodeToken(idUser).then(response =>{
             socket.idUser=response;
-            console.log('Conexion con el Socket: ', socket.idUser)
+            //console.log('Conexion con el Socket: ', socket.idUser)
             next()
         })
         .catch(response=>{
@@ -28,7 +28,6 @@ io.on('connection',function(socket){
         console.log("Enviando lista de usuarios: "+send);*/
     });
     socket.on('disconnect', function(){
-        console.log('Usuario desconectado: '+socket.idUser);
             /*var allConnectedClients = io.sockets.connected; //list os socket connected
             var send = []
             Object.keys(allConnectedClients).forEach(function(key){
