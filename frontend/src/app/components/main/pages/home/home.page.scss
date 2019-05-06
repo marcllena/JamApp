@@ -5,7 +5,7 @@
 }
 
 #map {
-  width: 100%;
+  width: 80%;
   height: 95vh;
 }
 
@@ -22,4 +22,9 @@
     margin-left: -21px;
     margin-top: -41px;
   }
+}
+
+.card {
+  float: right;
+  width: 18%;
 }
