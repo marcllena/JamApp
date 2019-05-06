@@ -37,11 +37,14 @@
               <span class="focus-input100" data-symbol="&#xf206;"></span>
             </div>
 
-            <div class="wrap-input100 validate-input m-b-23">
-              <span class="label-input100">Estils</span>
-              <input class="input100" type="text" formControlName="estils" placeholder="Escribe el estilo">
-              <span class="focus-input100" data-symbol="&#xf206;"></span>
-            </div>
+            <ion-list>
+              <ion-label class="label-input100">Estilos</ion-label>
+              <br>
+              <ion-select  placeholder="Selecciona estilos" multiple="true" (ionChange)="logsito()" value="regeton" formControlName="estils" okText="Aceptar" cancelText="Cancelar">
+              <ion-select-option *ngFor="let item of items" [value]="item">{{item}}</ion-select-option>
+              </ion-select>
+            </ion-list>
+            <br>
 
             <div class="container-login100-form-btn">
               <div class="wrap-login100-form-btn">
