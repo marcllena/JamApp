@@ -164,8 +164,11 @@ function refreshToken(req,res) {
 //le llega un vector de IDs como IdList
 function deleteUsers(req,res){
     console.log('DELETE /api/user');
-
-    User.find({ '_id': { $in: req.body.IdList}}, function(err, users){
+    let IdList=req.params.userId;
+    for(var i=0; i<req.body.IdList.length; i++){
+        IdList[i]= cryptr.decrypt(req.params.userId[i]);
+    }
+    User.find({ '_id': { $in: IdList}}, function(err, users){
         if(err)
             return res.status(500).send({message: `Error searching the users: ${err}`});
 

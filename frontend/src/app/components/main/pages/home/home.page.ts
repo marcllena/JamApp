@@ -24,7 +24,7 @@ export class HomePage {
   userList:any;
   markersListUsers: any;
   markersListSalas: any;
-  
+  userClicked:any;
   constructor(
     private geolocation: Geolocation,
     private nativeGeocoder: NativeGeocoder,
@@ -154,6 +154,7 @@ export class HomePage {
             for (let i = 0; i < this.markersListUsers.length; i++) {
               google.maps.event.addListener(this.markersListUsers[i], 'click', () =>{
                 console.log("Click al usuari " + this.userList.musicians[i].username)
+                this.userClicked=this.userList.musicians[i];
               });
             }
           }
