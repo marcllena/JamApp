@@ -21,6 +21,7 @@ apiUsers.get('/location', /*auth,*/ userCtrl.getUsersLocation);//GET all users l
 //-------------General--------------
 apiUsers.get('/:userId', auth, userCtrl.getUser);//GET user by ID
 apiUsers.put('/:userId', isMeOrAdmin, userCtrl.updateUser);//UPDATE user
+apiUsers.put('/',auth,userCtrl.updateUser); //UPDATE user without path param
 apiUsers.delete('/', isAdmin, userCtrl.deleteUsers);// DELETE users, le llega un vector de IDs llamado IdList
 apiUsers.get('/', auth, userCtrl.getUsers);//GET all users
 

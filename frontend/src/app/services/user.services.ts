@@ -76,4 +76,11 @@ export class UserServices {
   getLocations() {
     return this.http.get(this.environment.urlUser + "user/location",{observe: 'response'})
   }
+
+  updateUser(token,user){
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+    }
+    return this.http.put(this.environment.urlUser + "user/",user,{headers: headers,observe: 'response'});
+  }
 }
