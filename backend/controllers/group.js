@@ -33,7 +33,7 @@ function createGroup(req, res) {
         if(group==null){
             const newGroup = new Group({
                 name: req.body.name,
-                email: user.email, // El grup adopta el correu del creador fins que ell no n'espeficiqui un altre.
+                email: req.body.email, // El grup adopta el correu del creador fins que ell no n'espeficiqui un altre.
                 description: req.body.description
             });
             newGroup.integrants.push(user[0]);
@@ -43,7 +43,9 @@ function createGroup(req, res) {
             for(var i=0; i<req.body.estils.length;i++){
                 newGroup.estils.push(req.body.estils[i])
             }
+            console.log(newGroup)
             newGroup.save((err) => {
+                
                 if(err) {
                     console.log("Error al crear grup:"+req.body.name)
                     return res.status(500).send({message: `Error al crear el grup: ${err}`})

@@ -14,6 +14,7 @@ import { Router } from "@angular/router";
 export class GrupCreateComponent implements OnInit {
 
   createGroupForm: FormGroup;
+  items = ["Regeton","Trap","Dembow"]
 
   constructor(private formBuilder: FormBuilder, private userService: UserServices, private router: Router) { 
     this.createGroupForm = this.formBuilder.group({
@@ -25,6 +26,10 @@ export class GrupCreateComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  logsito(){
+    console.log(this.createGroupForm.value.estils);
+  }
 
   guardar() {
     console.log("Operacio de crear un grup realitzada al backend: "+this.createGroupForm.value);
