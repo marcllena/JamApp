@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {DataService} from '../../services/data.services'
+import { WebsocketsService } from 'src/app/services/websockets.service';
 
 @Component({
   selector: 'app-chat1to1',
@@ -8,11 +9,20 @@ import {DataService} from '../../services/data.services'
 })
 export class Chat1to1Component implements OnInit {
   destination
-  constructor(private singleton: DataService) {
+  sendingMessage
+  messages: [{from: String, message: String}] 
+  constructor(private singleton: DataService, private websockets: WebsocketsService) {
     this.singleton.newChatDestination.subscribe(destination => this.destination = destination)
-    console.log(this.destination)
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.websockets.chatInit(this.destination);
+    this.messages = this.websockets.getMessages();
+  }
+  sendMessage(destination, message){
+      console.log("BICHU")
+      this.websockets.pushMessage(message);
+      this.websockets.sendMessage(this.destination, this.sendingMessage)
+  }
 
 }

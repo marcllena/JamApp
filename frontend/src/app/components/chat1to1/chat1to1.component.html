@@ -8,11 +8,17 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content>
+
+  <ion-card *ngFor="let message of finalMessages">
+    <ion-card-header>
+      <ion-card-title>{{message.from}}: {{message.message}}</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+<ion-footer>
   <ion-item>
-    <ion-button >
+    <ion-button (click) = "sendMessage(destination, sendingMessage)" >
       <ion-icon slot="icon-only" name ="send"></ion-icon>
     </ion-button>
-    <ion-input type="text" placeholder="Escribe el mensaje..."></ion-input>
+    <ion-input type="text" placeholder="Escribe el mensaje..." [(ngModel)] = "sendingMessage"></ion-input>
   </ion-item>
-</ion-content>
+</ion-footer>
