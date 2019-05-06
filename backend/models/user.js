@@ -13,7 +13,7 @@ const baseOptions = {
 
 const userBase = new mongoose.Schema({
         //id: String,
-        username: String,
+        username: {type: String, unique: true},
         edat: Number,
         email: {type: String, unique: true, lowercase:true},
         password: {type: String,select: false },

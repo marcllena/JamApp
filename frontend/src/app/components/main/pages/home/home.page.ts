@@ -1,12 +1,12 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
+import { NativeGeocoder,  NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 import {ToolbarService} from "../../../../services/toolbar.service";
 import { Platform } from '@ionic/angular';
 import { UserServices } from "../../../../services/user.services";
 import {HttpResponse} from "@angular/common/http";
-import * as io from 'socket.io-client';
+
 declare var google;
 
 @Component({
@@ -24,13 +24,14 @@ export class HomePage {
   userList:any;
   markersListUsers: any;
   markersListSalas: any;
-  socket
+  
   constructor(
     private geolocation: Geolocation,
     private nativeGeocoder: NativeGeocoder,
     private toolbarService: ToolbarService,
     public platform: Platform,
-    private userService: UserServices
+    private userService: UserServices,
+    
   ) {
     this.markersListUsers=[];
     this.markersListSalas=[];
@@ -39,8 +40,7 @@ export class HomePage {
   }
 
   ngOnInit() {
-  this.socket = io.connect('http://localhost:3000') //S'ha de cnaviar a una variable per desplegar
-  this.socket.emit("idUser",localStorage.getItem("token"))
+
   this.obtindreUbicacio();
   }
 
