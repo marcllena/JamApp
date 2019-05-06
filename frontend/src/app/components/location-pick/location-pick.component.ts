@@ -131,6 +131,35 @@ export class LocationPickComponent implements OnInit {
   updateMarkerPosition(){
     this.marker.setPosition(new google.maps.LatLng( this.clickedLatitud, this.clickedLongitud ));
   }
+  getLocation(){
+    /*console.log("Latitud: "+this.clickedLatitud+", Longitud: "+this.clickedLongitud);
+    //Creem nou objecte amb les ubicacions:
+    var coordinates = {
+      latitud: this.clickedLatitud,
+      longitud: this.clickedLongitud
+    };
+    let token =localStorage.getItem('token');
+    this.userService.setLocation(token,coordinates)
+      .subscribe(async response => {
+          console.log("Resposta del BackEnd" + response.body);
+          if (response.status == 200) {
+            const toast = await this.toastController.create({
+              message: "Posicion Fijada Correctamente",
+              duration: 2000,
+              position: 'bottom',
+            });
+            toast.present();
+          } else {
+            //Error desconegut
+            console.log("Error");
+          }
+        },
+        err => {
+          console.log("Error del BackEnd"+err);
+          //console.log(err);
+        });*/
+  }
+
   setLocation(){
     console.log("Operació fixar posició realitzada al BackEnd:");
     console.log("Latitud: "+this.clickedLatitud+", Longitud: "+this.clickedLongitud);
