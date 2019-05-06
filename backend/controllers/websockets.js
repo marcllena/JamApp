@@ -4,14 +4,13 @@ const socket = require('socket.io')
 const services = require('../services')
 
 var websockets = function websockets(server) {
-    console.log("websockets")
     var io = socket(server);
 io.on('connection',function(socket){
     
     socket.on('idUser', function(idUser){
         services.decodeToken(idUser).then(response =>{
             socket.idUser=response;
-            console.log('Conexion con el Socket: ', socket.idUser)
+            //console.log('Conexion con el Socket: ', socket.idUser)
             next()
         })
         .catch(response=>{
@@ -29,7 +28,6 @@ io.on('connection',function(socket){
         console.log("Enviando lista de usuarios: "+send);*/
     });
     socket.on('disconnect', function(){
-        console.log('Usuario desconectado: '+socket.idUser);
             /*var allConnectedClients = io.sockets.connected; //list os socket connected
             var send = []
             Object.keys(allConnectedClients).forEach(function(key){
@@ -39,8 +37,12 @@ io.on('connection',function(socket){
     
             io.sockets.emit('user',send);//send to connected socket*/
     });
-    socket.on('chat',function(message, name, type, dest){//send messages
-        io.sockets.emit('chat',message, name,  type, dest);
+    socket.on('chat1to1',function(message, dest){//send messages 1 to 1 musician
+        //aqui he de fer que es comprovi que el desti estigui connectat
+        //si ho esta, amb el nickname trobar l'id del usuari i trobarli el socket
+            //enviarli el missatge
+        //guardar els missatges a la conversa (creant una nova o sobreescribint) i la conversa a la BBDD(save o update)
+        io.sockets.emit('chat1to1',message);
         console.log("Recibiendo y reenviando");
     });
 });}

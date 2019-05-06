@@ -164,11 +164,11 @@ function refreshToken(req,res) {
 //le llega un vector de IDs como IdList
 function deleteUsers(req,res){
     console.log('DELETE /api/user');
-    let IdList=req.params.userId;
+    let llistaId=req.body.IdList;
     for(var i=0; i<req.body.IdList.length; i++){
-        IdList[i]= cryptr.decrypt(req.params.userId[i]);
+        llistaId[i]= cryptr.decrypt(req.body.IdList[i]);
     }
-    User.find({ '_id': { $in: IdList}}, function(err, users){
+    User.find({ '_id': { $in: llistaId}}, function(err, users){
         if(err)
             return res.status(500).send({message: `Error searching the users: ${err}`});
 

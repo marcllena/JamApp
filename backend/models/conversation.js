@@ -8,7 +8,7 @@ const Schema = mongoose.Schema;
 const ConverSchema = Schema({
     name: String,
     participants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
-    messages: {type:Number, default: 0 },
+    messages: [String] = null,
 });
 
 module.exports = mongoose.model('Conver',ConverSchema);

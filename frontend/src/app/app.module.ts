@@ -19,7 +19,8 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { UserlistComponent } from './components/userlist/userlist.component';
 import { GrupCreateComponent } from './components/grup-create/grup-create.component';
 import { LocationPickComponent } from './components/location-pick/location-pick.component';
-
+import { Chat1to1Component} from './components/chat1to1/chat1to1.component';
+import { DataService } from './services/data.services';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +29,8 @@ import { LocationPickComponent } from './components/location-pick/location-pick.
     SettingsComponent,
     UserlistComponent,
     GrupCreateComponent,
-    LocationPickComponent
+    LocationPickComponent,
+    Chat1to1Component
   ],
   entryComponents: [],
   imports: [
@@ -44,6 +46,7 @@ import { LocationPickComponent } from './components/location-pick/location-pick.
     SplashScreen,
     Geolocation,
     NativeGeocoder,
+    DataService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent]

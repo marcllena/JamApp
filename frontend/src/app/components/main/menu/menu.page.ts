@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import {WebsocketsService} from "../../../services/websockets.service";
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.page.html',
@@ -25,9 +25,10 @@ export class MenuPage implements OnInit {
     },
   ];
 
-  constructor() { }
+  constructor(public websockets: WebsocketsService) { }
 
   ngOnInit() {
+    this.websockets.init();
   }
 
 }
