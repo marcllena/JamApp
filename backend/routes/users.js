@@ -12,7 +12,7 @@ const isMeOrAdmin = require('../middlewares/meOrAdmin');
 
 //-----------LOCATION--------------
 apiUsers.post('/location/:userId', isMeOrAdmin, userCtrl.setLocation);//Set user location latitud and longitud
-apiUsers.post('/location', isMeOrAdmin, userCtrl.setLocation);//Set user location latitud and longitud without path param
+apiUsers.post('/location', auth, userCtrl.setLocation);//Set user location latitud and longitud without path param
 apiUsers.get('/location', /*auth,*/ userCtrl.getUsersLocation);//GET all users location, retorna el vector musicians amb els musics
 // i el vector rooms amb les sales
 
