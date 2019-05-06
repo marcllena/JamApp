@@ -2,7 +2,7 @@
 
 const socket = require('socket.io')
 const services = require('../services')
-const Conversacion = require('../models/conversation')
+const Conver = require('../models/conversation')
 const Musician = require('../models/musician')
 var websockets = function websockets(server) {
     var io = socket(server);
@@ -11,7 +11,7 @@ io.on('connection',function(socket){
     socket.on('idUser', function(idUser){
         services.decodeToken(idUser).then(response =>{
             socket.idUser=response;
-            //console.log('Conexion con el Socket: ', socket.idUser)
+            console.log('Conexion con el Socket: ', socket.idUser)
             next()
         })
         .catch(response=>{
@@ -37,6 +37,7 @@ io.on('connection',function(socket){
             });
     
             io.sockets.emit('user',send);//send to connected socket*/
+            console.log('desonexion con el Socket: ', socket.idUser)
     });
     socket.on('sendMessage',function(dest, message){//send messages 1 to 1 musician
         //aqui he de fer que es comprovi que el desti estigui connectat
@@ -59,29 +60,34 @@ io.on('connection',function(socket){
                     io.sockets.connected[online].emit("sendMessage", message)
                 }
                 //Falta guardar els missatges a una conversa.
-                missatge =  {from: String = socket.idUser, message: String = message}
-                Conversacion.findOne({participants: {"$all" : [socket.idUser, user._id]}}, (err, conv) => {
+                let missatge =  {from: String = socket.idUser, message: String = message}
+                Conver.findOne({participants: {"$all" : [socket.idUser, user._id]}}, (err, conv) => {
                     if(err) {
                         console.log("Error al buscar conversa")
                     }
                     else if(conv!=null){ //conversa trobat, buscar possible conversa
                         conv.messages.push(missatge)
+                        conv.save((err)=> {
+                            if(err) {
+                                console.log("Error al guardar conversa");
+                            }
+                        })
                     }
                     else {//CONV no existent
-                        newConv = new Conversacion({
-                            participants: [],
-                            messages: [],
-                        })
+                        const newConv = new Conver();
                         newConv.participants.push(socket.idUser)
                         newConv.participants.push(user._id)
                         newConv.messages.push(missatge)
+                        console.log(newConv)
+                        newConv.save((err) => {
+                            if(err) {
+                                console.log("Error ");
+                            }
+                    console.log(" agregat correctament");
+                } )
                     }
-                    //Guardar conversa
-                    newConv.save((err=> {
-                        if(err) {
-                            console.log("Error al guardar conversa");
-                        }
-                    }))
+                   
+                    
                     })
             }
         })
@@ -95,7 +101,7 @@ io.on('connection',function(socket){
                     console.log("Error al buscar music")
                 }
             else if(user!=null){ //usuari trobat, buscar possible conversa
-                Conversacion.findOne({participants: {"$all" : [socket.idUser, user._id]}}, (err, conv) => {
+                Conver.findOne({participants: {"$all" : [socket.idUser, user._id]}}, (err, conv) => {
                     if(err) {
                         console.log("Error al buscar conversa")
                     }

@@ -10,7 +10,7 @@ import { WebsocketsService } from 'src/app/services/websockets.service';
 export class Chat1to1Component implements OnInit {
   destination
   sendingMessage
-  messages: [{from: String, message: String}] 
+  messages: [{'from', 'message'}] 
   constructor(private singleton: DataService, private websockets: WebsocketsService) {
     this.singleton.newChatDestination.subscribe(destination => this.destination = destination)
   }
@@ -21,6 +21,7 @@ export class Chat1to1Component implements OnInit {
   }
   sendMessage(destination, message){
       console.log("BICHU")
+      
       this.websockets.pushMessage(message);
       this.websockets.sendMessage(this.destination, this.sendingMessage)
   }

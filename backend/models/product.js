@@ -1,4 +1,4 @@
-'use scrict'
+'use strict'
 /*
 Esquema de la base de dades amb els camps que pot tindre cada Producte 
  */

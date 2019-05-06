@@ -1,4 +1,4 @@
-'use scrict'
+'use strict'
 /*
 Esquema de la base de dades amb els camps que pot tindre cada Producte
  */
@@ -13,7 +13,7 @@ const GroupSchema = Schema({
     email: {type: String, unique: true, lowercase:true},
     fotoGrup: String,
     integrants:[{ type: mongoose.Schema.Types.ObjectId, ref: 'Musician'}],
-    solicituds: [{id: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Musician'}], missatge: String, username: String}],
+    solicituds: [{id: { type: mongoose.Schema.Types.ObjectId, ref: 'Musician'}, missatge: String, username: String}],
     latitud: Number,
     longitud: Number,
     description: String,

@@ -7,15 +7,16 @@ import {DataService} from './data.services'
 export class WebsocketsService {
 
   socket
-  messages: [{from: String,message: String}]
+  messages
   constructor(private singleton: DataService) {
+    this.messages = new Array()
     this.socket = io.connect('http://localhost:3000') //S'ha de cnaviar a una variable per desplegar
     this.socket.on('chatInit', function(messages){
       //Imprimir missatges, guardarlos a una variable singleton.
-      this.singleton.changeMessages(messages);
+      this.messages = messages;
     })
     this.socket.on('sendMessage', function(message){
-      this.singleton.pushMessage(message);
+      this.pushMessage(message);
     })
   }
   init(){
@@ -24,7 +25,9 @@ export class WebsocketsService {
   }
   
   pushMessage(message){
+    let missatge = {'from': this.socket.idUser, 'message': message}
     this.messages.push(message);
+    console.log(this.messages)
   }
   getMessages(){
     return this.messages;

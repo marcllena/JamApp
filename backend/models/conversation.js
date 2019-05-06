@@ -7,7 +7,7 @@ const Schema = mongoose.Schema;
 
 const ConverSchema = Schema({
     participants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
-    messages: [{from: String, message: String}],
+    messages: [{from:{type: mongoose.Schema.Types.ObjectId, ref: 'User'}, message: String}],
 });
 
 module.exports = mongoose.model('Conver',ConverSchema);
