@@ -67,13 +67,20 @@ export class UserServices {
   getUserLocation(){
       return this.http.get("http://ip-api.com/json/", {observe: 'response'})
   }
-  setLocation(token,lon,lan) {
+  setLocation(token,coor) {
     const headers = {
       'Authorization': `Bearer ${token}`,
     }
-    return this.http.post(this.environment.urlUser + "user/location/", '{ "latitud":'+lan+',"longitud":'+lon+'}',{headers: headers,observe: 'response'})
+    return this.http.post(this.environment.urlUser + "user/location/", coor,{headers: headers,observe: 'response'})
   }
   getLocations() {
     return this.http.get(this.environment.urlUser + "user/location",{observe: 'response'})
+  }
+
+  updateUser(token,user){
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+    }
+    return this.http.put(this.environment.urlUser + "user/",user,{headers: headers,observe: 'response'});
   }
 }

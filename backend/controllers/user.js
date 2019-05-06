@@ -195,7 +195,10 @@ function deleteUsers(req,res){
 function updateUser(req,res){
     console.log('PUT /api/user/:userId');
 
-    let userId = req.params.userId;
+    let userId;
+    if (req.params.userId) userId = cryptr.decrypt(req.params.userId);
+    else userId = req.user;
+    
     let update = req.body;
 
     User.findByIdAndUpdate(userId,update,{new: true}, (err, userUpdated) => {

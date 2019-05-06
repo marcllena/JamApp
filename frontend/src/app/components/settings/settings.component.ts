@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { NgForm} from '@angular/forms'
 import { SettingsService } from 'src/app/services/settings.service';
+import { UserServices } from 'src/app/services/user.services';
 import { User } from 'src/app/models/user';
 
 declare var M: any;
@@ -13,7 +14,7 @@ declare var M: any;
 })
 export class SettingsComponent implements OnInit {
 
-  constructor(private settingsService: SettingsService,private router: Router) { }
+  constructor(private settingsService: SettingsService,private router: Router,private userServices: UserServices) { }
 
   ngOnInit() {
   }
@@ -47,6 +48,10 @@ export class SettingsComponent implements OnInit {
     localStorage.removeItem('token');
     localStorage.removeItem('_id');
     this.router.navigateByUrl('');
+  }
+
+  updateUser(user){
+    this.userServices.updateUser = user;
   }
 
 }
