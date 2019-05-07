@@ -71,7 +71,7 @@ function signUp(req,res) {
             });
             break;
     }
-    console.log(userNew);
+    //console.log(userNew);
     console.log("Petició de SignUp del seguent user: "+userNew.email);
     if(req.body.password==null)
         return res.status(500).send({message: `Rellena el campo password`});
@@ -126,7 +126,8 @@ function signIn(req,res) {
 }
 
 function getUser(req,res) {
-    User.findById(req.params.userId, (err,user)=>{
+    const Id = cryptr.decrypt(req.params.userId);
+    User.findById(Id, (err,user)=>{
         console.log(user);
         if(err)
             return res.status(500).send({message: `Error searching the user: ${err}`});
