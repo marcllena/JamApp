@@ -89,26 +89,31 @@ io.on('connection',function(socket){
                    
                     
                     })
+                    io.sockets.emit('chat1to1',message);
+                     console.log("Recibiendo y reenviando");
             }
         })
-        io.sockets.emit('chat1to1',message);
-        console.log("Recibiendo y reenviando");
+        
     });
     socket.on('chatInit', function(dest){
-        console.log("Iniciant chat")
+        console.log("Iniciant chat" + dest)
         Musician.findOne({username: dest}, (err, user)=>{
+            console.log(user)
             if(err) {
                     console.log("Error al buscar music")
                 }
             else if(user!=null){ //usuari trobat, buscar possible conversa
+                console.log(socket.idUser+"///"+ user._id)
                 Conver.findOne({participants: {"$all" : [socket.idUser, user._id]}}, (err, conv) => {
                     if(err) {
                         console.log("Error al buscar conversa")
                     }
                     else if(conv!=null){ //usuari trobat, buscar possible conversa
+                        console.log("bichadissima")
                         io.sockets.emit('chatInit', conv.messages) //S'envien els missatges
                     }
                     else {//CONV no existent
+                        console.log("shem conversa")
                     }
                     })
             }

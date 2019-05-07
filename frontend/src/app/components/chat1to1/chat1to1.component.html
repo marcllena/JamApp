@@ -8,12 +8,17 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
-  <ion-card *ngFor="let message of finalMessages">
+  <ion-content class="content-stable"
+                 on-swipe-left="hideTime = false"
+                 on-swipe-right="hideTime = true">
+  <div>
+  <ion-card *ngFor="let message of messages">
     <ion-card-header>
-      <ion-card-title>{{message.from}}: {{message.message}}</ion-card-title>
+      <ion-card-title><b>{{message.from}}</b>: {{message.message}}</ion-card-title>
     </ion-card-header>
   </ion-card>
+</div>
+</ion-content>
 <ion-footer>
   <ion-item>
     <ion-button (click) = "sendMessage(destination, sendingMessage)" >
