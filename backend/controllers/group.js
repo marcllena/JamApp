@@ -24,26 +24,49 @@ function createGroup(req, res) {
         }
 
         if(user==null) {
-            console.log("El usuario no existe")
+            console.log("El usuario no existe");
             return res.status(404).send({message: `El usuario no existe`})
         }
         else
         {
+            if (user.userType!=='Musician') return res.status(403).send({message: 'Only a musician can create a group'});
+            //if (req.body.email==null)
             Group.findOne({email: req.body.email}, (err, group)=>{
         if(group==null){
-            const newGroup = new Group({
+            if (!req.body.name) return res.status(400).send({message: 'Name field must be specified'});
+            let newGroup;
+            if (req.body.email&&req.body.description)
+            newGroup = new Group({
                 name: req.body.name,
                 email: req.body.email, // El grup adopta el correu del creador fins que ell no n'espeficiqui un altre.
                 description: req.body.description
             });
+            else{
+                if (req.body.email)
+                    newGroup = new Group({
+                        name: req.body.name,
+                        email: req.body.email,
+                        description: ""
+                    });
+                else
+                    newGroup = new Group({
+                        name: req.body.name,
+                        email: "",//null,
+                        description: req.body.description
+                    });
+            }
+
             newGroup.integrants.push(user[0]);
             /*for(var i=0; i<req.body.styles.length;i++){
             newGroup.estils.push(req.body.styles[i])
             }*/
-            for(var i=0; i<req.body.estils.length;i++){
-                newGroup.estils.push(req.body.estils[i])
+            if (req.body.estils) {
+                for (var i = 0; i < req.body.estils.length; i++) {
+                    newGroup.estils.push(req.body.estils[i])
+                }
             }
-            console.log(newGroup)
+            console.log(newGroup);
+            newGroup.integrants.push(user);
             newGroup.save((err) => {
                 
                 if(err) {
