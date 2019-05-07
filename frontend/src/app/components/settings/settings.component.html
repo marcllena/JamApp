@@ -18,6 +18,39 @@
           JamApp Editar Perfil
         </span>
 
+        <form [formGroup]="settingsForm">
+          <div class="wrap-input100 validate-input m-b-23">
+            <span class="label-input100">Nombre del usuario</span>
+            <input class="input100" type="text" formControlName="username" placeholder="Escribe el nombre del usuario">
+            <span class="focus-input100" data-symbol="&#xf206;"></span>
+          </div>
+
+          <div class="wrap-input100 validate-input m-b-23">
+            <span class="label-input100">Edad</span>
+            <input class="input100" type="number" formControlName="edat" placeholder="Escribe la edad">
+            <span class="focus-input100" data-symbol="&#xf206;"></span>
+          </div>
+
+          <ion-list>
+            <ion-label class="label-input100">Instrumentos</ion-label>
+            <br>
+            <ion-select placeholder="Seleccionar instrumentos" multiple="true" (ionChange)="logsito()" value="guitarra" formControlName="instrument" okText="Aceptar" cancelText="Cancelar">
+            <ion-select-option *ngFor="let item of items1" [value]="item">{{item}}</ion-select-option>
+          </ion-select>
+          </ion-list>
+          <br>
+
+          <ion-list>
+              <ion-label class="label-input100">Estilos</ion-label>
+              <br>
+              <ion-select  placeholder="Selecciona estilos" multiple="true" (ionChange)="logsito2()" value="regeton" formControlName="estils" okText="Aceptar" cancelText="Cancelar">
+              <ion-select-option *ngFor="let item of items2" [value]="item">{{item}}</ion-select-option>
+              </ion-select>
+            </ion-list>
+            <br>
+
+        </form>
+
 
           <ion-button color="primary" href="api/changeLocation" expand="block">Cambiar nuestra ubicación</ion-button>
       </form>

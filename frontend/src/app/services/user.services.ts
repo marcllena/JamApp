@@ -10,6 +10,7 @@ import { Group } from "../models/group";
 export class UserServices {
 
   environment: Environment;
+  selectedUser: User;
 
   constructor(private http: HttpClient) {
     this.environment = new Environment();
