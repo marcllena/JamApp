@@ -51,13 +51,15 @@ io.on('connection',function(socket){
             
             else if(user!=null){
                 var online = -1;
-                for(var i=0;i<io.sockets.connected;i++){
-                    if(user._id == io.sockets.connected[i].idUser){
+                console.log(Object.keys(io.sockets.connected).length)
+                for(var i=0;i<Object.keys(io.sockets.connected).length;i++){
+                    console.log(io.sockets.connected[Object.keys(io.sockets.connected)[i]].idUser + "///" + user._id )
+                    if(user._id == io.sockets.connected[Object.keys(io.sockets.connected)[i]].idUser){
                         online = i;
                     }
                 }
                 if(online!=-1){
-                    io.sockets.connected[online].emit("sendMessage", message)
+                    io.sockets.connected[Object.keys(io.sockets.connected)[online]].emit("chat1to1", message)
                 }
                 //Falta guardar els missatges a una conversa.
                 let missatge =  {from: /*String =*/ socket.idUser, message: /*String =*/ message}
@@ -89,7 +91,6 @@ io.on('connection',function(socket){
                    
                     
                     })
-                    io.sockets.emit('chat1to1',message);
                      console.log("Recibiendo y reenviando");
             }
         })
