@@ -60,7 +60,7 @@ io.on('connection',function(socket){
                     io.sockets.connected[online].emit("sendMessage", message)
                 }
                 //Falta guardar els missatges a una conversa.
-                let missatge =  {from: String = socket.idUser, message: String = message}
+                let missatge =  {from: /*String =*/ socket.idUser, message: /*String =*/ message}
                 Conver.findOne({participants: {"$all" : [socket.idUser, user._id]}}, (err, conv) => {
                     if(err) {
                         console.log("Error al buscar conversa")
@@ -74,7 +74,7 @@ io.on('connection',function(socket){
                         })
                     }
                     else {//CONV no existent
-                        const newConv = new Conver();
+                        let newConv = new Conver();
                         newConv.participants.push(socket.idUser)
                         newConv.participants.push(user._id)
                         newConv.messages.push(missatge)
