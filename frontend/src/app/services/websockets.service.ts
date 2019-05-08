@@ -71,7 +71,6 @@ export class WebsocketsService {
     this.socket.emit('chatInit', dest);
   }
   sendMessage(dest: String, message: String){
-    console.log("HEDEPASARPERAKI")
     this.socket.emit('sendMessage', dest, message);
   }
 }

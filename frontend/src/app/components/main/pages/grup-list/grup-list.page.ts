@@ -93,9 +93,11 @@ export class GrupListPage implements OnInit {
     let token =localStorage.getItem('token');
     this.userService.obtainMyGroups(token)
       .subscribe(response =>{
-        console.log("Resposta del backend"+response.body);
+        //console.log("Resposta del backend:  "+JSON.stringify(response.body));
         if(response.status==200){
-          this.requests = response.body['group'];
+          console.log(response.body)
+          this.requests = (<any>response.body).selectedGroups;
+          console.log(this.requests)
         }
         else{
           console.log("Error desconegut");

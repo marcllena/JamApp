@@ -101,22 +101,21 @@ io.on('connection',function(socket){
     socket.on('chatInit', function(dest){
         console.log("Iniciant chat" + dest)
         Musician.findOne({username: dest}, (err, user)=>{
-            console.log(user)
             if(err) {
                     console.log("Error al buscar music")
                 }
             else if(user!=null){ //usuari trobat, buscar possible conversa
                 console.log(socket.idUser+"///"+ user._id)
-                Conver.findOne({participants: {"$in" : [socket.idUser, user._id]}}, (err, conv) => { // POTSER NO FA BE LA BUSQUEDA, DEMA HO PROVO
+                Conver.findOne({participants: {"$all" : [socket.idUser, user._id]}}, (err, conv) => { // POTSER NO FA BE LA BUSQUEDA, DEMA HO PROVO
                     if(err) {
                         console.log("Error al buscar conversa")
                     }
                     else if(conv!=null){ //usuari trobat, buscar possible conversa
-                        console.log("bichadissima")
                         socket.emit('chatInit', conv.messages) //S'envien els missatges
                     }
                     else {//CONV no existent
                         console.log("shem conversa")
+                        socket.emit('chatInit', "")
                     }
                     })
             }
