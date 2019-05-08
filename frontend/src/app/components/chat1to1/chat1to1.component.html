@@ -12,7 +12,7 @@
                  on-swipe-left="hideTime = false"
                  on-swipe-right="hideTime = true">
   <div>
-  <ion-card *ngFor="let message of messages">
+  <ion-card *ngFor="let message of this.websockets.getMessages()">
     <ion-card-header>
       <ion-card-title><b>{{message.from}}</b>: {{message.message}}</ion-card-title>
     </ion-card-header>

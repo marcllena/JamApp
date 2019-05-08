@@ -12,12 +12,14 @@ io.on('connection',function(socket){
         services.decodeToken(idUser).then(response =>{
             socket.idUser=response;
             console.log('Conexion con el Socket: ', socket.idUser)
+            socket.emit('idUser', response)
             next()
         })
         .catch(response=>{
         
 
         })
+        
         /*var allConnectedClients = io.sockets.connected; //list os socket connected
         var send = []
         Object.keys(allConnectedClients).forEach(function(key){
@@ -105,13 +107,13 @@ io.on('connection',function(socket){
                 }
             else if(user!=null){ //usuari trobat, buscar possible conversa
                 console.log(socket.idUser+"///"+ user._id)
-                Conver.findOne({participants: {"$all" : [socket.idUser, user._id]}}, (err, conv) => {
+                Conver.findOne({participants: {"$in" : [socket.idUser, user._id]}}, (err, conv) => { // POTSER NO FA BE LA BUSQUEDA, DEMA HO PROVO
                     if(err) {
                         console.log("Error al buscar conversa")
                     }
                     else if(conv!=null){ //usuari trobat, buscar possible conversa
                         console.log("bichadissima")
-                        io.sockets.emit('chatInit', conv.messages) //S'envien els missatges
+                        socket.emit('chatInit', conv.messages) //S'envien els missatges
                     }
                     else {//CONV no existent
                         console.log("shem conversa")
