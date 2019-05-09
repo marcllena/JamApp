@@ -4,15 +4,16 @@ import {NativeGeocoder} from "@ionic-native/native-geocoder/ngx";
 import {ToolbarService} from "../../services/toolbar.service";
 import {Platform, ToastController} from "@ionic/angular";
 import {UserServices} from "../../services/user.services";
+import {Router} from "@angular/router";
 
 declare var google;
 
 @Component({
-  selector: 'app-location-pick',
-  templateUrl: './location-pick.component.html',
-  styleUrls: ['./location-pick.component.scss'],
+  selector: 'app-registration-location',
+  templateUrl: './registration-location.component.html',
+  styleUrls: ['./registration-location.component.scss'],
 })
-export class LocationPickComponent implements OnInit {
+export class RegistrationLocationComponent implements OnInit {
 
   @ViewChild('map') mapElement: ElementRef;
   map: any;
@@ -21,6 +22,7 @@ export class LocationPickComponent implements OnInit {
   longitud: number;
   clickedLatitud: number;
   clickedLongitud: number;
+  exito:boolean;
 
 
 
@@ -31,13 +33,23 @@ export class LocationPickComponent implements OnInit {
     public platform: Platform,
     public toastController: ToastController,
     private userService: UserServices,
+    private router: Router
   ) {
     this.clickedLatitud= -360;
     this.clickedLongitud= -360;
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.obtindreUbicacio();
+    this.mostrarToast();
+  }
+  async mostrarToast() {
+    const toast = await this.toastController.create({
+      message: "Porfavor seleccione su ubicación en el mapa",
+      duration: 4000,
+      position: 'bottom',
+    });
+    toast.present();
   }
 
   obtindreUbicacio(){
@@ -118,7 +130,7 @@ export class LocationPickComponent implements OnInit {
     var image = {
       url: '../../../assets/markers/music-marker.png',
     }
-      this.marker = new google.maps.Marker({
+    this.marker = new google.maps.Marker({
       position: {lat: this.clickedLatitud , lng: this.clickedLongitud},
       //icon: image, //De moment deixem la imatge per defecte
       map: this.map,
@@ -126,34 +138,6 @@ export class LocationPickComponent implements OnInit {
   }
   updateMarkerPosition(){
     this.marker.setPosition(new google.maps.LatLng( this.clickedLatitud, this.clickedLongitud ));
-  }
-  getLocation(){
-    /*console.log("Latitud: "+this.clickedLatitud+", Longitud: "+this.clickedLongitud);
-    //Creem nou objecte amb les ubicacions:
-    var coordinates = {
-      latitud: this.clickedLatitud,
-      longitud: this.clickedLongitud
-    };
-    let token =localStorage.getItem('token');
-    this.userService.setLocation(token,coordinates)
-      .subscribe(async response => {
-          console.log("Resposta del BackEnd" + response.body);
-          if (response.status == 200) {
-            const toast = await this.toastController.create({
-              message: "Posicion Fijada Correctamente",
-              duration: 2000,
-              position: 'bottom',
-            });
-            toast.present();
-          } else {
-            //Error desconegut
-            console.log("Error");
-          }
-        },
-        err => {
-          console.log("Error del BackEnd"+err);
-          //console.log(err);
-        });*/
   }
 
   setLocation(){
@@ -169,6 +153,7 @@ export class LocationPickComponent implements OnInit {
       .subscribe(async response => {
           console.log("Resposta del BackEnd" + response.body);
           if (response.status == 200) {
+            this.exito=true;
             const toast = await this.toastController.create({
               message: "Posicion Fijada Correctamente",
               duration: 2000,
@@ -178,10 +163,12 @@ export class LocationPickComponent implements OnInit {
           } else {
             //Error desconegut
             console.log("Error");
+            this.exito=false;
           }
         },
         err => {
           console.log("Error del BackEnd"+err);
+          this.exito=false;
           //console.log(err);
         });
   }

@@ -124,7 +124,7 @@ export class RegistrationComponent implements OnInit {
         localStorage.setItem('token', token);
         localStorage.setItem('_id',response.body['_id']);
         //Li passem la ubicació al registrarse:
-        this.router.navigateByUrl("/api/changeLocation");
+        this.router.navigateByUrl("api/pickLocation");
       }
       else {
         //Error desconegut
