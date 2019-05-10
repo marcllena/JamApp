@@ -4,6 +4,7 @@ import {NativeGeocoder} from "@ionic-native/native-geocoder/ngx";
 import {ToolbarService} from "../../services/toolbar.service";
 import {Platform, ToastController} from "@ionic/angular";
 import {UserServices} from "../../services/user.services";
+import {User} from "../../models/user";
 
 declare var google;
 
@@ -38,6 +39,15 @@ export class LocationPickComponent implements OnInit {
 
   ngOnInit() {
     this.obtindreUbicacio();
+    this.mostrarToast();
+  }
+  async mostrarToast() {
+    const toast = await this.toastController.create({
+      message: "Porfavor seleccione su nueva ubicación en el mapa",
+      duration: 4000,
+      position: 'bottom',
+    });
+    toast.present();
   }
 
   obtindreUbicacio(){
@@ -101,15 +111,11 @@ export class LocationPickComponent implements OnInit {
         }
       ]
     });
+    this.getLocation();
     google.maps.event.addListener(this.map,"click", (event) => {
       this.clickedLongitud=event.latLng.lng();
       this.clickedLatitud=event.latLng.lat();
-      if(this.marker==null) {
-        this.placeNewMarker();
-      }
-      else{
-        this.updateMarkerPosition();
-      }
+      this.updateMarkerPosition();
       this.setLocation();
 
     });
@@ -128,23 +134,17 @@ export class LocationPickComponent implements OnInit {
     this.marker.setPosition(new google.maps.LatLng( this.clickedLatitud, this.clickedLongitud ));
   }
   getLocation(){
-    /*console.log("Latitud: "+this.clickedLatitud+", Longitud: "+this.clickedLongitud);
-    //Creem nou objecte amb les ubicacions:
-    var coordinates = {
-      latitud: this.clickedLatitud,
-      longitud: this.clickedLongitud
-    };
     let token =localStorage.getItem('token');
-    this.userService.setLocation(token,coordinates)
+    let id =localStorage.getItem('_id');
+    this.userService.getLocation(token,id)
       .subscribe(async response => {
           console.log("Resposta del BackEnd" + response.body);
+          var result= response.body as User;
           if (response.status == 200) {
-            const toast = await this.toastController.create({
-              message: "Posicion Fijada Correctamente",
-              duration: 2000,
-              position: 'bottom',
-            });
-            toast.present();
+            this.marker = new google.maps.Marker({
+              position: {lat: result.latitud, lng: result.longitud},
+              map: this.map,
+            })
           } else {
             //Error desconegut
             console.log("Error");
@@ -153,7 +153,7 @@ export class LocationPickComponent implements OnInit {
         err => {
           console.log("Error del BackEnd"+err);
           //console.log(err);
-        });*/
+        });
   }
 
   setLocation(){

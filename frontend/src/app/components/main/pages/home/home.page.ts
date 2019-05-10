@@ -135,7 +135,7 @@ export class HomePage {
             }
             //Mostrem les sales
             var image2 = {
-              url: '../../../assets/markers/marker3.png',
+              url: '../../../assets/markers/star-marker.png',
               scaledSize: new google.maps.Size(50, 50)
             };
             for (let i = 0; i < this.userList.rooms.length; i++) {
