@@ -52,8 +52,7 @@
 
         <ion-item>
           <ion-label>Perfil de Usuario</ion-label>
-          <ion-select (ionChange)="incUserReps()" value="music" formControlName="profile" okText="Aceptar" cancelText="Cancelar">
-            <ion-select-option value="user">Usuario</ion-select-option>
+          <ion-select (ionChange)="incUserReps()" placeholder="Selecciona un perfil" formControlName="profile" okText="Aceptar" cancelText="Cancelar">
             <ion-select-option value="music">Músico</ion-select-option>
             <ion-select-option value="room">Sala</ion-select-option>
             <ion-select-option *ngIf="adminCandidate" value="admin">Admin</ion-select-option>
@@ -80,6 +79,11 @@
           </ng-container>
           <ng-container *ngFor="let validation of validation_messages.confirmPassword">
             <div class="alert alert-danger" *ngIf="registerForm.get('confirmPassword').hasError(validation.type) && (registerForm.get('confirmPassword').dirty || registerForm.get('confirmPassword').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+          <ng-container *ngFor="let validation of validation_messages.profile">
+            <div class="alert alert-danger" *ngIf="registerForm.get('profile').hasError(validation.type) && (registerForm.get('profile').dirty || registerForm.get('profile').touched)">
               {{ validation.message }}
             </div>
           </ng-container>

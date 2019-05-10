@@ -36,7 +36,8 @@ export class RegistrationComponent implements OnInit {
 
         confirmPassword: ['', passValidator],
 
-        profile:'',
+        profile:new FormControl('', Validators.compose([
+          Validators.required])),
 
         adminPassword:''
       }
@@ -63,6 +64,9 @@ export class RegistrationComponent implements OnInit {
       'confirmPassword': [
         { type: 'required', message: 'Confirmar Contraseña: Requerida' },
         { type: 'pattern', message: 'Contraseña: Debe contener entre 4 y 8 carácteres, incluyendo un número como mínimo' },
+      ],
+      'profile': [
+        { type: 'required', message: 'Perfil de usuario: Requerido' }
       ]
     }
     }
