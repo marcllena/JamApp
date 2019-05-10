@@ -19,6 +19,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { UserlistComponent } from './components/userlist/userlist.component';
 import { GrupCreateComponent } from './components/grup-create/grup-create.component';
 import { LocationPickComponent } from './components/location-pick/location-pick.component';
+import { RegistrationLocationComponent } from './components/registration-location/registration-location.component';
 import { Chat1to1Component} from './components/chat1to1/chat1to1.component';
 import { DataService } from './services/data.services';
 import { UserInfoComponent } from './components/user-info/user-info.component';
@@ -32,7 +33,9 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
     GrupCreateComponent,
     LocationPickComponent,
     Chat1to1Component,
-    UserInfoComponent
+    RegistrationLocationComponent,
+    Chat1to1Component,
+    UserInfoComponent,
   ],
   entryComponents: [],
   imports: [

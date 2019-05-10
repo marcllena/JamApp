@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Register Form
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="map-wrapper">
+    <div #map id="map"></div>
+  </div>
+  <ion-fab  *ngIf="exito==true" vertical="bottom" horizontal="center" slot="fixed" >
+    <ion-fab-button href="/api/menu/home">
+      <ion-icon name="done-all"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+
+</ion-content>
+
+
+
+
