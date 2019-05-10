@@ -10,6 +10,8 @@ const User = require('../models/user');
 const Musician = require('../models/musician');
 const Admin = require('../models/admin');
 const Room = require('../models/room');
+const Point = require('../models/point');
+
 const service = require('../services');
 const config = require('../config');
 const Cryptr = require('cryptr');
@@ -19,7 +21,8 @@ const cryptr = new Cryptr(config.SECRET_TOKEN);
 //registre, rep al body els parametres de nom, password i email
 // a més, el camp userType 0 si user, 1 si music, 2 si sala, 3 si admin
 function signUp(req,res) {
-    var userNew;
+    let userNew;
+    let point;
     console.log(req.body);
     switch (req.body.userType){
 
@@ -32,20 +35,32 @@ function signUp(req,res) {
             break;
 
         case 1://cas music
+            point = new Point({
+                type: "Point",
+                coordinates: [null,null],
+            });
             userNew = new Musician({
                 email: req.body.email,
                 username: req.body.username,
                 password: req.body.password,
+                location: point,
                 latitud: null,
-                longitud: null
+                longitud: null,
+
             });
             break;
 
         case 2://cas sala
+            point = new Point({
+                type: "Point",
+                coordinates: [null,null],
+            });
+
             userNew = new Room({
                 email: req.body.email,
                 username: req.body.username,
                 password: req.body.password,
+                location: point,
                 latitud: null,
                 longitud: null
             });
@@ -157,7 +172,10 @@ function refreshToken(req,res) {
 
         res.status(200).send({
             message: "Te has logeado correctamente",
-            token: service.createToken(user)
+            token: service.createToken(user),
+            _id: cryptr.encrypt(user._id),
+            username: user.username,
+
         })
     })
 
@@ -221,6 +239,11 @@ function setLocation(req,res){
         if(err)
             return res.status(500).send({message: `Error searching the user: ${err}`});
         if(user==null) return res.status(404).send({message: `User not found`});
+        let point = new Point({
+            type: "Point",
+            coordinates: [req.body.longitud,req.body.latitud],
+        });
+        user.location=point;
         user.latitud=req.body.latitud;
         user.longitud=req.body.longitud;
         user.save((err,userStored) => {
