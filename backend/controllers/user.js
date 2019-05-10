@@ -114,7 +114,8 @@ function signIn(req,res) {
                 res.status(200).send({
                     message: "Te has logeado correctamente",
                     token: service.createToken(user[0]),
-                    _id: cryptr.encrypt(user[0]._id)
+                    _id: cryptr.encrypt(user[0]._id),
+                    username: user[0].username,
                 })
             } else {
                 console.log("Password Incorrecte");
