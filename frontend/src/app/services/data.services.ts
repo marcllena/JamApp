@@ -8,19 +8,26 @@ export class DataService {
 
   private originalParam = new BehaviorSubject("0");
   private originalChatDestination = new BehaviorSubject("0");
-  newParam= this.originalParam.asObservable()
-  newChatDestination = this.originalChatDestination.asObservable()
+  private originalClickedUserId = new BehaviorSubject("0");
+  newParam= this.originalParam.asObservable();
+  newChatDestination = this.originalChatDestination.asObservable();
+  newClickedUserId = this.originalClickedUserId.asObservable();
 
   constructor() { }
+
 
 
   changeStationName(name: string) {
     this.originalParam.next(name)
   }
+
   changeChatDestination(name: string) {
     this.originalChatDestination.next(name);
   }
 
+  changeClickedUserId(name: string) {
+    this.originalClickedUserId.next(name);
+  }
 
 
 }
