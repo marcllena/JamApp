@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client';
 import {DataService} from './data.services'
+import {Environment} from "./environment";
 @Injectable({
   providedIn: 'root'
 })
 export class WebsocketsService {
 
+  environment: Environment;
+
   socket
   messages = new Array()
   constructor(private singleton: DataService,) {
-    this.socket = io.connect('http://localhost:3000') //S'ha de cnaviar a una variable per desplegar
+    this.environment = new Environment();
+    this.socket = io.connect(this.environment.urlSockets) //S'ha de cnaviar a una variable per desplegar
     this.socket.on('chatInit', function(missages){
       console.log(missages)
       //Imprimir missatges, guardarlos a una variable singleton.
