@@ -9,16 +9,23 @@ export class DataService {
   private originalChatDestination = new BehaviorSubject("0");
   private originalClickedUserId = new BehaviorSubject("0");
   private originalUserId = new BehaviorSubject("0");
+  private originalUsername = new BehaviorSubject("Null");
 
   newChatDestination = this.originalChatDestination.asObservable();
   newClickedUserId = this.originalClickedUserId.asObservable();
   newUserId = this.originalUserId.asObservable();
+  newUsername = this.originalUsername.asObservable();
+
 
   constructor() { }
 
 
   changeUserId(name: string) {
     this.originalUserId.next(name);
+  }
+
+  changeUsername(name: string) {
+    this.originalUsername.next(name);
   }
 
   changeChatDestination(name: string) {

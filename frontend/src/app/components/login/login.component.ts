@@ -4,6 +4,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import { User } from "../../models/user";
+import {DataService} from "../../services/data.services";
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   validation_messages: any;
 
-  constructor(private userService: AuthService, private router: Router, private formBuilder: FormBuilder) {
+  constructor(private userService: AuthService, private router: Router, private formBuilder: FormBuilder,private singleton: DataService) {
     this.loginForm = this.formBuilder.group({
         email: new FormControl('', Validators.compose([
           Validators.required,
@@ -62,7 +63,8 @@ export class LoginComponent implements OnInit {
             let token = response.body['token'];
             localStorage.setItem('token', token);
             localStorage.setItem('_id',response.body['_id']);
-
+            this.singleton.changeUserId(response.body['_id']);
+            this.singleton.changeUsername(response.body['username']);
             this.router.navigateByUrl("/api/menu/home");
           }
           else {
@@ -98,6 +100,8 @@ export class LoginComponent implements OnInit {
             console.log("Resposta del BackEnd" + response);
             if (response.status == 200) {
               //El usuari ja te login
+              this.singleton.changeUserId(response.body['_id']);
+              this.singleton.changeUsername(response.body['username']);
               this.router.navigateByUrl("/api/menu/home");
             } else {
               //Error desconegut
