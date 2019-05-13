@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Router} from "@angular/router";
 import {DataService} from "./data.services";
+import { AlertController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +11,9 @@ export class ToolbarService {
   private userId: string;
   private userName: string;
 
-  constructor(private router: Router,private singleton: DataService) {
-    this.userId = localStorage.getItem('id');
-    this.userName=localStorage.getItem('username');
-    console.log(this.userName);
+  constructor(private router: Router,private singleton: DataService, private alertController: AlertController) {
+    this.singleton.newUserId.subscribe(userid => this.userId = userid);
+    this.singleton.newUsername.subscribe(username => this.userName = username);
   }
 
   profile(){
