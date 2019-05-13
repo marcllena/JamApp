@@ -41,18 +41,30 @@
           <br>
 
           <ion-list>
-              <ion-label class="label-input100">Estilos</ion-label>
-              <br>
-              <ion-select  placeholder="Selecciona estilos" multiple="true" (ionChange)="logsito2()" value="regeton" formControlName="estils" okText="Aceptar" cancelText="Cancelar">
-              <ion-select-option *ngFor="let item of items2" [value]="item">{{item}}</ion-select-option>
-              </ion-select>
-            </ion-list>
+            <ion-label class="label-input100">Estilos</ion-label>
             <br>
+            <ion-select  placeholder="Selecciona estilos" multiple="true" (ionChange)="logsito2()" value="regeton" formControlName="estils" okText="Aceptar" cancelText="Cancelar">
+            <ion-select-option *ngFor="let item of items2" [value]="item">{{item}}</ion-select-option>
+            </ion-select>
+          </ion-list>
+          <br>
+
+          <div class="container-login100-form-btn">
+            <div class="wrap-login100-form-btn">
+              <div class="login100-form-bgbtn"></div>
+              <ion-button color="primary" expand="block">Guardar</ion-button>
+            </div>
+          </div>
+          <br>
+
+          <div class="container-login100-form-btn">
+            <div class="wrap-login100-form-btn">
+              <div class="login100-form-bgbtn"></div>
+              <ion-button color="primary" href="api/changeLocation" expand="block">Cambiar nuestra ubicación</ion-button>
+            </div>
+          </div>
 
         </form>
-
-
-          <ion-button color="primary" href="api/changeLocation" expand="block">Cambiar nuestra ubicación</ion-button>
       </form>
     </div>
   </div>

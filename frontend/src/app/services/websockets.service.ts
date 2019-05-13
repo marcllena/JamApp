@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client';
 import {DataService} from './data.services'
+import {Environment} from "./environment";
 @Injectable({
   providedIn: 'root'
 })
 export class WebsocketsService {
+
+  environment: Environment;
 
   socket
   messages = new Array()

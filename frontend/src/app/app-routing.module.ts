@@ -8,6 +8,8 @@ import {UserlistComponent} from "./components/userlist/userlist.component";
 import { GrupCreateComponent } from "./components/grup-create/grup-create.component";
 import {LocationPickComponent} from "./components/location-pick/location-pick.component";
 import { Chat1to1Component } from './components/chat1to1/chat1to1.component';
+import {UserInfoComponent} from "./components/user-info/user-info.component";
+import {RegistrationLocationComponent} from "./components/registration-location/registration-location.component";
 
 const routes: Routes = [
   { path: 'api/signin', component: LoginComponent },
@@ -18,7 +20,10 @@ const routes: Routes = [
   { path: 'api/menu', loadChildren: './components/main/menu/menu.module#MenuPageModule' },
   { path: 'api/grupCreate', component: GrupCreateComponent},
   { path: 'api/changeLocation', component: LocationPickComponent},
+  { path: 'api/pickLocation', component: RegistrationLocationComponent},
   {path: 'api/chat1to1', component: Chat1to1Component},
+  {path: 'api/userInfo', component: UserInfoComponent},
+
 ];
 
 @NgModule({

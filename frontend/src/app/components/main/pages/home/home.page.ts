@@ -6,6 +6,8 @@ import {ToolbarService} from "../../../../services/toolbar.service";
 import { Platform } from '@ionic/angular';
 import { UserServices } from "../../../../services/user.services";
 import {HttpResponse} from "@angular/common/http";
+import {DataService} from '../../../../services/data.services';
+import {Router} from "@angular/router";
 
 declare var google;
 
@@ -26,11 +28,13 @@ export class HomePage {
   markersListSalas: any;
   userClicked:any;
   constructor(
+    private singleton: DataService,
     private geolocation: Geolocation,
     private nativeGeocoder: NativeGeocoder,
     private toolbarService: ToolbarService,
     public platform: Platform,
     private userService: UserServices,
+    private router: Router
     
   ) {
     this.markersListUsers=[];
@@ -135,7 +139,7 @@ export class HomePage {
             }
             //Mostrem les sales
             var image2 = {
-              url: '../../../assets/markers/marker3.png',
+              url: '../../../assets/markers/star-marker.png',
               scaledSize: new google.maps.Size(50, 50)
             };
             for (let i = 0; i < this.userList.rooms.length; i++) {
@@ -155,6 +159,8 @@ export class HomePage {
               google.maps.event.addListener(this.markersListUsers[i], 'click', () =>{
                 console.log("Click al usuari " + this.userList.musicians[i].username)
                 this.userClicked=this.userList.musicians[i];
+                this.singleton.changeClickedUserId(this.userClicked._id);
+                this.router.navigateByUrl("/api/userInfo");
               });
             }
           }

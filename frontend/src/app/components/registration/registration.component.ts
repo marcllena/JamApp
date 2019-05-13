@@ -36,7 +36,8 @@ export class RegistrationComponent implements OnInit {
 
         confirmPassword: ['', passValidator],
 
-        profile:'',
+        profile:new FormControl('', Validators.compose([
+          Validators.required])),
 
         adminPassword:''
       }
@@ -63,6 +64,9 @@ export class RegistrationComponent implements OnInit {
       'confirmPassword': [
         { type: 'required', message: 'Confirmar Contraseña: Requerida' },
         { type: 'pattern', message: 'Contraseña: Debe contener entre 4 y 8 carácteres, incluyendo un número como mínimo' },
+      ],
+      'profile': [
+        { type: 'required', message: 'Perfil de usuario: Requerido' }
       ]
     }
     }
@@ -124,7 +128,7 @@ export class RegistrationComponent implements OnInit {
         localStorage.setItem('token', token);
         localStorage.setItem('_id',response.body['_id']);
         //Li passem la ubicació al registrarse:
-        this.router.navigateByUrl("/api/changeLocation");
+        this.router.navigateByUrl("api/pickLocation");
       }
       else {
         //Error desconegut

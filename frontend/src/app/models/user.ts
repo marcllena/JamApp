@@ -3,13 +3,12 @@ export class User {
   email: string;
   username: string;
   password: string;
-  edat: Number;
-  fotoPerfil: String;
+  edat: number;
   instrument: string[];
-  ubicacio:String;
-  coordenades:[Number];
-  descripcio:String;
-  video:String;
+  ubicacio:string;
+  latitud: number;
+  longitud: number;
+  video:string;
   estils: string[];
   userType:number;
   pass: string;

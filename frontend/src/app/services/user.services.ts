@@ -15,6 +15,13 @@ export class UserServices {
   constructor(private http: HttpClient) {
     this.environment = new Environment();
   }
+
+  obtainUser(token,userId) {
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+    }
+    return this.http.get(this.environment.urlUser + "user/" + userId, {headers: headers,observe: 'response'})
+  }
   obtainUsers(token) {
     const headers = {
       'Authorization': `Bearer ${token}`,
@@ -73,6 +80,12 @@ export class UserServices {
       'Authorization': `Bearer ${token}`,
     }
     return this.http.post(this.environment.urlUser + "user/location/", coor,{headers: headers,observe: 'response'})
+  }
+  getLocation(token,id) {
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+    }
+    return this.http.get(this.environment.urlUser + "user/"+id, {headers: headers,observe: 'response'})
   }
   getLocations() {
     return this.http.get(this.environment.urlUser + "user/location",{observe: 'response'})
