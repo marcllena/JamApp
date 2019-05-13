@@ -11,9 +11,10 @@ export class WebsocketsService {
 
   socket
   messages = new Array()
+  destination
   constructor(private singleton: DataService,) {
-    this.environment = new Environment();
-    this.socket = io.connect(this.environment.urlSockets) //S'ha de cnaviar a una variable per desplegar
+    this.singleton.newChatDestination.subscribe(destination => this.destination = destination)
+    this.socket = io.connect('http://localhost:3000') //S'ha de cnaviar a una variable per desplegar
     this.socket.on('chatInit', function(missages){
       console.log(missages)
       //Imprimir missatges, guardarlos a una variable singleton.
@@ -24,12 +25,13 @@ export class WebsocketsService {
       this.pushIncomingMessage(missages);
 
     }.bind(this))
-    this.socket.on('chat1to1', function(message){
+    this.socket.on('chat1to1', function(message, origin){
       
       console.log("Rebent missatge")
       let fletxa = new Array();
       fletxa.push(message)
-      this.pushIncomingMessage(fletxa);
+      console.log(message, origin, this.destination)
+      this.pushIncomingMessage(fletxa, origin);
     }.bind(this))
     this.socket.on('idUser', function(idUser){
         this.socket.idUser = idUser;
@@ -42,24 +44,26 @@ export class WebsocketsService {
   netejaMessages(){
     this.messages = new Array()
   }
-  pushIncomingMessage(message){
-
+  pushIncomingMessage(message, origin){
+      //Falta distingir qui envia el missatge, perque si no es qui toca, safageix igual º
     let missatge
     for(let i=0;i<message.length;i++){
       if(message[i].from == this.socket.idUser){
         console.log("son iguals")
-        missatge = {'from': "Myself", 'message': message[i].message}
+        missatge = {'from': "jo", 'message': message[i].message}
+        this.messages.push(missatge)
       }
       else{
-        if(typeof message[i].message == "undefined"){
-          missatge = {'from': "Candidat", 'message': message[i]}
+        if(typeof message[i].message == "undefined" && origin == this.destination){
+          missatge = {'from': this.destination, 'message': message[i]}
+          this.messages.push(missatge)
         }
-        else{
-        missatge = {'from': "Candidat", 'message': message[i].message}
-        console.log("son diff")}
+        else if(typeof message[i].message != "undefined"){
+        missatge = {'from': this.destination, 'message': message[i].message}
+        this.messages.push(missatge)}
       }
 
-      this.messages.push(missatge)
+      
     }
 
   }
