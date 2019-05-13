@@ -126,7 +126,7 @@ function signIn(req,res) {
             //if (err) throw err;
             if(isMatch) {
                 console.log("Login Correcte " );
-                if(user[0].userType)
+                if("userType" in user[0])
                 res.status(200).send({
                     message: "Te has logeado correctamente",
                     token: service.createToken(user[0]),
@@ -179,7 +179,7 @@ function refreshToken(req,res) {
 
         console.log("Login Correcte, Token Validat");
 
-        if(user[0].userType)
+        if("userType" in user[0])
             res.status(200).send({
                 message: "Te has logeado correctamente",
                 token: service.createToken(user[0]),

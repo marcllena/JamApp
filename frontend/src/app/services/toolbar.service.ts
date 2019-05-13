@@ -14,6 +14,8 @@ export class ToolbarService {
   constructor(private router: Router,private singleton: DataService, private alertController: AlertController) {
     this.singleton.newUserId.subscribe(userid => this.userId = userid);
     this.singleton.newUsername.subscribe(username => this.userName = username);
+    this.userId=localStorage.getItem('id');
+    this.userName=localStorage.getItem('username');
   }
 
   profile(){

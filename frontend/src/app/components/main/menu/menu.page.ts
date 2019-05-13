@@ -11,17 +11,20 @@ export class MenuPage implements OnInit {
     {
       title: 'Home',
       url: 'home',
-      icon: 'home'
+      icon: 'home',
+      type: 'User'
     },
     {
       title: 'Groups',
       url: 'gruplist',
-      icon: 'people'
+      icon: 'people',
+      type: 'User'
     },
     {
       title: 'Jam Sessions',
       url: 'jamlist',
-      icon: 'musical-notes'
+      icon: 'musical-notes',
+      type: 'User'
     },
   ];
 
