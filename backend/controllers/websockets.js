@@ -19,7 +19,7 @@ io.on('connection',function(socket){
                     socket.nickname = user.username
                 }
             })
-            console.log('Conexion con el Socket: ', socket.idUser)
+            console.log('Conexion con el Socket: ', socket.idUser);
             socket.emit('idUser', response)
             next()
         })

@@ -6,24 +6,32 @@ import {WebsocketsService} from "../../../services/websockets.service";
   styleUrls: ['./menu.page.scss'],
 })
 export class MenuPage implements OnInit {
+  private userType: string;
 
   public mainPages = [
     {
       title: 'Home',
-      url: 'home',
+      url: 'menu/home',
       icon: 'home',
       type: 'User'
     },
     {
       title: 'Groups',
-      url: 'gruplist',
+      url: 'menu/gruplist',
       icon: 'people',
       type: 'User'
     },
     {
       title: 'Jam Sessions',
-      url: 'jamlist',
+      url: 'menu/jamlist',
       icon: 'musical-notes',
+      type: 'User'
+    },
+
+    {
+      title: 'User List',
+      url: 'userlist',
+      icon: 'contacts',
       type: 'User'
     },
   ];
@@ -31,6 +39,7 @@ export class MenuPage implements OnInit {
   constructor(public websockets: WebsocketsService) { }
 
   ngOnInit() {
+    this.userType=localStorage.getItem('userType');
     this.websockets.init();
   }
 

@@ -53,7 +53,7 @@
             <ion-label>{{group.email}}</ion-label>
             <ion-label>{{group.description}}</ion-label>
             <!--<ion-checkbox></ion-checkbox>-->
-            <ion-button class="list-buttons" color="primary" (click)="requestMembership(group)">
+            <ion-button class="list-buttons" color="primary" (click)="requestMembership(group)" *ngIf="userType=='Musician'">
               <!--Join a group-->
               <ion-icon slot="icon-only" name="add-circle"></ion-icon>
             </ion-button>

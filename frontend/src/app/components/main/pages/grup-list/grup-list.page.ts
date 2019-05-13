@@ -11,6 +11,7 @@ import {DataService} from '../../../../services/data.services';
 })
 export class GrupListPage implements OnInit {
 
+  private userType: string;
   groups: Object;
   requests: Object;
 
@@ -18,6 +19,7 @@ export class GrupListPage implements OnInit {
 
   ngOnInit() {
     this.getRequests();
+    this.userType=localStorage.getItem('userType');
   }
 
   llistaGrups(){
