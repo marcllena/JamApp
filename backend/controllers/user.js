@@ -126,11 +126,20 @@ function signIn(req,res) {
             //if (err) throw err;
             if(isMatch) {
                 console.log("Login Correcte " );
+                if(user[0].userType)
                 res.status(200).send({
                     message: "Te has logeado correctamente",
                     token: service.createToken(user[0]),
                     _id: cryptr.encrypt(user[0]._id),
                     username: user[0].username,
+                    userType: user[0].userType,
+                })
+                else res.status(200).send({
+                    message: "Te has logeado correctamente",
+                    token: service.createToken(user[0]),
+                    _id: cryptr.encrypt(user[0]._id),
+                    username: user[0].username,
+                    userType: "User",
                 })
             } else {
                 console.log("Password Incorrecte");
@@ -170,12 +179,20 @@ function refreshToken(req,res) {
 
         console.log("Login Correcte, Token Validat");
 
-        res.status(200).send({
+        if(user[0].userType)
+            res.status(200).send({
+                message: "Te has logeado correctamente",
+                token: service.createToken(user[0]),
+                _id: cryptr.encrypt(user[0]._id),
+                username: user[0].username,
+                userType: user[0].userType,
+            });
+        else res.status(200).send({
             message: "Te has logeado correctamente",
-            token: service.createToken(user),
-            _id: cryptr.encrypt(user._id),
-            username: user.username,
-
+            token: service.createToken(user[0]),
+            _id: cryptr.encrypt(user[0]._id),
+            username: user[0].username,
+            userType: "User",
         })
     })
 

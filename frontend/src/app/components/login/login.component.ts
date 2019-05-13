@@ -62,7 +62,9 @@ export class LoginComponent implements OnInit {
             //Operació Realitzada Correctament
             let token = response.body['token'];
             localStorage.setItem('token', token);
-            localStorage.setItem('_id',response.body['_id']);
+            localStorage.setItem('id',response.body['_id']);
+            localStorage.setItem('userType', response.body['userType']);
+            localStorage.setItem('username',response.body['username']);
             this.singleton.changeUserId(response.body['_id']);
             this.singleton.changeUsername(response.body['username']);
             this.router.navigateByUrl("/api/menu/home");
@@ -100,6 +102,11 @@ export class LoginComponent implements OnInit {
             console.log("Resposta del BackEnd" + response);
             if (response.status == 200) {
               //El usuari ja te login
+              let token = response.body['token'];
+              localStorage.setItem('token', token);
+              localStorage.setItem('id',response.body['_id']);
+              localStorage.setItem('userType', response.body['userType']);
+              localStorage.setItem('username',response.body['username']);
               this.singleton.changeUserId(response.body['_id']);
               this.singleton.changeUsername(response.body['username']);
               this.router.navigateByUrl("/api/menu/home");
