@@ -23,6 +23,7 @@ import { RegistrationLocationComponent } from './components/registration-locatio
 import { Chat1to1Component} from './components/chat1to1/chat1to1.component';
 import { DataService } from './services/data.services';
 import { UserInfoComponent } from './components/user-info/user-info.component';
+import {FilterFormComponent} from "./components/filter-form/filter-form.component";
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +37,7 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
     RegistrationLocationComponent,
     Chat1to1Component,
     UserInfoComponent,
+    FilterFormComponent
   ],
   entryComponents: [],
   imports: [

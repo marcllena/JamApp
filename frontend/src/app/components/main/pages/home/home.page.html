@@ -1,11 +1,16 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
     <ion-title>
       Home
     </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-button color="primary" (click)="toolbarService.settings()">
+        <ion-icon slot="icon-only" name="switch"></ion-icon>
+        <ion-label>Filtros</ion-label>
+      </ion-button>
+    </ion-buttons>
+
     <ion-buttons slot="end">
       <ion-label>{{toolbarService.getUserName()}}</ion-label>
       <ion-button color="primary" (click)="toolbarService.profile()">

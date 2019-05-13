@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Filters Form
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="api/menu/home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="limiter">
+    <div class="container-login100">
+      <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+        <form class="login100-form validate-form">
+          <ion-label>Mostrar:</ion-label>
+          <ion-list class="list_items">
+            <ion-item>
+              <ion-checkbox class="checkbox" checked="true"></ion-checkbox>
+              <ion-label>Musicos</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-checkbox class="checkbox" checked="true"></ion-checkbox>
+              <ion-label>Salas</ion-label>
+            </ion-item>
+            <ion-label>Filtrar por distancia</ion-label>
+            <ion-item>
+              <ion-range min="1" max="100" step="5" snaps="true" color="primary">
+                <ion-label slot="start">1 km</ion-label>
+                <ion-label slot="end">100 km</ion-label>
+              </ion-range>
+            </ion-item>
+          </ion-list>
+        </form>
+    </div>
+  </div>
+
+  <div id="dropDownSelect1"></div>
+
+  <!--===============================================================================================-->
+  <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+  <!--===============================================================================================-->
+  <script src="vendor/animsition/js/animsition.min.js"></script>
+  <!--===============================================================================================-->
+  <script src="vendor/bootstrap/js/popper.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <!--===============================================================================================-->
+  <script src="vendor/select2/select2.min.js"></script>
+  <!--===============================================================================================-->
+  <script src="vendor/daterangepicker/moment.min.js"></script>
+  <script src="vendor/daterangepicker/daterangepicker.js"></script>
+  <!--===============================================================================================-->
+  <script src="vendor/countdowntime/countdowntime.js"></script>
+  <!--===============================================================================================-->
+  </div>
+</ion-content>
