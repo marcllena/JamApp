@@ -18,7 +18,9 @@ export class ToolbarService {
   profile(){
     this.router.navigateByUrl('api/settings');
   }
-
+  chat(){
+    this.router.navigateByUrl('api/chats');
+  }
   logOut(){
     localStorage.removeItem('token');
     localStorage.removeItem('_id');
