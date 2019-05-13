@@ -127,6 +127,15 @@ export class HomePage {
               url: '../../../assets/markers/music-marker.png',
               scaledSize: new google.maps.Size(50, 50)
             };
+            /*for (let i = 0; i < this.userList.musicians.length; i++) {
+              if(this.userList.musicians[i].location=!null) {
+                this.markersListUsers[i]=new google.maps.Marker({
+                  position: {lat: this.userList.musicians[i].location.coordinates[1], lng: this.userList.musicians[i].location.coordinates[0]},
+                  map: this.map,
+                  icon: image1,
+                });
+              }
+            }*/
             for (let i = 0; i < this.userList.musicians.length; i++) {
               if(this.userList.musicians[i].latitud!=null&&this.userList.musicians[i].longitud!=null) {
                 this.markersListUsers[i]=new google.maps.Marker({
@@ -142,6 +151,15 @@ export class HomePage {
               url: '../../../assets/markers/star-marker.png',
               scaledSize: new google.maps.Size(50, 50)
             };
+            /*for (let i = 0; i < this.userList.rooms.length; i++) {
+              if(this.userList.rooms[i].location=!null) {
+                this.markersListUsers[i]=new google.maps.Marker({
+                  position: {lat: this.userList.musicians[i].location.coordinates[1], lng: this.userList.musicians[i].location.coordinates[0]},
+                  map: this.map,
+                  icon: image1,
+                });
+              }
+            }*/
             for (let i = 0; i < this.userList.rooms.length; i++) {
               if(this.userList.rooms[i].latitud!=null&&this.userList.rooms[i].longitud!=null) {
                 this.markersListSalas[i]=new google.maps.Marker(

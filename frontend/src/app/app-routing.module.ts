@@ -11,6 +11,7 @@ import { Chat1to1Component } from './components/chat1to1/chat1to1.component';
 import {UserInfoComponent} from "./components/user-info/user-info.component";
 import {RegistrationLocationComponent} from "./components/registration-location/registration-location.component";
 import { ChatListComponent } from './components/main/pages/chat-list/chat-list.component';
+import {FilterFormComponent} from "./components/filter-form/filter-form.component";
 
 const routes: Routes = [
   { path: 'api/signin', component: LoginComponent },
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path: 'api/chat1to1', component: Chat1to1Component},
   {path: 'api/userInfo', component: UserInfoComponent},
   {path: 'api/chats', component: ChatListComponent},
+  {path: 'api/filter', component: FilterFormComponent},
 
 ];
 

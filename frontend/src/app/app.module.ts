@@ -24,6 +24,7 @@ import { Chat1to1Component} from './components/chat1to1/chat1to1.component';
 import { DataService } from './services/data.services';
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { ChatListComponent } from './components/main/pages/chat-list/chat-list.component';
+import {FilterFormComponent} from "./components/filter-form/filter-form.component";
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +39,7 @@ import { ChatListComponent } from './components/main/pages/chat-list/chat-list.c
     Chat1to1Component,
     UserInfoComponent,
     ChatListComponent,
+    FilterFormComponent
   ],
   entryComponents: [],
   imports: [
