@@ -255,17 +255,43 @@ function setLocation(req,res){
 }
 
 function getUsersLocation(req,res){
-    Musician.find({}, '_id username latitud longitud', (err,musicians)=>{
+    Musician.find({}, '_id username latitud longitud location', (err,musicians)=>{
         if(err)
             return res.status(500).send({message: `Error searching musicians: ${err}`});
 
-        Room.find({}, '_id name latitud longitud', (err,rooms)=>{
+        Room.find({}, '_id name latitud longitud location', (err,rooms)=>{
             if(err)
                 return res.status(500).send({message: `Error searching rooms: ${err}`});
 
             res.status(200).send({
                 musicians: musicians,
                 rooms: rooms
+            });
+        });
+    });
+}
+
+function filterDistance(req,res){
+    let longitud,latitud,distancia;
+    User.findById(req.user, (err,user)=> {
+        if(user.location) {
+            longitud = user.location.coordinates[0];
+            latitud = user.location.coordinates[1];
+        }
+        else return res.status(400).send({message: "User without location"});
+        distancia=req.body.distance;
+        Musician.find({location: {$geoWithin: {$centerSphere: [[longitud, latitud], distancia / 6371]}}}, '_id username latitud longitud location', (err, musicians) => {
+            if (err)
+                return res.status(500).send({message: `Error searching musicians: ${err}`});
+
+            Room.find({location: {$geoWithin: {$centerSphere: [[longitud, latitud], distancia / 6371]}}}, '_id name latitud longitud location', (err, rooms) => {
+                if (err)
+                    return res.status(500).send({message: `Error searching rooms: ${err}`});
+
+                res.status(200).send({
+                    musicians: musicians,
+                    rooms: rooms
+                });
             });
         });
     });
@@ -281,5 +307,6 @@ module.exports={
     deleteUsers,
     updateUser,
     setLocation,
-    getUsersLocation
+    getUsersLocation,
+    filterDistance
 };

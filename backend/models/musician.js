@@ -19,6 +19,6 @@ const MusicianSchema = UserBase.discriminator('Musician', new mongoose.Schema({
     descripcio:String,
     video:String,
     estils:[String]
-}))
+}));
 
 module.exports= mongoose.model('Musician');
