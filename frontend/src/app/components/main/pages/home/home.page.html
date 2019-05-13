@@ -7,6 +7,7 @@
       Home
     </ion-title>
     <ion-buttons slot="end">
+      <ion-label>{{toolbarService.getUserName()}}</ion-label>
       <ion-button color="primary" (click)="toolbarService.profile()">
         <ion-icon slot="icon-only" name="contact"></ion-icon>
       </ion-button>
