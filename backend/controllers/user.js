@@ -179,19 +179,19 @@ function refreshToken(req,res) {
 
         console.log("Login Correcte, Token Validat");
 
-        if("userType" in user[0])
+        if("userType" in user)
             res.status(200).send({
                 message: "Te has logeado correctamente",
-                token: service.createToken(user[0]),
-                _id: cryptr.encrypt(user[0]._id),
-                username: user[0].username,
-                userType: user[0].userType,
+                token: service.createToken(user),
+                _id: cryptr.encrypt(user._id),
+                username: user.username,
+                userType: user.userType,
             });
         else res.status(200).send({
             message: "Te has logeado correctamente",
-            token: service.createToken(user[0]),
-            _id: cryptr.encrypt(user[0]._id),
-            username: user[0].username,
+            token: service.createToken(user),
+            _id: cryptr.encrypt(user._id),
+            username: user.username,
             userType: "User",
         })
     })
