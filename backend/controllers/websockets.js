@@ -11,6 +11,14 @@ io.on('connection',function(socket){
     socket.on('idUser', function(idUser){
         services.decodeToken(idUser).then(response =>{
             socket.idUser=response;
+            Musician.findById(response, (err,user)=>{
+                if(err){
+                    console.log("error al buscar music")
+                }
+                else{
+                    socket.nickname = user.username
+                }
+            })
             console.log('Conexion con el Socket: ', socket.idUser)
             socket.emit('idUser', response)
             next()
@@ -61,7 +69,7 @@ io.on('connection',function(socket){
                     }
                 }
                 if(online!=-1){
-                    io.sockets.connected[Object.keys(io.sockets.connected)[online]].emit("chat1to1", message)
+                    io.sockets.connected[Object.keys(io.sockets.connected)[online]].emit("chat1to1", message, socket.nickname)
                 }
                 //Falta guardar els missatges a una conversa.
                 let missatge =  {from: /*String =*/ socket.idUser, message: /*String =*/ message}
