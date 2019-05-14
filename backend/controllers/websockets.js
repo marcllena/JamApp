@@ -4,6 +4,8 @@ const socket = require('socket.io')
 const services = require('../services')
 const Conver = require('../models/conversation')
 const Musician = require('../models/musician')
+const User = require('../models/user')
+
 var websockets = function websockets(server) {
     var io = socket(server);
 io.on('connection',function(socket){
@@ -11,7 +13,7 @@ io.on('connection',function(socket){
     socket.on('idUser', function(idUser){
         services.decodeToken(idUser).then(response =>{
             socket.idUser=response;
-            Musician.findById(response, (err,user)=>{
+            User.findById(response, (err,user)=>{
                 if(err){
                     console.log("error al buscar music")
                 }
@@ -54,7 +56,7 @@ io.on('connection',function(socket){
         //si ho esta, amb el nickname trobar l'id del usuari i trobarli el socket
             //enviarli el missatge
         //guardar els missatges a la conversa (creant una nova o sobreescribint) i la conversa a la BBDD(save o update)
-        Musician.findOne({username: dest}, (err,user)=>{
+        User.findOne({username: dest}, (err,user)=>{
             if(err) {
                 console.log("Error al buscar music")
             }
@@ -108,7 +110,7 @@ io.on('connection',function(socket){
     });
     socket.on('chatInit', function(dest){
         console.log("Iniciant chat" + dest)
-        Musician.findOne({username: dest}, (err, user)=>{
+        User.findOne({username: dest}, (err, user)=>{
             if(err) {
                     console.log("Error al buscar music")
                 }
@@ -130,6 +132,57 @@ io.on('connection',function(socket){
             else {//Usuari no trobat
             }
             })
+    });
+    socket.on('conversations',function(token){
+        var array = []
+        services.decodeToken(token).then(response =>{
+            
+            var destination;
+            Conver.find({'participants': {$in:response}}, (err,convers)=>{ //No tinc clar si busca be, pero ja tira...
+                if(err) {
+                    console.log("Error al buscar")
+                }
+                else{
+                    
+                for(var i=0;i<convers.length;i++){
+                    let messages = [];
+                    for(let k=0;k<convers[i].messages.length;k++){
+                        messages.push(convers[i].messages[k])
+                     }
+                    for(var j=0;j<convers[i].participants.length;j++){
+                    if(convers[i].participants[j] != response){
+                        
+                        User.findById(convers[i].participants[j], (err, user)=>{
+                            if(err) {
+                                console.log("Error al buscar")
+                            }
+                            else{
+                                destination = user.username;
+                                array.push({'destination': destination, 'conversation': messages})
+                                if(i == convers.length){ //no estic 100% que sigui ==, hauria de ser i<
+                                    console.log(array)
+                                    socket.emit('conversations', array)
+                                }
+                        }})
+                     
+            }
+            }
+            
+             
+            
+            }
+            //Això s'executa abans que les linies 160, etc... hauria dexecutar-se despres.
+            
+        }
+            
+            })
+            
+            next()
+        })
+        .catch(response=>{
+        
+
+        })
     });
 });}
 module.exports = websockets;

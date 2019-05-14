@@ -36,6 +36,9 @@ export class WebsocketsService {
     this.socket.on('idUser', function(idUser){
         this.socket.idUser = idUser;
     }.bind(this))
+    this.socket.on('conversations', function(array){
+      console.log("Resultat dels xats: "+JSON.stringify(array))
+    })
   }
   init(){
     this.socket.emit('idUser',localStorage.getItem("token"))
@@ -80,5 +83,9 @@ export class WebsocketsService {
   }
   sendMessage(dest: String, message: String){
     this.socket.emit('sendMessage', dest, message);
+  }
+  conversations(){
+    console.log("enviant request de chats")
+    this.socket.emit('conversations', localStorage.getItem("token"));
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToolbarService } from 'src/app/services/toolbar.service';
+import { WebsocketsService } from 'src/app/services/websockets.service';
 
 @Component({
   selector: 'app-chat-list',
@@ -8,8 +9,11 @@ import { ToolbarService } from 'src/app/services/toolbar.service';
 })
 export class ChatListComponent implements OnInit {
 
-  constructor(private toolbarService: ToolbarService) { }
+  constructor(private toolbarService: ToolbarService, private websockets: WebsocketsService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log("buscant xats")
+    this.websockets.conversations();
+  }
 
 }
