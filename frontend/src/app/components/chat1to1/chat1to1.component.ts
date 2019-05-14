@@ -10,17 +10,20 @@ import { WebsocketsService } from 'src/app/services/websockets.service';
 export class Chat1to1Component implements OnInit {
   destination
   sendingMessage
+
   constructor(private singleton: DataService, private websockets: WebsocketsService) {
     this.singleton.newChatDestination.subscribe(destination => this.destination = destination)
   }
 
   ngOnInit() {
     this.websockets.chatInit(this.destination);
+    console.log("iniciant chat")
   }
   sendMessage(destination, message){
       
       this.websockets.pushMessage(message);
       this.websockets.sendMessage(this.destination, this.sendingMessage)
+      this.sendingMessage = ""
   }
 
 }

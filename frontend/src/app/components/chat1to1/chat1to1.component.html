@@ -24,6 +24,6 @@
     <ion-button (click) = "sendMessage(destination, sendingMessage)" >
       <ion-icon slot="icon-only" name ="send"></ion-icon>
     </ion-button>
-    <ion-input type="text" placeholder="Escribe el mensaje..." [(ngModel)] = "sendingMessage"></ion-input>
+    <ion-input type="text" placeholder="Escribe el mensaje..." [(ngModel)] = "sendingMessage" (keyup.enter) = "sendMessage(destination, sendingMessage)"></ion-input>
   </ion-item>
 </ion-footer>

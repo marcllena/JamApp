@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client';
 import {DataService} from './data.services'
 import {Environment} from "./environment";
+import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,6 +13,8 @@ export class WebsocketsService {
   socket
   messages = new Array()
   destination
+  private originalChats = new BehaviorSubject([]);
+  newChats = this.originalChats.asObservable();
   constructor(private singleton: DataService,) {
     this.singleton.newChatDestination.subscribe(destination => this.destination = destination)
     this.socket = io.connect('http://localhost:3000') //S'ha de cnaviar a una variable per desplegar
@@ -37,8 +40,9 @@ export class WebsocketsService {
         this.socket.idUser = idUser;
     }.bind(this))
     this.socket.on('conversations', function(array){
+      this.originalChats.next(array);
       console.log("Resultat dels xats: "+JSON.stringify(array))
-    })
+    }.bind(this))
   }
   init(){
     this.socket.emit('idUser',localStorage.getItem("token"))
@@ -80,6 +84,7 @@ export class WebsocketsService {
   }
   chatInit(dest: String){
     this.socket.emit('chatInit', dest);
+    console.log(dest)
   }
   sendMessage(dest: String, message: String){
     this.socket.emit('sendMessage', dest, message);
