@@ -145,10 +145,10 @@ io.on('connection',function(socket){
                 else{
                     
                 for(var i=0;i<convers.length;i++){
-                    let messages = [];
+                    /*let messages = [];
                     for(let k=0;k<convers[i].messages.length;k++){
                         messages.push(convers[i].messages[k])
-                     }
+                     }*/
                     for(var j=0;j<convers[i].participants.length;j++){
                     if(convers[i].participants[j] != response){
                         
@@ -158,7 +158,7 @@ io.on('connection',function(socket){
                             }
                             else{
                                 destination = user.username;
-                                array.push({'destination': destination, 'conversation': messages})
+                                array.push({'destination': destination})//, 'conversation': messages})
                                 if(i == convers.length){ //no estic 100% que sigui ==, hauria de ser i<
                                     console.log(array)
                                     socket.emit('conversations', array)
