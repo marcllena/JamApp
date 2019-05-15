@@ -3,7 +3,6 @@ import { ToolbarService } from 'src/app/services/toolbar.service';
 import { WebsocketsService } from 'src/app/services/websockets.service';
 import { DataService } from 'src/app/services/data.services';
 import {Router} from "@angular/router";
-import { threadId } from 'worker_threads';
 @Component({
   selector: 'app-chat-list',
   templateUrl: './chat-list.component.html',
