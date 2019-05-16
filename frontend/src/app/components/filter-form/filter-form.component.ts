@@ -39,8 +39,6 @@ export class FilterFormComponent implements OnInit {
   }
 
   exportFilters(){
-    console.log("Mostrar els musics"+this.musics);
-    console.log("Mostrar les sales"+this.salas);
     this.singleton.changeMusicsFilter(this.musics);
     this.singleton.changeSalesFilter(this.salas);
     this.router.navigateByUrl("api/menu/home");

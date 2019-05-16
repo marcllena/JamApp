@@ -41,15 +41,17 @@ export class HomePage {
   ) {
     this.markersListUsers=[];
     this.markersListSalas=[];
-    this.singleton.newMusicsFilter.subscribe(result => this.musicsFilter = result)
-    this.singleton.newSalesFilter.subscribe(result => this.musicsFilter = result)
   }
 
   ngOnInit() {
-  this.obtindreUbicacio();
+    this.singleton.newMusicsFilter.subscribe(result => this.musicsFilter = result)
+    this.singleton.newSalesFilter.subscribe(result => this.salesFilter = result)
+    this.obtindreUbicacio();
   }
 
   refresh(){
+    this.singleton.newMusicsFilter.subscribe(result => this.musicsFilter = result)
+    this.singleton.newSalesFilter.subscribe(result => this.salesFilter = result)
     this.obtindreUbicacio();
   }
 
@@ -124,7 +126,7 @@ export class HomePage {
           if(response.status==200) {
             this.userList=response.body;
             //Mostrem els musics
-            if(this.singleton.getMusicsFilter()) {
+            if(this.musicsFilter) {
               var image1 = {
                 url: '../../../assets/markers/music-marker.png',
                 scaledSize: new google.maps.Size(50, 50)
