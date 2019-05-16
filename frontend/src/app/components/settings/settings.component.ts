@@ -72,10 +72,28 @@ export class SettingsComponent implements OnInit {
     this.router.navigateByUrl('');
   }
 
-  updateUser(user){
+  updateUser(){
     console.log("Operacio de updateUser realitzada al backend"+this.settingsForm.value);
-    this.userServices.updateUser = user;
-    this.router.navigateByUrl("api/menu/grup-list");
+    let token=localStorage.getItem('token');
+    let user = new User (this.settingsForm.value.username, this.settingsForm.value.edat, this.settingsForm.value.instrument,this.settingsForm.value.estils);
+    this.userServices.updateUser(token,user)
+      .subscribe(response =>{
+        if(response.status == 200){
+          this.router.navigateByUrl("api/menu/home");
+        }
+        else {
+          console.log("Error");
+        }
+      },
+      err=>{
+        console.log("Error al backend"+err);
+        if(err.status == 409){
+          console.log("Error 409");
+        }
+        else if(err.status == 500){
+          console.log("Error 500");
+        }
+      });
   }
 
   logsito(){
