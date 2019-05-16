@@ -12,25 +12,41 @@
   <div class="limiter">
     <div class="container-login100">
       <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+        <span class="login100-form-title p-b-49">
+						Filtros en el Mapa
+					</span>
         <form class="login100-form validate-form">
           <ion-label>Mostrar:</ion-label>
           <ion-list>
             <ion-item>
               <ion-checkbox class="checkbox" checked="true" (click)="checkMusics()"></ion-checkbox>
-              <ion-label>Musicos</ion-label>
+              <ion-label class="list_items">Musicos</ion-label>
             </ion-item>
             <ion-item>
               <ion-checkbox class="checkbox" checked="true" (click)="checkSalas()"></ion-checkbox>
               <ion-label>Salas</ion-label>
             </ion-item>
+            <p></p>
+            <ion-checkbox class="checkbox" checked="false" (click)="checkMusics()"></ion-checkbox>
             <ion-label>Filtrar por distancia:</ion-label>
-            <ion-item class="list_items">
+            <ion-item>
               <ion-range min="1" max="100" step="5" snaps="true" color="primary">
-                <ion-label slot="start">1 km</ion-label>
-                <ion-label slot="end">100 km</ion-label>
+                <ion-item slot="start">
+                <ion-label>1 km</ion-label>
+              </ion-item>
+                <ion-item slot="end">
+                  <ion-label>100 km</ion-label>
+                </ion-item>
               </ion-range>
             </ion-item>
           </ion-list>
+          <p></p>
+          <div class="container-login100-form-btn">
+            <div class="wrap-login100-form-btn">
+              <div class="login100-form-bgbtn"></div>
+              <ion-button color="primary" (click)="exportFilters()"  expand="block"> Aplicar Filtros</ion-button>
+            </div>
+          </div>
         </form>
     </div>
   </div>

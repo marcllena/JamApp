@@ -27,6 +27,9 @@ export class HomePage {
   markersListUsers: any;
   markersListSalas: any;
   userClicked:any;
+  musicsFilter:boolean;
+  salesFilter:boolean;
+
   constructor(
     private singleton: DataService,
     private geolocation: Geolocation,
@@ -35,16 +38,14 @@ export class HomePage {
     public platform: Platform,
     private userService: UserServices,
     private router: Router
-    
   ) {
     this.markersListUsers=[];
     this.markersListSalas=[];
-
-
+    this.singleton.newMusicsFilter.subscribe(result => this.musicsFilter = result)
+    this.singleton.newSalesFilter.subscribe(result => this.musicsFilter = result)
   }
 
   ngOnInit() {
-
   this.obtindreUbicacio();
   }
 
@@ -123,63 +124,67 @@ export class HomePage {
           if(response.status==200) {
             this.userList=response.body;
             //Mostrem els musics
-            var image1 = {
-              url: '../../../assets/markers/music-marker.png',
-              scaledSize: new google.maps.Size(50, 50)
-            };
-            /*for (let i = 0; i < this.userList.musicians.length; i++) {
-              if(this.userList.musicians[i].location=!null) {
-                this.markersListUsers[i]=new google.maps.Marker({
-                  position: {lat: this.userList.musicians[i].location.coordinates[1], lng: this.userList.musicians[i].location.coordinates[0]},
-                  map: this.map,
-                  icon: image1,
-                });
+            if(this.singleton.getMusicsFilter()) {
+              var image1 = {
+                url: '../../../assets/markers/music-marker.png',
+                scaledSize: new google.maps.Size(50, 50)
+              };
+              /*for (let i = 0; i < this.userList.musicians.length; i++) {
+                if(this.userList.musicians[i].location=!null) {
+                  this.markersListUsers[i]=new google.maps.Marker({
+                    position: {lat: this.userList.musicians[i].location.coordinates[1], lng: this.userList.musicians[i].location.coordinates[0]},
+                    map: this.map,
+                    icon: image1,
+                  });
+                }
+              }*/
+              for (let i = 0; i < this.userList.musicians.length; i++) {
+                if (this.userList.musicians[i].latitud != null && this.userList.musicians[i].longitud != null) {
+                  this.markersListUsers[i] = new google.maps.Marker({
+                    position: {lat: this.userList.musicians[i].latitud, lng: this.userList.musicians[i].longitud},
+                    map: this.map,
+                    icon: image1,
+                  });
+                  console.log("Marcador a " + this.userList.musicians[i].latitud)
+                }
               }
-            }*/
-            for (let i = 0; i < this.userList.musicians.length; i++) {
-              if(this.userList.musicians[i].latitud!=null&&this.userList.musicians[i].longitud!=null) {
-                this.markersListUsers[i]=new google.maps.Marker({
-                  position: {lat: this.userList.musicians[i].latitud, lng: this.userList.musicians[i].longitud},
-                  map: this.map,
-                  icon: image1,
+              //Obtenim el click als usuaris
+              for (let i = 0; i < this.markersListUsers.length; i++) {
+                google.maps.event.addListener(this.markersListUsers[i], 'click', () =>{
+                  console.log("Click al usuari " + this.userList.musicians[i].username)
+                  this.userClicked=this.userList.musicians[i];
+                  this.singleton.changeClickedUserId(this.userClicked._id);
+                  this.router.navigateByUrl("/api/userInfo");
                 });
-                console.log("Marcador a " + this.userList.musicians[i].latitud)
               }
             }
             //Mostrem les sales
-            var image2 = {
-              url: '../../../assets/markers/star-marker.png',
-              scaledSize: new google.maps.Size(50, 50)
-            };
-            /*for (let i = 0; i < this.userList.rooms.length; i++) {
-              if(this.userList.rooms[i].location=!null) {
-                this.markersListUsers[i]=new google.maps.Marker({
-                  position: {lat: this.userList.musicians[i].location.coordinates[1], lng: this.userList.musicians[i].location.coordinates[0]},
-                  map: this.map,
-                  icon: image1,
-                });
-              }
-            }*/
-            for (let i = 0; i < this.userList.rooms.length; i++) {
-              if(this.userList.rooms[i].latitud!=null&&this.userList.rooms[i].longitud!=null) {
-                this.markersListSalas[i]=new google.maps.Marker(
-                  {
-                    position: {lat: this.userList.rooms[i].latitud, lng: this.userList.rooms[i].longitud},
+            if(this.salesFilter) {
+              var image2 = {
+                url: '../../../assets/markers/star-marker.png',
+                scaledSize: new google.maps.Size(50, 50)
+              };
+              /*for (let i = 0; i < this.userList.rooms.length; i++) {
+                if(this.userList.rooms[i].location=!null) {
+                  this.markersListUsers[i]=new google.maps.Marker({
+                    position: {lat: this.userList.musicians[i].location.coordinates[1], lng: this.userList.musicians[i].location.coordinates[0]},
                     map: this.map,
-                    icon: image2,
+                    icon: image1,
                   });
-                console.log("Marcador a " + this.userList.rooms[i].latitud)
+                }
+              }*/
+              for (let i = 0; i < this.userList.rooms.length; i++) {
+                if (this.userList.rooms[i].latitud != null && this.userList.rooms[i].longitud != null) {
+                  this.markersListSalas[i] = new google.maps.Marker(
+                    {
+                      position: {lat: this.userList.rooms[i].latitud, lng: this.userList.rooms[i].longitud},
+                      map: this.map,
+                      icon: image2,
+                    });
+                  console.log("Marcador a " + this.userList.rooms[i].latitud)
+                }
               }
-            }
-
-            //Obtenim el click als usuaris
-            for (let i = 0; i < this.markersListUsers.length; i++) {
-              google.maps.event.addListener(this.markersListUsers[i], 'click', () =>{
-                console.log("Click al usuari " + this.userList.musicians[i].username)
-                this.userClicked=this.userList.musicians[i];
-                this.singleton.changeClickedUserId(this.userClicked._id);
-                this.router.navigateByUrl("/api/userInfo");
-              });
+              //De moment no tenim click a les sales
             }
           }
         },

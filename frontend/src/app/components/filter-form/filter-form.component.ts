@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {DataService} from "../../services/data.services";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-filter-form',
@@ -12,9 +14,12 @@ export class FilterFormComponent implements OnInit {
   musics: boolean;
   salas:boolean;
 
-  constructor() { }
+  constructor(private singleton: DataService,  private router: Router) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.musics=true;
+    this.salas=true;
+  }
 
   checkMusics(){
     if(this.musics){
@@ -34,10 +39,11 @@ export class FilterFormComponent implements OnInit {
   }
 
   exportFilters(){
-
-    //Guardem les dades al Singleton
-    //Fem routerLink per anar cap a mapa
-
+    console.log("Mostrar els musics"+this.musics);
+    console.log("Mostrar les sales"+this.salas);
+    this.singleton.changeMusicsFilter(this.musics);
+    this.singleton.changeSalesFilter(this.salas);
+    this.router.navigateByUrl("api/menu/home");
   }
 
 }

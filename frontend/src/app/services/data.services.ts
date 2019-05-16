@@ -10,11 +10,15 @@ export class DataService {
   private originalClickedUserId = new BehaviorSubject("0");
   private originalUserId = new BehaviorSubject("0");
   private originalUsername = new BehaviorSubject("Null");
+  private originalMusicsFilter = new BehaviorSubject(true);
+  private originalSalesFilter = new BehaviorSubject(true);
 
   newChatDestination = this.originalChatDestination.asObservable();
   newClickedUserId = this.originalClickedUserId.asObservable();
   newUserId = this.originalUserId.asObservable();
   newUsername = this.originalUsername.asObservable();
+  newMusicsFilter= this.originalMusicsFilter.asObservable();
+  newSalesFilter= this.originalSalesFilter.asObservable();
 
 
   constructor() { }
@@ -34,6 +38,15 @@ export class DataService {
 
   changeClickedUserId(name: string) {
     this.originalClickedUserId.next(name);
+  }
+  changeMusicsFilter(value: boolean){
+    this.originalMusicsFilter.next(value)
+  }
+  changeSalesFilter(value: boolean){
+    this.originalSalesFilter.next(value)
+  }
+  getMusicsFilter(){
+    return this.originalMusicsFilter;
   }
 
 
