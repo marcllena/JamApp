@@ -21,7 +21,7 @@
         <form [formGroup]="settingsForm">
           <div class="wrap-input100 validate-input m-b-23">
             <span class="label-input100">Nombre del usuario</span>
-            <input class="input100" type="text" formControlName="username" placeholder="Escribe el nombre del usuario">
+            <input class="input100" type="text" formControlName="username" placeholder="Escribe el nombre">
             <span class="focus-input100" data-symbol="&#xf206;"></span>
           </div>
 
@@ -52,7 +52,7 @@
           <div class="container-login100-form-btn">
             <div class="wrap-login100-form-btn">
               <div class="login100-form-bgbtn"></div>
-              <ion-button color="primary" expand="block">Guardar</ion-button>
+              <ion-button color="primary" (click)="updateUser()" expand="block">Guardar</ion-button>
             </div>
           </div>
           <br>
