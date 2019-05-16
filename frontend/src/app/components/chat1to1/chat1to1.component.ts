@@ -25,5 +25,4 @@ export class Chat1to1Component implements OnInit {
       this.websockets.sendMessage(this.destination, this.sendingMessage)
       this.sendingMessage = ""
   }
-
 }

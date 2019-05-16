@@ -5,7 +5,7 @@ import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from "@angular/
 import {Router} from "@angular/router";
 import { User } from "../../models/user";
 import {DataService} from "../../services/data.services";
-
+declare var FB: any;
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -37,6 +37,23 @@ export class LoginComponent implements OnInit {
     if(token!=null) {
       this.comprobarLogin(token);
     }
+    (window as any).fbAsyncInit = function() {
+      FB.init({
+        appId      : '753500388379761',
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v3.2'
+      });
+      FB.AppEvents.logPageView();
+    };
+
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "https://connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
     this.validation_messages = {
       'email': [
         { type: 'required', message: 'Mail: Requerido' },
@@ -51,7 +68,30 @@ export class LoginComponent implements OnInit {
     }
   }
 
-
+  submitLogin(){
+    console.log("Mandando petición de logueo en Facebook...");
+    //FB.login();
+    FB.login((response)=>
+        {
+          
+          if (response.authResponse)
+          {
+            console.log(response)
+            
+            //Aqui hem de fer feina Gabri ;)
+      
+            
+           // this._router.navigate(['/special'])
+            //login success
+            //login success code here
+            //redirect to home page
+           }
+           else
+           {
+           console.log('User login failed');
+         }
+      });
+  }
   login() {
     console.log("Operació de login realitzada al BackEnd:"+this.loginForm.value);
     let user = new User(this.loginForm.value.email,"", this.loginForm.value.password);
