@@ -5,6 +5,7 @@ import { SettingsService } from 'src/app/services/settings.service';
 import { UserServices } from 'src/app/services/user.services';
 import { User } from 'src/app/models/user';
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {DataService} from '../../services/data.services';
 
 declare var M: any;
 
@@ -17,20 +18,27 @@ declare var M: any;
 })
 export class SettingsComponent implements OnInit {
 
+  Id: String;
+  user: Object;
+
   settingsForm: FormGroup;
   items1 = ["guitarra","piano","ukelele","triangle","pito","maraques","harmonica"]
   items2 = ["Regeton","Trap","Dembow"]
 
-  constructor(private settingsService: SettingsService,private router: Router,private userServices: UserServices,private formBuilder: FormBuilder) {
+  constructor(private settingsService: SettingsService,private router: Router,private userServices: UserServices,private formBuilder: FormBuilder, private singleton: DataService) {
     this.settingsForm = this.formBuilder.group({
       username:'',
       edat:0,
       instrument:[],
       estils:[]
     })
+    this.singleton.newClickedUserId.subscribe(Id => this.Id = Id)
   }
 
   ngOnInit() {
+    //if(this.Id==="0") this.router.navigateByUrl("/");
+    this.getUser()
+    console.log(this.user);
   }
 
   addUser(form: NgForm){
@@ -65,7 +73,9 @@ export class SettingsComponent implements OnInit {
   }
 
   updateUser(user){
+    console.log("Operacio de updateUser realitzada al backend"+this.settingsForm.value);
     this.userServices.updateUser = user;
+    this.router.navigateByUrl("api/menu/grup-list");
   }
 
   logsito(){
@@ -74,6 +84,30 @@ export class SettingsComponent implements OnInit {
 
   logsito2(){
     console.log(this.settingsForm.value.estils);
+  }
+
+  getUser() {
+    console.log("Operació de demanar usuari realitzada al BackEnd:");
+    let token =localStorage.getItem('token');
+    this.userServices.obtainUser(token,this.Id)
+      .subscribe(response => {
+          console.log("Resposta del BackEnd"+response.body);
+          if(response.status==200){
+            this.user=response.body;
+            //if (this.user.descripcio){
+
+            //}
+            //this.title = this.user.username;
+          }
+          else {
+            //Error desconegut
+            console.log("Error");
+          }
+        },
+        err => {
+          console.log("Error del BackEnd"+err);
+          //console.log(err);
+        });
   }
 
 }
