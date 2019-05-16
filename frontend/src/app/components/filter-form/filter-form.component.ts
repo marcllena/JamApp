@@ -9,8 +9,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FilterFormComponent implements OnInit {
 
+  musics: boolean;
+  salas:boolean;
+
   constructor() { }
 
   ngOnInit() {}
+
+  checkMusics(){
+    if(this.musics){
+      this.musics=false;
+    }
+    else {
+      this.musics = true;
+    }
+  }
+  checkSalas(){
+    if(this.salas){
+      this.salas=false;
+    }
+    else{
+      this.salas=true;
+    }
+  }
+
+  exportFilters(){
+
+    //Guardem les dades al Singleton
+    //Fem routerLink per anar cap a mapa
+
+  }
 
 }

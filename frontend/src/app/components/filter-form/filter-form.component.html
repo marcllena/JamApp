@@ -14,17 +14,17 @@
       <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
         <form class="login100-form validate-form">
           <ion-label>Mostrar:</ion-label>
-          <ion-list class="list_items">
+          <ion-list>
             <ion-item>
-              <ion-checkbox class="checkbox" checked="true"></ion-checkbox>
+              <ion-checkbox class="checkbox" checked="true" (click)="checkMusics()"></ion-checkbox>
               <ion-label>Musicos</ion-label>
             </ion-item>
             <ion-item>
-              <ion-checkbox class="checkbox" checked="true"></ion-checkbox>
+              <ion-checkbox class="checkbox" checked="true" (click)="checkSalas()"></ion-checkbox>
               <ion-label>Salas</ion-label>
             </ion-item>
-            <ion-label>Filtrar por distancia</ion-label>
-            <ion-item>
+            <ion-label>Filtrar por distancia:</ion-label>
+            <ion-item class="list_items">
               <ion-range min="1" max="100" step="5" snaps="true" color="primary">
                 <ion-label slot="start">1 km</ion-label>
                 <ion-label slot="end">100 km</ion-label>

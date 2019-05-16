@@ -11,19 +11,19 @@ export class MenuPage implements OnInit {
   public mainPages = [
     {
       title: 'Home',
-      url: 'menu/home',
+      url: 'home',
       icon: 'home',
       type: 'User'
     },
     {
       title: 'Groups',
-      url: 'menu/gruplist',
+      url: 'gruplist',
       icon: 'people',
       type: 'User'
     },
     {
       title: 'Jam Sessions',
-      url: 'menu/jamlist',
+      url: 'jamlist',
       icon: 'musical-notes',
       type: 'User'
     },
