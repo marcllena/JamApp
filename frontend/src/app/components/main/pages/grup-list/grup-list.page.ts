@@ -7,7 +7,7 @@ import {DataService} from '../../../../services/data.services';
 @Component({
   selector: 'app-grup-list',
   templateUrl: './grup-list.page.html',
-  styleUrls: ['./grup-list.page.scss']
+  styleUrls: ['./grup-list.page.css']
 })
 export class GrupListPage implements OnInit {
 
@@ -20,6 +20,7 @@ export class GrupListPage implements OnInit {
   ngOnInit() {
     this.getRequests();
     this.userType=localStorage.getItem('userType');
+    this.llistaGrups();
   }
 
   llistaGrups(){
