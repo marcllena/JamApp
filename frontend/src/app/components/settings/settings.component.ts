@@ -26,13 +26,15 @@ export class SettingsComponent implements OnInit {
   items2 = ["Regeton","Trap","Dembow"]
 
   constructor(private settingsService: SettingsService,private router: Router,private userServices: UserServices,private formBuilder: FormBuilder, private singleton: DataService) {
+    this.singleton.newClickedUserId.subscribe(Id => this.Id = Id)
     this.settingsForm = this.formBuilder.group({
       username:'',
       edat:0,
       instrument:[],
-      estils:[]
+      estils:[],
+      descripcio:'',
+      video:''
     })
-    this.singleton.newClickedUserId.subscribe(Id => this.Id = Id)
   }
 
   ngOnInit() {

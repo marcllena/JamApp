@@ -12,15 +12,18 @@ export class User {
   estils: string[];
   userType:number;
   pass: string;
+  descripcio: string;
 
 
-  constructor( email = '', username = '', password = '',edat=0, instrument=[], estils=[]) {
+  constructor( email = '', username = '', password = '',edat=0, instrument=[], estils=[], descripcio= '', video='') {
     this.email = email;
     this.username = username;
     this.password = password;
     this.edat = edat;
     this.instrument = instrument;
     this.estils = estils;
+    this.descripcio = descripcio;
+    this.video = video;
   }
   
 }
