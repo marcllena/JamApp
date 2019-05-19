@@ -76,8 +76,11 @@ export class LoginComponent implements OnInit {
           
           if (response.authResponse)
           {
-            console.log(response)
-            
+            console.log(response);
+            FB.api('/me', function(response) {
+
+              console.log('Good to see you, ' + response.name + '.' + ' Email: ' + response.email + ' Facebook ID: ' + response.id);
+            });
             //Aqui hem de fer feina Gabri ;)
       
             
@@ -90,7 +93,7 @@ export class LoginComponent implements OnInit {
            {
            console.log('User login failed');
          }
-      });
+      }, { scope: 'email' });
   }
   login() {
     console.log("Operació de login realitzada al BackEnd:"+this.loginForm.value);

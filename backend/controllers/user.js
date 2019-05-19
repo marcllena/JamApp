@@ -151,7 +151,14 @@ function signIn(req,res) {
 }
 
 function getUser(req,res) {
-    const Id = cryptr.decrypt(req.params.userId);
+    let Id;
+    try {
+        Id = cryptr.decrypt(req.params.userId);
+    }
+    catch(error) {
+        return res.status(500).send({message: `Error on the ID`});
+    }
+
     User.findById(Id, (err,user)=>{
         console.log(user);
         if(err)
@@ -203,7 +210,12 @@ function deleteUsers(req,res){
     console.log('DELETE /api/user');
     let llistaId=req.body.IdList;
     for(var i=0; i<req.body.IdList.length; i++){
-        llistaId[i]= cryptr.decrypt(req.body.IdList[i]);
+        try {
+            llistaId[i]= cryptr.decrypt(req.body.IdList[i]);
+        }
+        catch(error) {
+            return res.status(500).send({message: `Error on the ID`});
+        }
     }
     User.find({ '_id': { $in: llistaId}}, function(err, users){
         if(err)
@@ -233,7 +245,14 @@ function updateUser(req,res){
     console.log('PUT /api/user/:userId');
 
     let userId;
-    if (req.params.userId) userId = cryptr.decrypt(req.params.userId);
+    if (req.params.userId) {
+        try {
+            userId = cryptr.decrypt(req.params.userId);
+        }
+        catch(error) {
+            return res.status(500).send({message: `Error on the ID`});
+        }
+    }
     else userId = req.user;
     
     let update = req.body;
@@ -250,7 +269,14 @@ function updateUser(req,res){
 
 function setLocation(req,res){
     let userId;
-    if (req.params.userId) userId = cryptr.decrypt(req.params.userId);
+    if (req.params.userId) {
+        try {
+            userId = cryptr.decrypt(req.params.userId);
+        }
+        catch(error) {
+            return res.status(500).send({message: `Error on the ID`});
+        }
+    }
     else userId = req.user;
     User.findById(userId, (err,user)=>{
         if(err)
