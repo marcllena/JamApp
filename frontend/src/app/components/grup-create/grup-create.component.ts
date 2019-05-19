@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import { UserServices } from "../../services/user.services";
 import { Group } from "../../models/group";
 import { Router } from "@angular/router";
@@ -15,17 +15,38 @@ export class GrupCreateComponent implements OnInit {
 
   createGroupForm: FormGroup;
   items = ["Regeton","Trap","Dembow"]
+  validation_messages: any;
 
   constructor(private formBuilder: FormBuilder, private userService: UserServices, private router: Router) { 
     this.createGroupForm = this.formBuilder.group({
-      name:'',
+      name: new FormControl('',Validators.compose([
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z0-9]{3,}$/)
+      ])),
       email:'',
-      description:'',
+      description: new FormControl('',Validators.compose([
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z0-9\s]{5,}$/)
+      ])),
       estils: []
+
     })
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.validation_messages = {
+      'name': [
+        {type: 'required', message: 'Nombre: requerido'},
+        { type: 'error', message: 'Error: Falta un nombre'} ,
+        { type: 'pattern', message: 'Nombre: Debe ser un nombre valido, minimo 3 letras' }
+      ],
+      'description': [
+        {type: 'required', message: 'Descripcion: requerida'},
+        { type: 'error', message: 'Error: Falta la descripcion'} ,
+        { type: 'pattern', message: 'Descripcion: Debe ser una descripcion valida, minimo 5 letras' }
+      ]
+    }
+  }
 
   logsito(){
     console.log(this.createGroupForm.value.estils);

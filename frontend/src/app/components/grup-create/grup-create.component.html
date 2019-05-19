@@ -46,6 +46,19 @@
             </ion-list>
             <br>
 
+            <div class="validation-errors">
+              <ng-container *ngFor="let validation of validation_messages.name">
+                <div class="alert alert-danger" *ngIf="createGroupForm.get('name').hasError(validation.type) && (createGroupForm.get('name').dirty || createGroupForm.get('name').touched)">
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+              <ng-container *ngFor="let validation of validation_messages.description">
+                <div class="alert alert-danger" *ngIf="createGroupForm.get('description').hasError(validation.type) && (createGroupForm.get('description').dirty || createGroupForm.get('description').touched)">
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+            </div>
+
             <div class="container-login100-form-btn">
               <div class="wrap-login100-form-btn">
                 <div class="login100-form-bgbtn"></div>
