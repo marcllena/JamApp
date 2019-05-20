@@ -23,5 +23,76 @@
 </ion-header>
 
 <ion-content>
+  <div class="limiter">
+    <div class="container-login100">
+      <div class="wrap-login100 p-l-20 p-r-20 p-t-20 p-b-20">
+        <p></p>
+        <p></p>
+        <span class="login100-form-title">
+          Lista de Usuarios de JamApp
+        </span>
+        <p></p>
+        <p></p>
+        <div class="container-login100-form-btn">
+          <div class="wrap-login100-form-btn">
+            <div class="login100-form-bgbtn"></div>
+            <ion-button color="primary" (click)="llistaUsers()" expand="block">Obtener Usuarios</ion-button>
+          </div>
+        </div>
+        <p></p>
+        <p></p>
+        <ion-list-header *ngIf="users" >
+          <ion-label>Nombre del Usuario</ion-label>
+          <ion-label>Email</ion-label>
+          <ion-label>Tipo de Usuario</ion-label>
+          <ion-label> </ion-label>
+          <ion-label> </ion-label>
+          <ion-label> </ion-label>
+        </ion-list-header>
+        <ion-list *ngFor="let user of users">
+          <ion-item>
+            <ion-label>{{user.username}}</ion-label>
+            <ion-label>{{user.email}}</ion-label>
+            <ion-label>{{user.userType}}</ion-label>
+            <ion-checkbox class="checkbox"  (click)="selectUser(user._id)"></ion-checkbox>
+            <ion-button class="list-buttons" color="primary" (click)="editarUser(user._id)" >
+              Editar
+              <ion-icon slot="icon-only" name="create"></ion-icon>
+            </ion-button>
+            <ion-button class="list-buttons" color="primary" (click)="eliminarUser(user._id)">
+              Eliminar
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-list>
+        <p></p>
+        <p></p>
+        <div class="container-login100-form-btn">
+          <div class="wrap-login100-form-btn">
+            <div class="login100-form-bgbtn"></div>
+            <ion-button *ngIf="users" color="primary" (click)="eliminarVariosUsers()" expand="block">Eliminar Usuarios Seleccionados</ion-button>
+          </div>
+        </div>
+      </div>
+    </div>
 
+
+    <div id="dropDownSelect1"></div>
+
+    <!--===============================================================================================-->
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/daterangepicker/moment.min.js"></script>
+    <script src="vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+  </div>
 </ion-content>
