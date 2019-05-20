@@ -42,10 +42,6 @@ export class SettingsComponent implements OnInit {
     //if(this.Id==="0") this.router.navigateByUrl("/");
     this.getUser()
     console.log(this.Id);
-<<<<<<< HEAD
-    //console.log(this.user);
-=======
->>>>>>> 8d4cf340541196c0d2bcd9a6136e43f5042c9436
   }
 
   addUser(form: NgForm){
