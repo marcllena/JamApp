@@ -95,26 +95,26 @@ function signUp(req,res) {
         if(err){
             return res.status(500).send({message: `Error al crear el usuario: ${err}`})}
         if (!user.length){
-            userNew.save((err) => {
+            userNew.save((err,newUser) => {
                 if(err) {
                     console.log("Error al crear usuari:"+req.body.email+". Ja existeix un usuari amb el correu");
                     return res.status(409).send({message: `Error al crear el usuario: ${err}`})
                 }
         console.log("Usuari: "+req.body.email+" agregat correctament");
-                if("userType" in user[0]) {
+                if("userType" in newUser) {
                     res.status(200).send({
                         message: "Register successfuly",
-                        token: service.createToken(user[0]),
-                        _id: cryptr.encrypt(user[0]._id),
-                        username: user[0].username,
-                        userType: user[0].userType,
+                        token: service.createToken(newUser),
+                        _id: cryptr.encrypt(newUser._id),
+                        username: newUser.username,
+                        userType: newUser.userType,
                     });
                 }
                 else res.status(200).send({
                     message: "Register successfuly",
-                    token: service.createToken(user[0]),
-                    _id: cryptr.encrypt(user[0]._id),
-                    username: user[0].username,
+                    token: service.createToken(newUser),
+                    _id: cryptr.encrypt(newUser._id),
+                    username: newUser.username,
                     userType: "User",
                 })
     } )     }
@@ -258,6 +258,8 @@ function deleteUsers(req,res){
 
 function updateUser(req,res){
     console.log('PUT /api/user/:userId');
+
+    console.log(req.body);
 
     let userId;
     if (req.params.userId) {
