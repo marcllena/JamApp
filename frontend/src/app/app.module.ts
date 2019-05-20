@@ -25,6 +25,7 @@ import { DataService } from './services/data.services';
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { ChatListComponent } from './components/main/pages/chat-list/chat-list.component';
 import {FilterFormComponent} from "./components/filter-form/filter-form.component";
+import {PoliticaComponent} from "./components/politica/politica.component";
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +40,8 @@ import {FilterFormComponent} from "./components/filter-form/filter-form.componen
     Chat1to1Component,
     UserInfoComponent,
     ChatListComponent,
-    FilterFormComponent
+    FilterFormComponent,
+    PoliticaComponent
   ],
   entryComponents: [],
   imports: [
