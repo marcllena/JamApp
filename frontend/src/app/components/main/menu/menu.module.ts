@@ -29,6 +29,10 @@ const routes: Routes = [
         path: 'jamlist',
         loadChildren: '../pages/jam-list/jam-list.module#JamListPageModule'
       },
+      {
+        path: 'userlist',
+        loadChildren: '../pages/userlist/userlist.module#UserlistPageModule'
+      },
     ]
   }
 ];

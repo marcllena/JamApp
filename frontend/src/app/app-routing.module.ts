@@ -29,6 +29,7 @@ const routes: Routes = [
   {path: 'api/chats', component: ChatListComponent},
   {path: 'api/filter', component: FilterFormComponent},
   {path: 'api/politica', component: PoliticaComponent},
+  { path: 'userlist', loadChildren: './components/main/pages/userlist/userlist.module#UserlistPageModule' },
 
 ];
 
