@@ -26,7 +26,8 @@ export class SettingsComponent implements OnInit {
   items2 = ["Regeton","Trap","Dembow"]
 
   constructor(private settingsService: SettingsService,private router: Router,private userServices: UserServices,private formBuilder: FormBuilder, private singleton: DataService) {
-    this.singleton.newClickedUserId.subscribe(Id => this.Id = Id)
+    //this.singleton.newClickedUserId.subscribe(Id => this.Id = Id)
+    this.Id=localStorage.getItem('id');
     this.settingsForm = this.formBuilder.group({
       username:'',
       edat:0,
@@ -40,7 +41,8 @@ export class SettingsComponent implements OnInit {
   ngOnInit() {
     //if(this.Id==="0") this.router.navigateByUrl("/");
     this.getUser()
-    console.log(this.user);
+    console.log(this.Id);
+    //console.log(this.user);
   }
 
   addUser(form: NgForm){
@@ -69,8 +71,6 @@ export class SettingsComponent implements OnInit {
   }
 
   goBack() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('_id');
     this.router.navigateByUrl('');
   }
 
@@ -114,6 +114,7 @@ export class SettingsComponent implements OnInit {
           console.log("Resposta del BackEnd"+response.body);
           if(response.status==200){
             this.user=response.body;
+            console.log(this.user);
             //if (this.user.descripcio){
 
             //}
