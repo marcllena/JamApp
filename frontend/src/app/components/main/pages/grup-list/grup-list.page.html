@@ -28,25 +28,28 @@
       <div class="wrap-login100 p-l-20 p-r-20 p-t-20 p-b-20">
         <br><br>
           <span class="login100-form-title">
-            Lista de Grupos de JamApp
+            Grupos de JamApp
           </span>
         <br><br>
-        <ion-list-header *ngIf="groups">
-          <ion-label>Nombre del grupo</ion-label>
-          <ion-label>Email</ion-label>
-          <ion-label>Descripción</ion-label>
-          <ion-label>Unirse</ion-label>
-        </ion-list-header>
-        <ion-list *ngFor="let group of groups">
-          <ion-item>
-            <ion-label>{{group.name}}</ion-label>
-            <ion-label>{{group.email}}</ion-label>
-            <ion-label>{{group.description}}</ion-label>
-            <ion-button class="list-buttons" color="primary" (click)="requestMembership(group)" *ngIf="userType=='Musician'">
+        <div *ngIf="groups">
+          <ion-card style="display: inline-block;" *ngFor="let group of groups">
+            <ion-card-header>
+              <ion-card-title style="margin: 5px">Grupo: {{group.name}}</ion-card-title>
+            </ion-card-header>
+            <div >
+                <ion-card-content style="margin: 5px">
+                    Email: {{group.email}}
+                </ion-card-content>
+                <ion-card-content style="margin: 5px">
+                    Descripción: {{group.description}}
+                </ion-card-content>
+            </div>
+            <ion-button style="margin: 5px" color="primary" size="small" (click)="requestMembership(group)" strong="true">
+              Unirse
               <ion-icon slot="icon-only" name="add-circle"></ion-icon>
             </ion-button>
-          </ion-item>
-        </ion-list>
+          </ion-card>
+        </div>
         <br><br>
         <div class="container-login100-form-btn">
           <div class="wrap-login100-form-btn">
@@ -56,7 +59,7 @@
         </div>
         <br><br>
 
-        <span *ngIf="requests" class="login100-form-title">
+        <span *ngIf="requests?.length!=0" class="login100-form-title">
             Solicitudes a mis grupos
         </span>
         <div *ngFor="let request of requests">
@@ -70,9 +73,9 @@
                       {{solicitud.missatge}}
                   </ion-card-content>
               </div>
-              <ion-button style="margin: 5px" color="medium" size="small" (click)="acceptRequest(request,solicitud)" strong="true">Aceptar</ion-button>
-              <ion-button style="margin: 5px" color="medium" size="small" (click)="denyRequest(request,solicitud)">Rechazar</ion-button>
-              <ion-button style="margin: 5px" color="medium" size="small" (click)="chat(solicitud.username)">Chat</ion-button>
+              <ion-button style="margin: 5px" color="primary" size="small" (click)="acceptRequest(request,solicitud)" strong="true">Aceptar</ion-button>
+              <ion-button style="margin: 5px" color="primary" size="small" (click)="denyRequest(request,solicitud)">Rechazar</ion-button>
+              <ion-button style="margin: 5px" color="primary" size="small" (click)="chat(solicitud.username)">Chat</ion-button>
             </ion-card>
           </div>
       </div>

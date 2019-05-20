@@ -18,10 +18,10 @@
           JamApp Editar Perfil
         </span>
 
-        <form [formGroup]="settingsForm">
+        <form [formGroup]="settingsForm" *ngIf="user">
           <div class="wrap-input100 validate-input m-b-23">
             <span class="label-input100">Nombre del usuario</span>
-            <input class="input100" type="text" formControlName="username" placeholder="Escribe el nombre">
+            <input class="input100" type="text" formControlName="username" placeholder={{this.user.username}}>
             <span class="focus-input100" data-symbol="&#xf206;"></span>
           </div>
 
