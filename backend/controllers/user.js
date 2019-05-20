@@ -101,7 +101,22 @@ function signUp(req,res) {
                     return res.status(409).send({message: `Error al crear el usuario: ${err}`})
                 }
         console.log("Usuari: "+req.body.email+" agregat correctament");
-        res.status(200).send({token: service.createToken(userNew)})
+                if("userType" in user[0]) {
+                    res.status(200).send({
+                        message: "Register successfuly",
+                        token: service.createToken(user[0]),
+                        _id: cryptr.encrypt(user[0]._id),
+                        username: user[0].username,
+                        userType: user[0].userType,
+                    });
+                }
+                else res.status(200).send({
+                    message: "Register successfuly",
+                    token: service.createToken(user[0]),
+                    _id: cryptr.encrypt(user[0]._id),
+                    username: user[0].username,
+                    userType: "User",
+                })
     } )     }
         else 
             return res.status(409).send({message: `Email ya registrado`})
@@ -323,20 +338,40 @@ function filterDistance(req,res){
         }
         else return res.status(400).send({message: "User without location"});
         distancia=req.body.distance;
-        Musician.find({location: {$geoWithin: {$centerSphere: [[longitud, latitud], distancia / 6371]}}}, '_id username latitud longitud location', (err, musicians) => {
-            if (err)
-                return res.status(500).send({message: `Error searching musicians: ${err}`});
-
+        if (!req.body.musician||!req.body.room){
+            req.body.musician=true;
+            req.body.room=true;
+        }
+        if(req.body.musician==true) {
+            Musician.find({location: {$geoWithin: {$centerSphere: [[longitud, latitud], distancia / 6371]}}}, '_id username latitud longitud location', (err, musicians) => {
+                if (err)
+                    return res.status(500).send({message: `Error searching musicians: ${err}`});
+                if (req.body.room==true) {
+                    Room.find({location: {$geoWithin: {$centerSphere: [[longitud, latitud], distancia / 6371]}}}, '_id name latitud longitud location', (err, rooms) => {
+                        if (err)
+                            return res.status(500).send({message: `Error searching rooms: ${err}`});
+                            res.status(200).send({
+                                musicians: musicians,
+                                rooms: rooms
+                            });
+                    });
+                }
+                else{
+                    res.status(200).send({
+                        musicians: musicians
+                    });
+                }
+            });
+        }
+        else{
             Room.find({location: {$geoWithin: {$centerSphere: [[longitud, latitud], distancia / 6371]}}}, '_id name latitud longitud location', (err, rooms) => {
                 if (err)
                     return res.status(500).send({message: `Error searching rooms: ${err}`});
-
                 res.status(200).send({
-                    musicians: musicians,
                     rooms: rooms
                 });
             });
-        });
+        }
     });
 }
 
