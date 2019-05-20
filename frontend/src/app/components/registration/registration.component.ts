@@ -127,6 +127,8 @@ export class RegistrationComponent implements OnInit {
         let token = response.body['token'];
         localStorage.setItem('token', token);
         localStorage.setItem('_id',response.body['_id']);
+        localStorage.setItem('userType', response.body['userType']);
+        localStorage.setItem('username',response.body['username']);
         //Li passem la ubicació al registrarse:
         this.router.navigateByUrl("api/pickLocation");
       }
