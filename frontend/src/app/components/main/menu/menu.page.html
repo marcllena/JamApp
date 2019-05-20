@@ -11,7 +11,7 @@
           <!-- Standard Menu Item aqui se mete el if para mostrar-->
           <ion-menu-toggle *ngIf="p.type=='User'||p.type==userType">
             <!--Hauria de ser [routerLink]="[p.url]"  pero cada tres peta href="api/menu/{{p.url}}"-->
-            <ion-item href="api/menu/{{p.url}}" routerDirection="root" routerLinkActive="active">
+            <ion-item [routerLink]="[p.url]" routerDirection="root" routerLinkActive="active">
               <ion-icon [name]="p.icon" slot="start"></ion-icon>
               <ion-label>
                 {{ p.title }}

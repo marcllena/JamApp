@@ -40,7 +40,7 @@ export class SettingsComponent implements OnInit {
   ngOnInit() {
     //if(this.Id==="0") this.router.navigateByUrl("/");
     this.getUser()
-    console.log(this.user);
+    console.log(this.Id);
   }
 
   addUser(form: NgForm){
