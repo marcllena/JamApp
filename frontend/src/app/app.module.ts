@@ -16,7 +16,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { SettingsComponent } from './components/settings/settings.component';
-import { UserlistComponent } from './components/userlist/userlist.component';
 import { GrupCreateComponent } from './components/grup-create/grup-create.component';
 import { LocationPickComponent } from './components/location-pick/location-pick.component';
 import { RegistrationLocationComponent } from './components/registration-location/registration-location.component';
@@ -32,7 +31,6 @@ import {PoliticaComponent} from "./components/politica/politica.component";
     LoginComponent,
     RegistrationComponent,
     SettingsComponent,
-    UserlistComponent,
     GrupCreateComponent,
     LocationPickComponent,
     Chat1to1Component,
