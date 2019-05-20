@@ -19,6 +19,12 @@
         </span>
 
         <form [formGroup]="settingsForm" *ngIf="user">
+          <div class="login100-form validate-form">
+            <span class="login100-form-title p-b-49" style="font-size: 20px">
+              {{this.user.email}}
+            </span>
+          </div>
+
           <div class="wrap-input100 validate-input m-b-23">
             <span class="label-input100">Nombre del usuario</span>
             <input class="input100" type="text" formControlName="username" placeholder={{this.user.username}}>
