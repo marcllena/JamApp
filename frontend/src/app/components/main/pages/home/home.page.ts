@@ -7,7 +7,7 @@ import { Platform } from '@ionic/angular';
 import { UserServices } from "../../../../services/user.services";
 import {HttpResponse} from "@angular/common/http";
 import {DataService} from '../../../../services/data.services';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 declare var google;
 
@@ -37,10 +37,14 @@ export class HomePage {
     private toolbarService: ToolbarService,
     public platform: Platform,
     private userService: UserServices,
-    private router: Router
+    private router: Router,
+    private activatedRoute:ActivatedRoute
   ) {
     this.markersListUsers=[];
     this.markersListSalas=[];
+    activatedRoute.params.subscribe(val => {
+      this.refresh();
+    });
   }
 
   ngOnInit() {
