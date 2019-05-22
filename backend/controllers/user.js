@@ -274,7 +274,7 @@ function updateUser(req,res){
     
     let update = req.body;
 
-    User.findByIdAndUpdate(userId,update,{new: true}, (err, userUpdated) => {
+    Musician.findByIdAndUpdate(userId,update,{new: true}, (err, userUpdated) => {
         if(err)
             return res.status(500).send({message: `Error updating the user: ${err}`});
 

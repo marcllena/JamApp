@@ -31,6 +31,7 @@ export class SettingsComponent implements OnInit {
     this.settingsForm = this.formBuilder.group({
       email:'',
       username:'',
+      password:'',
       edat:0,
       instrument:[],
       estils:[],
@@ -77,7 +78,7 @@ export class SettingsComponent implements OnInit {
   updateUser(){
     console.log("Operacio de updateUser realitzada al backend"+this.settingsForm.value);
     let token=localStorage.getItem('token');
-    let user2 = new User (this.settingsForm.value.email, this.settingsForm.value.username,"", this.settingsForm.value.edat, this.settingsForm.value.instrument,this.settingsForm.value.estils, this.settingsForm.value.descripcio, this.settingsForm.value.video);
+    let user2 = new User (this.settingsForm.value.email, this.settingsForm.value.username,this.settingsForm.value.password, this.settingsForm.value.edat, this.settingsForm.value.instrument,this.settingsForm.value.estils, this.settingsForm.value.descripcio, this.settingsForm.value.video);
     this.userServices.updateUser(token,user2)
       .subscribe(response =>{
         if(response.status == 200){
