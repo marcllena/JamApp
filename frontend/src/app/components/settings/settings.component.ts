@@ -29,6 +29,7 @@ export class SettingsComponent implements OnInit {
     //this.singleton.newClickedUserId.subscribe(Id => this.Id = Id)
     this.Id=localStorage.getItem('id');
     this.settingsForm = this.formBuilder.group({
+      email:'',
       username:'',
       edat:0,
       instrument:[],
@@ -76,8 +77,8 @@ export class SettingsComponent implements OnInit {
   updateUser(){
     console.log("Operacio de updateUser realitzada al backend"+this.settingsForm.value);
     let token=localStorage.getItem('token');
-    let user = new User (this.settingsForm.value.username, this.settingsForm.value.edat, this.settingsForm.value.instrument,this.settingsForm.value.estils);
-    this.userServices.updateUser(token,user)
+    let user2 = new User (this.settingsForm.value.email, this.settingsForm.value.username,"", this.settingsForm.value.edat, this.settingsForm.value.instrument,this.settingsForm.value.estils, this.settingsForm.value.descripcio, this.settingsForm.value.video);
+    this.userServices.updateUser(token,user2)
       .subscribe(response =>{
         if(response.status == 200){
           this.router.navigateByUrl("api/menu/home");
