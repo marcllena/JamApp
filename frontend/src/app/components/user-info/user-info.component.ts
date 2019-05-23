@@ -19,6 +19,14 @@ export class UserInfoComponent implements OnInit {
   //name: string;
   Id: string;
   user: Object;
+  description:boolean;
+  edat: boolean;
+  city:boolean;
+  instrument: boolean;
+  grups: boolean;
+  jams: boolean;
+  estils: boolean;
+
   //desc,city,;
 
 
@@ -28,7 +36,14 @@ export class UserInfoComponent implements OnInit {
 
   ngOnInit() {
     if(this.Id==="0") this.router.navigateByUrl("/");
-    this.getUser()
+    this.description=false;
+    this.edat=false;
+    this.instrument=false;
+    this.city=false;
+    this.grups=false;
+    this.jams=false;
+    this.estils=false;
+    this.getUser();
   }
 
   getUser() {
@@ -39,6 +54,15 @@ export class UserInfoComponent implements OnInit {
           console.log("Resposta del BackEnd"+response.body);
           if(response.status==200){
             this.user=response.body;
+            console.log(this.user);
+            if("edat" in this.user) this.edat=true;
+            if("descripcio" in this.user) this.description=true;
+            if("city" in this.user) this.city=true;
+            if(("instrument" in this.user)) this.instrument=false;
+            if("grups" in this.user) this.grups=true;
+            if("jams" in this.user) this.jams=true;
+            if("estils" in this.user) this.estils=true;
+
             //if (this.user.descripcio){
 
             //}

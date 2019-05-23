@@ -16,6 +16,7 @@ const MusicianSchema = UserBase.discriminator('Musician', new mongoose.Schema({
     latitud: Number,//+-90
     longitud: Number,//+-180
     grups: [[{ type: mongoose.Schema.Types.ObjectId, ref: 'Group'}]],
+    //jams: [{ type: Schema.Types.ObjectId, ref: 'Jam' }],
     descripcio:String,
     video:String,
     estils:[String]

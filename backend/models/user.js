@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt-nodejs');
 const config = require('../config');
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr(config.SECRET_TOKEN);
-const crypto = require('crypto')
+const crypto = require('crypto');
 const baseOptions = {
     discriminatorKey: 'userType',
     collection: 'users'
