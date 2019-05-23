@@ -13,6 +13,7 @@ export class FilterFormComponent implements OnInit {
 
   musics: boolean;
   salas:boolean;
+  distancia:number;
 
   constructor(private singleton: DataService,  private router: Router) { }
 
@@ -36,6 +37,12 @@ export class FilterFormComponent implements OnInit {
     else{
       this.salas=true;
     }
+  }
+
+  rangeChange(event)
+  {
+    this.distancia = event.detail.value;
+    console.log(this.distancia);
   }
 
   exportFilters(){
