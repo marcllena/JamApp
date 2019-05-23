@@ -22,10 +22,20 @@
     </ion-toolbar>
   </ion-header>
   <ion-content>
-    <ion-list *ngFor="let conversation  of chats ">
-      <ion-item>
-        <ion-button (click)="chat(conversation.destination)" >{{conversation.destination}}</ion-button>
-        
-      </ion-item>
-    </ion-list>
+    <div class="limiter">
+      <div class="container-login100">
+        <div class="wrap-login100 p-l-20 p-r-20 p-t-20 p-b-20">
+          <br>
+          <span class="login100-form-title">
+          Conversaciones
+          </span>
+          <br>
+          <ion-list *ngFor="let conversation  of chats ">
+            <ion-item >
+              <ion-label class="pointer" (click)="chat(conversation.destination)" routerDirection="root" routerLinkActive="active">{{conversation.destination}} </ion-label>
+            </ion-item>
+          </ion-list>
+        </div>
+      </div>
+    </div>
   </ion-content>

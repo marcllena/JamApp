@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     let token =localStorage.getItem('token');
+    console.log()
     if(token!=null) {
       this.comprobarLogin(token);
     }
