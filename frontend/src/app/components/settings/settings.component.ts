@@ -82,6 +82,7 @@ export class SettingsComponent implements OnInit {
     this.userServices.updateUser(token,user2)
       .subscribe(response =>{
         if(response.status == 200){
+          localStorage.setItem('username',response.body['username']);
           this.router.navigateByUrl("api/menu/home");
         }
         else {
