@@ -78,7 +78,16 @@ export class SettingsComponent implements OnInit {
   updateUser(){
     console.log("Operacio de updateUser realitzada al backend"+this.settingsForm.value);
     let token=localStorage.getItem('token');
-    let user2 = new User (this.settingsForm.value.email, this.settingsForm.value.username,/*this.settingsForm.value.password,*/ this.settingsForm.value.edat, this.settingsForm.value.instrument,this.settingsForm.value.estils, this.settingsForm.value.descripcio, this.settingsForm.value.video);
+    //let user2 = new User (this.settingsForm.value.email, this.settingsForm.value.username,/*this.settingsForm.value.password,*/ this.settingsForm.value.edat, this.settingsForm.value.instrument,this.settingsForm.value.estils, this.settingsForm.value.descripcio, this.settingsForm.value.video);
+    let user2 = {
+      email: this.settingsForm.value.email,
+      username: this.settingsForm.value.username,
+      edat: this.settingsForm.value.edat,
+      instrument: this.settingsForm.value.instrument,
+      estils: this.settingsForm.value.estils,
+      descripcio: this.settingsForm.value.descripcio,
+      video: this.settingsForm.value.video
+    }
     this.userServices.updateUser(token,user2)
       .subscribe(response =>{
         if(response.status == 200){
