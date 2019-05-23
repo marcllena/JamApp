@@ -38,7 +38,9 @@ export class ToolbarService {
           handler: () => {
             console.log('Realizamos Log Out');
             localStorage.removeItem('token');
-            localStorage.removeItem('_id');
+            localStorage.removeItem('id');
+            localStorage.removeItem('userType');
+            localStorage.removeItem('username');
             this.router.navigateByUrl('');
           }
         }

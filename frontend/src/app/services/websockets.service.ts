@@ -15,9 +15,10 @@ export class WebsocketsService {
   destination
   private originalChats = new BehaviorSubject([]);
   newChats = this.originalChats.asObservable();
-  constructor(private singleton: DataService,) {
+  constructor(private singleton: DataService) {
+    this.environment = new Environment();
     this.singleton.newChatDestination.subscribe(destination => this.destination = destination)
-    this.socket = io.connect('http://localhost:3000') //S'ha de cnaviar a una variable per desplegar
+    this.socket = io.connect(this.environment.urlSockets) //S'ha de cnaviar a una variable per desplegar
     this.socket.on('chatInit', function(missages){
       console.log(missages)
       //Imprimir missatges, guardarlos a una variable singleton.

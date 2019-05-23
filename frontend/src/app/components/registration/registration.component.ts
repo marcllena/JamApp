@@ -126,7 +126,7 @@ export class RegistrationComponent implements OnInit {
         //Operació Realitzada Correctament
         let token = response.body['token'];
         localStorage.setItem('token', token);
-        localStorage.setItem('_id',response.body['_id']);
+        localStorage.setItem('id',response.body['_id']);
         localStorage.setItem('userType', response.body['userType']);
         localStorage.setItem('username',response.body['username']);
         //Li passem la ubicació al registrarse:
