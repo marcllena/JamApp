@@ -27,6 +27,7 @@ export class HomePage {
   markersListUsers: any;
   markersListSalas: any;
   userClicked:any;
+  salaClicked:any;
   musicsFilter:boolean;
   salesFilter:boolean;
 
@@ -190,7 +191,15 @@ export class HomePage {
                   console.log("Marcador a " + this.userList.rooms[i].latitud)
                 }
               }
-              //De moment no tenim click a les sales
+              //Obtenim el click al les Sales
+              for (let i = 0; i < this.markersListSalas.length; i++) {
+                google.maps.event.addListener(this.markersListSalas[i], 'click', () =>{
+                  console.log("Click a la sala " + this.userList.rooms[i].username)
+                  this.salaClicked=this.userList.rooms[i];
+                  this.singleton.changeClickedUserId(this.salaClicked._id);
+                  this.router.navigateByUrl("/api/userInfo");
+                });
+              }
             }
           }
         },
