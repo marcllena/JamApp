@@ -1,11 +1,12 @@
 <ion-header>
   <ion-toolbar>
+    <ion-title *ngIf="platform.is('desktop')">
+      User List
+    </ion-title>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>
-      User List
-    </ion-title>
+
     <ion-buttons slot="end">
       <ion-label>{{toolbarService.getUserName()}}</ion-label>
       <ion-button color="primary" (click)="toolbarService.profile()">
@@ -13,7 +14,7 @@
       </ion-button>
       <ion-button color="primary" (click)="toolbarService.chat()">
         <ion-icon slot="icon-only" name="chatboxes"></ion-icon>
-        CHAT
+        <ion-label *ngIf="platform.is('desktop')">CHAT</ion-label>
       </ion-button>
       <ion-button color="primary" (click)="toolbarService.logOut()">
         Log Out
@@ -51,12 +52,14 @@
             <ion-label>{{user.userType}}</ion-label>
             <ion-checkbox class="checkbox"  (click)="selectUser(user._id)"></ion-checkbox>
             <ion-button class="list-buttons" color="primary" (click)="editarUser(user._id)" >
-              Editar
-              <ion-icon style="padding-right:7px" slot="icon-only" name="create"></ion-icon>
+              <ion-icon *ngIf="!platform.is('desktop')" slot="icon-only" name="create"></ion-icon>
+              <ion-icon *ngIf="platform.is('desktop')" style="padding-right:7px" slot="icon-only" name="create"></ion-icon>
+              <ion-label *ngIf="platform.is('desktop')">Editar</ion-label>
             </ion-button>
             <ion-button class="list-buttons" color="primary" (click)="eliminarUser(user._id)">
-              Eliminar
-              <ion-icon style="padding-right:7px" slot="icon-only" name="trash"></ion-icon>
+              <ion-icon *ngIf="!platform.is('desktop')" slot="icon-only" name="trash"></ion-icon>
+              <ion-icon *ngIf="platform.is('desktop')" style="padding-right:7px" slot="icon-only" name="trash"></ion-icon>
+              <ion-label *ngIf="platform.is('desktop')">Eliminar</ion-label>
             </ion-button>
           </ion-item>
         </ion-list>

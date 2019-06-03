@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {UserServices} from "../../../../services/user.services";
 import {Router} from "@angular/router";
-import {AlertController, ToastController} from "@ionic/angular";
+import {AlertController, Platform, ToastController} from "@ionic/angular";
 import {HttpResponse} from "@angular/common/http";
 import {ToolbarService} from "../../../../services/toolbar.service";
 import {User} from "../../../../models/user";
@@ -22,7 +22,7 @@ export class UserlistPage implements OnInit {
 
 
   constructor(private userService: UserServices, private router: Router,public toastController: ToastController,
-              private toolbarService: ToolbarService, private alertController: AlertController) { }
+              private toolbarService: ToolbarService, public platform: Platform,private alertController: AlertController) { }
 
   ngOnInit() {
     this.llistaUsers();

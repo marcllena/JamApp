@@ -1,19 +1,21 @@
 <ion-header>
+  <ion-header>
     <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-back-button defaultHref="api/menu/home"></ion-back-button>
-          </ion-buttons>
-      <ion-title>
+      <ion-title *ngIf="platform.is('desktop')">
         Chats
       </ion-title>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="api/menu/home"></ion-back-button>
+      </ion-buttons>
+
       <ion-buttons slot="end">
         <ion-label>{{toolbarService.getUserName()}}</ion-label>
         <ion-button color="primary" (click)="toolbarService.profile()">
           <ion-icon slot="icon-only" name="contact"></ion-icon>
         </ion-button>
         <ion-button color="primary" (click)="toolbarService.chat()">
-            <ion-icon slot="icon-only" name="chatboxes"></ion-icon>
-          CHAT
+          <ion-icon slot="icon-only" name="chatboxes"></ion-icon>
+          <ion-label *ngIf="platform.is('desktop')">CHAT</ion-label>
         </ion-button>
         <ion-button color="primary" (click)="toolbarService.logOut()">
           Log Out
@@ -21,10 +23,11 @@
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
+  </ion-header>
   <ion-content>
     <div class="limiter">
       <div class="container-login100">
-        <div class="wrap-login100 p-l-20 p-r-20 p-t-20 p-b-20">
+        <div class="wrap-login100 p-l-15 p-r-15 p-t-20 p-b-20">
           <br>
           <span class="login100-form-title">
           Conversaciones

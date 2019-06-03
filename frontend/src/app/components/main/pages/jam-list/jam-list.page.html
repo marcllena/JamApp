@@ -1,19 +1,20 @@
 <ion-header>
   <ion-toolbar>
+    <ion-title *ngIf="platform.is('desktop')">
+      Jams Session List
+    </ion-title>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>
-      Jams Session List
-    </ion-title>
+
     <ion-buttons slot="end">
       <ion-label>{{toolbarService.getUserName()}}</ion-label>
       <ion-button color="primary" (click)="toolbarService.profile()">
         <ion-icon slot="icon-only" name="contact"></ion-icon>
       </ion-button>
       <ion-button color="primary" (click)="toolbarService.chat()">
-          <ion-icon slot="icon-only" name="chatboxes"></ion-icon>
-        CHAT
+        <ion-icon slot="icon-only" name="chatboxes"></ion-icon>
+        <ion-label *ngIf="platform.is('desktop')">CHAT</ion-label>
       </ion-button>
       <ion-button color="primary" (click)="toolbarService.logOut()">
         Log Out
