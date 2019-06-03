@@ -23,6 +23,7 @@ export class RegistrationLocationComponent implements OnInit {
   clickedLatitud: number;
   clickedLongitud: number;
   exito:boolean;
+  markerPosition:any;
 
 
 
@@ -112,6 +113,14 @@ export class RegistrationLocationComponent implements OnInit {
           ]
         }
       ]
+    });
+    var icon = {
+      url: '../../../assets/markers/bluecircle.png',
+    };
+    this.markerPosition = new google.maps.Marker({
+      position: {lat: this.latitud, lng: this.longitud},
+      map: this.map,
+      icon: icon,
     });
     google.maps.event.addListener(this.map,"click", (event) => {
       this.clickedLongitud=event.latLng.lng();

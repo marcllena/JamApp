@@ -22,6 +22,7 @@ export class LocationPickComponent implements OnInit {
   longitud: number;
   clickedLatitud: number;
   clickedLongitud: number;
+  markerPosition:any;
 
 
 
@@ -111,6 +112,14 @@ export class LocationPickComponent implements OnInit {
         }
       ]
     });
+    var icon = {
+      url: '../../../assets/markers/bluecircle.png',
+    };
+    this.markerPosition = new google.maps.Marker({
+      position: {lat: this.latitud, lng: this.longitud},
+      map: this.map,
+      icon: icon,
+    });
     this.getLocation();
     google.maps.event.addListener(this.map,"click", (event) => {
       this.clickedLongitud=event.latLng.lng();
@@ -135,7 +144,7 @@ export class LocationPickComponent implements OnInit {
   }
   getLocation(){
     let token =localStorage.getItem('token');
-    let id =localStorage.getItem('_id');
+    let id =localStorage.getItem('id');
     this.userService.getLocation(token,id)
       .subscribe(async response => {
           console.log("Resposta del BackEnd" + response.body);

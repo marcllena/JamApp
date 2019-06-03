@@ -12,6 +12,9 @@ export class DataService {
   private originalUsername = new BehaviorSubject("Null");
   private originalMusicsFilter = new BehaviorSubject(true);
   private originalSalesFilter = new BehaviorSubject(true);
+  private originalDistanciaBooleanFilter = new BehaviorSubject(false);
+  private originalDistanciaValueFilter= new BehaviorSubject(0);
+
 
   newChatDestination = this.originalChatDestination.asObservable();
   newClickedUserId = this.originalClickedUserId.asObservable();
@@ -19,6 +22,8 @@ export class DataService {
   newUsername = this.originalUsername.asObservable();
   newMusicsFilter= this.originalMusicsFilter.asObservable();
   newSalesFilter= this.originalSalesFilter.asObservable();
+  newDistanciaBooleanFilter= this.originalDistanciaBooleanFilter.asObservable();
+  newDistanciaValueFilter= this.originalDistanciaValueFilter.asObservable();
 
 
   constructor() { }
@@ -44,6 +49,12 @@ export class DataService {
   }
   changeSalesFilter(value: boolean){
     this.originalSalesFilter.next(value)
+  }
+  changeDistanciaBooleanFilter(value: boolean){
+    this.originalDistanciaBooleanFilter.next(value)
+  }
+  changeDistanciaValueFilter(value: number){
+    this.originalDistanciaValueFilter.next(value)
   }
   getMusicsFilter(){
     return this.originalMusicsFilter;

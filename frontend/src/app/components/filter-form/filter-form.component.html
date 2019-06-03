@@ -20,23 +20,23 @@
           <ion-list>
             <ion-item>
               <ion-checkbox class="checkbox" checked="true" (click)="checkMusics()"></ion-checkbox>
-              <ion-label class="list_items">Musicos</ion-label>
+              <ion-label style="padding-left:7px" class="list_items">Musicos</ion-label>
             </ion-item>
             <ion-item>
               <ion-checkbox class="checkbox" checked="true" (click)="checkSalas()"></ion-checkbox>
-              <ion-label>Salas</ion-label>
+              <ion-label style="padding-left:7px">Salas</ion-label>
             </ion-item>
             <br>
-            <ion-checkbox class="checkbox" checked="false" (click)="checkMusics()"></ion-checkbox>
-            <ion-label>Filtrar por distancia:</ion-label>
+            <ion-checkbox class="checkbox" checked="false" (click)="checkDistance()"></ion-checkbox>
+            <ion-label style="padding-left:7px">Filtrar por distancia de mi ubicación actual:</ion-label>
             <br>
             <ion-item>
-              <ion-range style="padding-top: 30px;z-index: 99" min="5" max="100" pin="" step="5" snaps="true" color="primary" class="ion-color ion-color-secondary ios in-item range-has-pin hydrated" (ionChange)="rangeChange($event)">
+              <ion-range style="padding-top: 30px;z-index: 99" min="5" max="1000" pin="" step="50" snaps="true" color="primary" class="ion-color ion-color-secondary ios in-item range-has-pin hydrated" (ionChange)="rangeChange($event)">
                 <ion-item slot="start">
                   <ion-label>5 km</ion-label>
                 </ion-item>
                 <ion-item  style="z-index: -1" slot="end">
-                  <ion-label>100 km</ion-label>
+                  <ion-label>1000 km</ion-label>
                 </ion-item>
               </ion-range>
             </ion-item>
