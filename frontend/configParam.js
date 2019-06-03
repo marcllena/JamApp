@@ -1,6 +1,6 @@
 function constants() {
   return {
-    BACKEND_IP: '10.0.1.132'
+    BACKEND_IP: 'localhost'
   }
 }
 module.exports={
