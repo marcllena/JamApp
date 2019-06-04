@@ -14,7 +14,7 @@ const isMeOrAdmin = require('../middlewares/meOrAdmin');
 apiUsers.post('/location/:userId', isMeOrAdmin, userCtrl.setLocation);//Set user location latitud and longitud
 apiUsers.post('/location', auth, userCtrl.setLocation);//Set user location latitud and longitud without path param
 apiUsers.get('/location', /*auth,*/ userCtrl.getUsersLocation);//GET all users location, retorna el vector musicians amb els musics
-apiUsers.post('/filter', auth, userCtrl.filterDistance);//filtra la llista d'usuari segons la posicio de l'usuari que troba amb el token i el camp distance al body
+apiUsers.post('/filter', /*auth,*/userCtrl.filterDistance);//filtra la llista d'usuari segons la posicio de l'usuari que troba amb el token i el camp distance al body
 // i el vector rooms amb les sales
 
 

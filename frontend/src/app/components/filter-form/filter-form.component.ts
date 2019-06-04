@@ -13,13 +13,15 @@ export class FilterFormComponent implements OnInit {
 
   musics: boolean;
   salas:boolean;
-  distancia:number;
+  distanciaBoolean:boolean;
+  distanciaValue:number;
 
   constructor(private singleton: DataService,  private router: Router) { }
 
   ngOnInit() {
     this.musics=true;
     this.salas=true;
+    this.distanciaBoolean=false;
   }
 
   checkMusics(){
@@ -39,15 +41,25 @@ export class FilterFormComponent implements OnInit {
     }
   }
 
+  checkDistance(){
+    if(this.distanciaBoolean){
+      this.distanciaBoolean=false;
+    }
+    else{
+      this.distanciaBoolean=true;
+    }
+  }
+
   rangeChange(event)
   {
-    this.distancia = event.detail.value;
-    console.log(this.distancia);
+    this.distanciaValue = event.detail.value;
   }
 
   exportFilters(){
     this.singleton.changeMusicsFilter(this.musics);
     this.singleton.changeSalesFilter(this.salas);
+    this.singleton.changeDistanciaBooleanFilter(this.distanciaBoolean);
+    this.singleton.changeDistanciaValueFilter(this.distanciaValue);
     this.router.navigateByUrl("api/menu/home");
   }
 

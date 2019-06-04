@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ToolbarService} from "../../../../services/toolbar.service";
 import { UserServices } from "../../../../services/user.services";
 import {Router} from "@angular/router";
-import { ModalController, AlertController } from '@ionic/angular';
+import {ModalController, AlertController, Platform} from '@ionic/angular';
 import {DataService} from '../../../../services/data.services';
 @Component({
   selector: 'app-grup-list',
@@ -15,7 +15,8 @@ export class GrupListPage implements OnInit {
   groups: Object;
   requests: Object;
 
-  constructor(private alertController: AlertController,private toolbarService: ToolbarService, private router: Router,private userService: UserServices, private singleton: DataService) { }
+  constructor(private alertController: AlertController,private toolbarService: ToolbarService, private router: Router,
+              private userService: UserServices, private singleton: DataService, public platform: Platform) { }
 
   ngOnInit() {
     this.getRequests();

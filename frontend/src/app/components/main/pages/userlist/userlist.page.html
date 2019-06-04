@@ -1,11 +1,12 @@
 <ion-header>
   <ion-toolbar>
+    <ion-title *ngIf="platform.is('desktop')">
+      User List
+    </ion-title>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>
-      User List
-    </ion-title>
+
     <ion-buttons slot="end">
       <ion-label>{{toolbarService.getUserName()}}</ion-label>
       <ion-button color="primary" (click)="toolbarService.profile()">
@@ -13,7 +14,7 @@
       </ion-button>
       <ion-button color="primary" (click)="toolbarService.chat()">
         <ion-icon slot="icon-only" name="chatboxes"></ion-icon>
-        CHAT
+        <ion-label *ngIf="platform.is('desktop')">CHAT</ion-label>
       </ion-button>
       <ion-button color="primary" (click)="toolbarService.logOut()">
         Log Out
@@ -31,12 +32,10 @@
           Lista de Usuarios de JamApp
         </span>
        <br>
-        <div class="container-login100-form-btn">
-          <div class="wrap-login100-form-btn">
-            <div class="login100-form-bgbtn"></div>
-            <ion-button color="primary" (click)="llistaUsers()" expand="block">Obtener Usuarios</ion-button>
-          </div>
-        </div>
+        <ion-searchbar
+          [(ngModel)]="searchTerm"
+          (ionChange)="filterItems()"
+        ></ion-searchbar>
        <br>
         <ion-list-header *ngIf="users" >
           <ion-label>Nombre del Usuario</ion-label>
@@ -53,22 +52,26 @@
             <ion-label>{{user.userType}}</ion-label>
             <ion-checkbox class="checkbox"  (click)="selectUser(user._id)"></ion-checkbox>
             <ion-button class="list-buttons" color="primary" (click)="editarUser(user._id)" >
-              Editar
-              <ion-icon slot="icon-only" name="create"></ion-icon>
+              <ion-icon *ngIf="!platform.is('desktop')" slot="icon-only" name="create"></ion-icon>
+              <ion-icon *ngIf="platform.is('desktop')" style="padding-right:7px" slot="icon-only" name="create"></ion-icon>
+              <ion-label *ngIf="platform.is('desktop')">Editar</ion-label>
             </ion-button>
             <ion-button class="list-buttons" color="primary" (click)="eliminarUser(user._id)">
-              Eliminar
-              <ion-icon slot="icon-only" name="trash"></ion-icon>
+              <ion-icon *ngIf="!platform.is('desktop')" slot="icon-only" name="trash"></ion-icon>
+              <ion-icon *ngIf="platform.is('desktop')" style="padding-right:7px" slot="icon-only" name="trash"></ion-icon>
+              <ion-label *ngIf="platform.is('desktop')">Eliminar</ion-label>
             </ion-button>
           </ion-item>
         </ion-list>
        <br>
-        <div class="container-login100-form-btn">
-          <div class="wrap-login100-form-btn">
-            <div class="login100-form-bgbtn"></div>
-            <ion-button *ngIf="users" color="primary" (click)="eliminarVariosUsers()" expand="block">Eliminar Usuarios Seleccionados</ion-button>
-          </div>
-        </div>
+      <ion-row>
+        <ion-col col-6>
+          <ion-button *ngIf="users" style="padding-right:20px" color="primary" (click)="eliminarVariosUsers()" expand="block">Eliminar Usuarios Seleccionados</ion-button>
+        </ion-col>
+        <ion-col col-6>
+          <ion-button *ngIf="users" style="padding-left:20px"color="primary" (click)="llistaUsers()" expand="block">Refrescar Lista</ion-button>
+        </ion-col>
+      </ion-row>
       </div>
     </div>
 

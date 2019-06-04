@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {UserServices} from "../../../../services/user.services";
 import {Router} from "@angular/router";
-import {ToastController} from "@ionic/angular";
+import {AlertController, Platform, ToastController} from "@ionic/angular";
 import {HttpResponse} from "@angular/common/http";
 import {ToolbarService} from "../../../../services/toolbar.service";
+import {User} from "../../../../models/user";
 
 @Component({
   selector: 'app-userlist',
@@ -14,12 +15,17 @@ import {ToolbarService} from "../../../../services/toolbar.service";
 })
 export class UserlistPage implements OnInit {
 
-  users: Object;
+  users: User[];
+  usersOriginal: User[];
   usersSelected=[];
+  searchTerm: string = "";
 
-  constructor(private userService: UserServices, private router: Router,public toastController: ToastController, private toolbarService: ToolbarService) { }
+
+  constructor(private userService: UserServices, private router: Router,public toastController: ToastController,
+              private toolbarService: ToolbarService, public platform: Platform,private alertController: AlertController) { }
 
   ngOnInit() {
+    this.llistaUsers();
   }
 
   llistaUsers() {
@@ -29,7 +35,8 @@ export class UserlistPage implements OnInit {
       .subscribe(response => {
           console.log("Resposta del BackEnd"+response.body);
           if(response.status==200){
-            this.users=response.body;
+            this.users=response.body as User[];
+            this.usersOriginal=this.users;
           }
           else {
             //Error desconegut
@@ -44,35 +51,51 @@ export class UserlistPage implements OnInit {
 
   editarUser(userId){}
 
-  eliminarUser(userId){
-    console.log(userId);
-    let token =localStorage.getItem('token');
-    this.userService.deleteUsers(token,{IdList:userId})
-      .subscribe(
-        async response => {
-          var result = response as HttpResponse<JSON>;
-          if(result.status==200) {
-            const toast = await this.toastController.create({
-              message: "Usuario Eliminado Correctamente",
-              duration: 2000,
-              position: 'bottom',
-            });
-            toast.present();
+  async eliminarUser(userId) {
+    const alert = await this.alertController.create({
+      header: 'Alerta',
+      message: '¿Seguro que desea eliminar al usuario?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {
           }
-          this.llistaUsers();
-        },
-        async err => {
-          var result = err as HttpResponse<JSON>;
-          if(result.status==403) {
-            const toast = await this.toastController.create({
-              message: "Debes estar logeado como administrador para eliminar usuarios",
-              duration: 2000,
-              position: 'bottom',
-            });
-            toast.present();
+        }, {
+          text: 'Si',
+          handler: () => {
+            console.log(userId);
+            let token = localStorage.getItem('token');
+            this.userService.deleteUsers(token, {IdList: userId})
+              .subscribe(
+                async response => {
+                  var result = response as HttpResponse<JSON>;
+                  if (result.status == 200) {
+                    const toast = await this.toastController.create({
+                      message: "Usuario Eliminado Correctamente",
+                      duration: 2000,
+                      position: 'bottom',
+                    });
+                    toast.present();
+                  }
+                  this.llistaUsers();
+                },
+                async err => {
+                  var result = err as HttpResponse<JSON>;
+                  if (result.status == 403) {
+                    const toast = await this.toastController.create({
+                      message: "Debes estar logeado como administrador para eliminar usuarios",
+                      duration: 2000,
+                      position: 'bottom',
+                    });
+                    toast.present();
+                  }
+                  this.llistaUsers();
+                });
           }
-          this.llistaUsers();
-        });
+        }
+      ]
+    });
+    await alert.present();
   }
 
   selectUser(userId){
@@ -93,35 +116,63 @@ export class UserlistPage implements OnInit {
       console.log("Usuari seleccionat")
     }
   }
-  eliminarVariosUsers(){
+  async eliminarVariosUsers() {
+    if(this.usersSelected.length>0) {
+      const alert = await this.alertController.create({
+        header: 'Alerta',
+        message: '¿Seguro que desea eliminar a varios usuarios?',
+        buttons: [
+          {
+            text: 'Cancelar',
+            handler: () => {
+            }
+          }, {
+            text: 'Si',
+            handler: () => {
+              let token = localStorage.getItem('token');
+              this.userService.deleteUsers(token, {IdList: this.usersSelected})
+                .subscribe(
+                  async response => {
+                    var result = response as HttpResponse<JSON>;
+                    if (result.status == 200) {
+                      const toast = await this.toastController.create({
+                        message: "Usuarios Eliminados Correctamente",
+                        duration: 2000,
+                        position: 'bottom',
+                      });
+                      toast.present();
+                    }
+                    this.llistaUsers();
+                  },
+                  async err => {
+                    var result = err as HttpResponse<JSON>;
+                    if (result.status == 403) {
+                      const toast = await this.toastController.create({
+                        message: "Debes estar logeado como administrador para eliminar usuarios",
+                        duration: 2000,
+                        position: 'bottom',
+                      });
+                      toast.present();
+                    }
+                    this.llistaUsers();
+                  });
+            }
+          }
+        ]
+      });
+      await alert.present();
+    }
+  }
+  filterItems() {
+    var filtered= this.users.filter(item => {
+      return item.username.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
+    });
+    if(this.searchTerm=="")
+      this.users=this.usersOriginal;
+    else{
+      this.users=filtered;
+    }
 
-    let token =localStorage.getItem('token');
-    this.userService.deleteUsers(token,{IdList:this.usersSelected})
-      .subscribe(
-        async response => {
-          var result = response as HttpResponse<JSON>;
-          if(result.status==200) {
-            const toast = await this.toastController.create({
-              message: "Usuarios Eliminados Correctamente",
-              duration: 2000,
-              position: 'bottom',
-            });
-            toast.present();
-          }
-          this.llistaUsers();
-        },
-        async err => {
-          var result = err as HttpResponse<JSON>;
-          if(result.status==403) {
-            const toast = await this.toastController.create({
-              message: "Debes estar logeado como administrador para eliminar usuarios",
-              duration: 2000,
-              position: 'bottom',
-            });
-            toast.present();
-          }
-          this.llistaUsers();
-        });
   }
 
 }

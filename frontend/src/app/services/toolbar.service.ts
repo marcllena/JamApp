@@ -26,7 +26,7 @@ export class ToolbarService {
   async logOut() {
     const alert = await this.alertController.create({
       header: 'Alerta',
-      message: '¿Seguro que desea salir?.',
+      message: '¿Seguro que desea salir?',
       buttons: [
         {
           text: 'Cancelar',

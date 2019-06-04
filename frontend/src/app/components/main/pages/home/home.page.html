@@ -1,13 +1,13 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
+    <ion-title *ngIf="platform.is('desktop')">
       Home
     </ion-title>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
       <ion-button color="primary" (click)="toolbarService.settings()">
         <ion-icon slot="icon-only" name="switch"></ion-icon>
-        <ion-label>Filtros</ion-label>
+        <ion-label *ngIf="platform.is('desktop')">Filtros</ion-label>
       </ion-button>
     </ion-buttons>
 
@@ -18,7 +18,7 @@
       </ion-button>
       <ion-button color="primary" (click)="toolbarService.chat()">
           <ion-icon slot="icon-only" name="chatboxes"></ion-icon>
-        CHAT
+        <ion-label *ngIf="platform.is('desktop')">CHAT</ion-label>
       </ion-button>
       <ion-button color="primary" (click)="toolbarService.logOut()">
         Log Out

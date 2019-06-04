@@ -332,6 +332,46 @@ function getUsersLocation(req,res){
 }
 
 function filterDistance(req,res){
+    //Poso Gabri que passis les coordenades tmb, mantinc la original comentada més abaix:
+    let longitud,latitud,distancia;
+        distancia=req.body.distancia;
+        latitud=req.body.latitud;
+        longitud=req.body.longitud;
+        if (!req.body.musician||!req.body.room){
+            req.body.musician=true;
+            req.body.room=true;
+        }
+        if(req.body.musician==true) {
+            Musician.find({location: {$geoWithin: {$centerSphere: [[longitud, latitud], distancia / 6371]}}}, '_id username latitud longitud location', (err, musicians) => {
+                if (err)
+                    return res.status(500).send({message: `Error searching musicians: ${err}`});
+                if (req.body.room==true) {
+                    Room.find({location: {$geoWithin: {$centerSphere: [[longitud, latitud], distancia / 6371]}}}, '_id name latitud longitud location', (err, rooms) => {
+                        if (err)
+                            return res.status(500).send({message: `Error searching rooms: ${err}`});
+                            res.status(200).send({
+                                musicians: musicians,
+                                rooms: rooms
+                            });
+                    });
+                }
+                else{
+                    res.status(200).send({
+                        musicians: musicians
+                    });
+                }
+            });
+        }
+        else{
+            Room.find({location: {$geoWithin: {$centerSphere: [[longitud, latitud], distancia / 6371]}}}, '_id name latitud longitud location', (err, rooms) => {
+                if (err)
+                    return res.status(500).send({message: `Error searching rooms: ${err}`});
+                res.status(200).send({
+                    rooms: rooms
+                });
+            });
+        }
+    /*
     let longitud,latitud,distancia;
     User.findById(req.user, (err,user)=> {
         if(user.location) {
@@ -374,7 +414,7 @@ function filterDistance(req,res){
                 });
             });
         }
-    });
+    });*/
 }
 
 

@@ -88,9 +88,15 @@ export class UserServices {
     return this.http.get(this.environment.urlUser + "user/"+id, {headers: headers,observe: 'response'})
   }
   getLocations() {
+
     return this.http.get(this.environment.urlUser + "user/location",{observe: 'response'})
   }
-
+  getLocationsFiltered(token,filter) {
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+    }
+    return this.http.post(this.environment.urlUser + "user/filter", filter,{headers: headers,observe: 'response'})
+  }
   updateUser(token,user){
     const headers = {
       'Authorization': `Bearer ${token}`,
