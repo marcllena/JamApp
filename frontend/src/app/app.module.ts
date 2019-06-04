@@ -25,6 +25,8 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
 import { ChatListComponent } from './components/main/pages/chat-list/chat-list.component';
 import {FilterFormComponent} from "./components/filter-form/filter-form.component";
 import {PoliticaComponent} from "./components/politica/politica.component";
+import {GrupLocationComponent} from "./components/grup-location/grup-location.component";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +41,8 @@ import {PoliticaComponent} from "./components/politica/politica.component";
     UserInfoComponent,
     ChatListComponent,
     FilterFormComponent,
-    PoliticaComponent
+    PoliticaComponent,
+    GrupLocationComponent
   ],
   entryComponents: [],
   imports: [

@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import { UserServices } from "../../services/user.services";
 import { Group } from "../../models/group";
 import { Router } from "@angular/router";
+import {DataService} from "../../services/data.services";
 
 @Component({
   selector: 'app-grup-create',
@@ -17,7 +18,7 @@ export class GrupCreateComponent implements OnInit {
   items = ["Regeton","Trap","Dembow"]
   validation_messages: any;
 
-  constructor(private formBuilder: FormBuilder, private userService: UserServices, private router: Router) { 
+  constructor(private formBuilder: FormBuilder, private singleton: DataService,private userService: UserServices, private router: Router) {
     this.createGroupForm = this.formBuilder.group({
       name: new FormControl('',Validators.compose([
         Validators.required,
@@ -54,29 +55,12 @@ export class GrupCreateComponent implements OnInit {
 
   guardar() {
     console.log("Operacio de crear un grup realitzada al backend: "+this.createGroupForm.value);
-    let group = new Group(this.createGroupForm.value.name, this.createGroupForm.value.email, this.createGroupForm.value.description, this.createGroupForm.value.estils);
-    let token =localStorage.getItem('token');
-    this.userService.createGroup(token,group)
-      .subscribe(response =>{
-      console.log("Resposta del backend" + response);
-      if(response.status == 200){
-        //Operacio realitzada correctament
-        this.router.navigateByUrl("/api/menu/home");
-      }
-      else{
-        //Error desconegut
-        console.log("Error");
-      }
-      },
-      err=>{
-        console.log("Error al backend"+err);
-        if(err.status == 409){
-          console.log("Error 409");
-        }
-        else if(err.status == 500){
-          console.log("Error 500");
-        }
-      });
+    //Posem els camps al Singleton
+    this.singleton.changeGroupName(this.createGroupForm.value.name);
+    this.singleton.changeGroupMail( this.createGroupForm.value.email);
+    this.singleton.changeGroupDescription(this.createGroupForm.value.description);
+    this.singleton.changeGroupEstils(this.createGroupForm.value.estils);
+    this.router.navigateByUrl('api/grupLocation');
   }
 
 }

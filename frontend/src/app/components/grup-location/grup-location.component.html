@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Selecting Group Location
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="map-wrapper">
+    <div #map id="map"></div>
+  </div>
+  <ion-fab  *ngIf="exito==true" vertical="bottom" horizontal="center" slot="fixed" (click)="guardar()">
+    <ion-fab-button>
+      <ion-icon  name="done-all"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+
+</ion-content>

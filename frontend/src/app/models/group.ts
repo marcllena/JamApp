@@ -7,15 +7,18 @@ export class Group {
     fotoGrup: string;
     integrants: User[];
     solicituds: User[];
-    ubicacio: string;
+    latitud: number;
+    longitud: number;
     description: string;
     video: string;
     estils: string[];
 
-    constructor(name = '', email='',description='', estils=[]) {
+    constructor(name = '', email='',description='', latitud,longitud,estils=[]) {
         this.name = name;
         this.email = email;
         this.description = description;
         this.estils = estils;
+        this.latitud=latitud;
+        this.longitud=longitud;
     }
 }

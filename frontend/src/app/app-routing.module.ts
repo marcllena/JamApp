@@ -12,6 +12,7 @@ import {RegistrationLocationComponent} from "./components/registration-location/
 import { ChatListComponent } from './components/main/pages/chat-list/chat-list.component';
 import {FilterFormComponent} from "./components/filter-form/filter-form.component";
 import {PoliticaComponent} from "./components/politica/politica.component";
+import {GrupLocationComponent} from "./components/grup-location/grup-location.component";
 
 const routes: Routes = [
   { path: 'api/signin', component: LoginComponent },
@@ -27,6 +28,7 @@ const routes: Routes = [
   {path: 'api/chats', component: ChatListComponent},
   {path: 'api/filter', component: FilterFormComponent},
   {path: 'api/politica', component: PoliticaComponent},
+  { path: 'api/grupLocation', component: GrupLocationComponent},
 
 ];
 

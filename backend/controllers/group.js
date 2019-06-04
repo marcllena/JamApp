@@ -39,20 +39,26 @@ function createGroup(req, res) {
             newGroup = new Group({
                 name: req.body.name,
                 email: req.body.email, // El grup adopta el correu del creador fins que ell no n'espeficiqui un altre.
-                description: req.body.description
+                description: req.body.description,
+                latitud: req.body.latitud,
+                longitud: req.body.longitud,
             });
             else{
                 if (req.body.email)
                     newGroup = new Group({
                         name: req.body.name,
                         email: req.body.email,
-                        description: ""
+                        description: "",
+                        latitud: req.body.latitud,
+                        longitud: req.body.longitud,
                     });
                 else
                     newGroup = new Group({
                         name: req.body.name,
                         email: "",//null,
-                        description: req.body.description
+                        description: req.body.description,
+                        latitud: req.body.latitud,
+                        longitud: req.body.longitud,
                     });
             }
 
