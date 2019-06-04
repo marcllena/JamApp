@@ -42,21 +42,21 @@
           <ion-label>Email</ion-label>
           <ion-label>Tipo de Usuario</ion-label>
           <ion-label> </ion-label>
-          <ion-label> </ion-label>
-          <ion-label> </ion-label>
+          <ion-label *ngIf="userType=='Admin'"> </ion-label>
+          <ion-label *ngIf="userType=='Admin'"> </ion-label>
         </ion-list-header>
         <ion-list *ngFor="let user of users">
           <ion-item>
             <ion-label>{{user.username}}</ion-label>
             <ion-label>{{user.email}}</ion-label>
             <ion-label>{{user.userType}}</ion-label>
-            <ion-checkbox class="checkbox"  (click)="selectUser(user._id)"></ion-checkbox>
-            <ion-button class="list-buttons" color="primary" (click)="editarUser(user._id)" >
+            <ion-checkbox *ngIf="userType=='Admin'" class="checkbox"  (click)="selectUser(user._id)"></ion-checkbox>
+            <ion-button *ngIf="userType=='Admin'" class="list-buttons" color="primary" (click)="editarUser(user._id)" >
               <ion-icon *ngIf="!platform.is('desktop')" slot="icon-only" name="create"></ion-icon>
               <ion-icon *ngIf="platform.is('desktop')" style="padding-right:7px" slot="icon-only" name="create"></ion-icon>
               <ion-label *ngIf="platform.is('desktop')">Editar</ion-label>
             </ion-button>
-            <ion-button class="list-buttons" color="primary" (click)="eliminarUser(user._id)">
+            <ion-button *ngIf="userType=='Admin'" class="list-buttons" color="primary" (click)="eliminarUser(user._id)">
               <ion-icon *ngIf="!platform.is('desktop')" slot="icon-only" name="trash"></ion-icon>
               <ion-icon *ngIf="platform.is('desktop')" style="padding-right:7px" slot="icon-only" name="trash"></ion-icon>
               <ion-label *ngIf="platform.is('desktop')">Eliminar</ion-label>

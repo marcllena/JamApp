@@ -25,13 +25,17 @@
 
 <ion-content>
   <div class="limiter">
+
     <div class="container-login100">
+
       <div class="wrap-login100 p-l-20 p-r-20 p-t-20 p-b-20">
+
         <br><br>
           <span class="login100-form-title">
             Grupos de JamApp
           </span>
         <br><br>
+
         <div *ngIf="groups">
           <ion-card style="display: inline-block;" *ngFor="let group of groups">
             <ion-card-header>
@@ -51,6 +55,7 @@
             </ion-button>
           </ion-card>
         </div>
+
         <br><br>
         <div class="container-login100-form-btn">
           <div class="wrap-login100-form-btn">
@@ -63,6 +68,7 @@
         <span *ngIf="requests?.length!=0" class="login100-form-title">
             Solicitudes a mis grupos
         </span>
+
         <div *ngFor="let request of requests">
             <ion-card style="display: inline-block;" *ngFor="let solicitud of request.solicituds">
               <ion-card-header>

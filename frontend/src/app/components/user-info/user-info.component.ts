@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import {UserServices} from "../../services/user.services";
 import {Router} from "@angular/router";
 import {DataService} from '../../services/data.services'
+import { ElementRef } from '@angular/core';
 import { User } from "../../models/user";
 import { ToastController } from '@ionic/angular';
 
 //import { App} from '@ionic/angular';
+
 
 @Component({
   selector: 'app-user-info',
@@ -15,8 +17,11 @@ import { ToastController } from '@ionic/angular';
     '../../res/fonts/iconic/css/material-design-iconic-font.min.css','../../res/vendor/animate/animate.css','../../res/vendor/css-hamburgers/hamburgers.min.css', '../../res/vendor/animsition/css/animsition.min.css',
     '../../res/vendor/select2/select2.min.css','../../res/vendor/daterangepicker/daterangepicker.css']
 })
+
 export class UserInfoComponent implements OnInit {
+  //@ViewChild('groupColumn') grupColumn: ElementRef;
   //name: string;
+
   Id: string;
   user: Object;
   description:boolean;
@@ -36,13 +41,6 @@ export class UserInfoComponent implements OnInit {
 
   ngOnInit() {
     if(this.Id==="0") this.router.navigateByUrl("/");
-    this.description=false;
-    this.edat=false;
-    this.instrument=false;
-    this.city=false;
-    this.grups=false;
-    this.jams=false;
-    this.estils=false;
     this.getUser();
   }
 
@@ -55,14 +53,6 @@ export class UserInfoComponent implements OnInit {
           if(response.status==200){
             this.user=response.body;
             console.log(this.user);
-            if("edat" in this.user) this.edat=true;
-            if("descripcio" in this.user) this.description=true;
-            if("city" in this.user) this.city=true;
-            if(("instrument" in this.user)) this.instrument=false;
-            if("grups" in this.user) this.grups=true;
-            if("jams" in this.user) this.jams=true;
-            if("estils" in this.user) this.estils=true;
-
             //if (this.user.descripcio){
 
             //}

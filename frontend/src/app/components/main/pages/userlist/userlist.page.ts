@@ -19,12 +19,15 @@ export class UserlistPage implements OnInit {
   usersOriginal: User[];
   usersSelected=[];
   searchTerm: string = "";
+  private userType: string;
 
 
   constructor(private userService: UserServices, private router: Router,public toastController: ToastController,
               private toolbarService: ToolbarService, public platform: Platform,private alertController: AlertController) { }
 
   ngOnInit() {
+    this.userType=localStorage.getItem('userType');
+    console.log(this.userType);
     this.llistaUsers();
   }
 

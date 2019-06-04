@@ -333,6 +333,9 @@ function getUsersLocation(req,res){
 
 function filterDistance(req,res){
     //Poso Gabri que passis les coordenades tmb, mantinc la original comentada més abaix:
+    console.log("Filter distance start:");
+    console.log(req.body);
+    console.log("Filter distance stop:");
     let longitud,latitud,distancia;
         distancia=req.body.distancia;
         latitud=req.body.latitud;
@@ -342,11 +345,11 @@ function filterDistance(req,res){
             req.body.room=true;
         }
         if(req.body.musician==true) {
-            Musician.find({location: {$geoWithin: {$centerSphere: [[longitud, latitud], distancia / 6371]}}}, '_id username latitud longitud location', (err, musicians) => {
+            Musician.find({location: {$geoWithin: {$centerSphere: [[longitud, latitud], distancia / 6378.1]}}}, '_id username latitud longitud location', (err, musicians) => {
                 if (err)
                     return res.status(500).send({message: `Error searching musicians: ${err}`});
                 if (req.body.room==true) {
-                    Room.find({location: {$geoWithin: {$centerSphere: [[longitud, latitud], distancia / 6371]}}}, '_id name latitud longitud location', (err, rooms) => {
+                    Room.find({location: {$geoWithin: {$centerSphere: [[longitud, latitud], distancia / 6378.1]}}}, '_id name latitud longitud location', (err, rooms) => {
                         if (err)
                             return res.status(500).send({message: `Error searching rooms: ${err}`});
                             res.status(200).send({
@@ -363,7 +366,7 @@ function filterDistance(req,res){
             });
         }
         else{
-            Room.find({location: {$geoWithin: {$centerSphere: [[longitud, latitud], distancia / 6371]}}}, '_id name latitud longitud location', (err, rooms) => {
+            Room.find({location: {$geoWithin: {$centerSphere: [[longitud, latitud], distancia / 6378.1]}}}, '_id name latitud longitud location', (err, rooms) => {
                 if (err)
                     return res.status(500).send({message: `Error searching rooms: ${err}`});
                 res.status(200).send({

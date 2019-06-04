@@ -8,17 +8,17 @@ const Group = require('./group');
 const User= require('./user');
 
 
-const GroupSchema = Schema({
+const JamSchema = Schema({
     name: String,
     estils:[String],
-    participantsSolistes:[User],
-    participantsGrups: [Group],
+    //participantsSolistes:[{ type: Schema.Types.ObjectId, ref: 'Musician' }],
+    participants: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     dataIntencio: Date,
     dataConfirmda: Date,
     local:{ type: Schema.Types.ObjectId, ref: 'Room' },
     description: String,
-    organitzador:User,
+    organitzador:{ type: Schema.Types.ObjectId, ref: 'User' },
 
 });
 
-module.exports = mongoose.model('Jam',JamSchema)
+module.exports = mongoose.model('Jam',JamSchema);

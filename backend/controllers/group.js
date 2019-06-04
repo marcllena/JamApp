@@ -273,6 +273,8 @@ function searchGroup(req,res) {
         return res.status(200).send({message: 'Resultat de la cerca', selectedGroups})
     })
 }
+
+
 module.exports={
     createGroup,
     answerRequest,

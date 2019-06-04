@@ -9,21 +9,30 @@ const User = require('../models/user')
 const service = require('../services')
 const Group = require('../models/group')
 
-/*function signUp(req,res) {
-    const musician = new Musician({
-        email: req.body.email,
-        username: req.body.displayName,
-        instrument: req.instrument
-    })
-
-    musician.save((err) => {
+function getGroups(req, res){
+    let userId;
+    try {
+        userId = cryptr.decrypt(req.params.userId);
+    }
+    catch(error) {
+        return res.status(500).send({message: `Error on the ID`});
+    }
+    Musician.findById(userId, (err,user)=>{
         if(err)
-            return res.status(500).send({message: `Error al crear el usuario: ${err}`})
+            return res.status(500).send({message: `Error searching the user: ${err}`});
+        if(user==null) return res.status(404).send({message: `User not found`});
+        Group.find({ '_id': { $in: user.grups}}, function(err, grups){
+            if(err)
+                return res.status(500).send({message: `Error searching groups: ${err}`});
+            if(grups.length!=0) return res.status(404).send({message: `There are no groups`});
 
+            res.status(200).send({
+                grups: grups
+            });
+        })
 
-        res.status(200).send({token: service.createToken(musician)})
     })
-}*/
+}
 
 function requestMembership(req, res){
     Group.findById(req.body.idGroup, (err,group)=>{
@@ -60,7 +69,6 @@ la resta es farà en un altre mètode que sigui per editar el grup*/
 
 
 module.exports={
-    //signUp,
-    requestMembership/*,
-    signIn*/
+    requestMembership,
+    getGroups
 }

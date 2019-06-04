@@ -31,18 +31,47 @@
           <ion-label  style="font-weight: bold">City: </ion-label>
           <ion-label>{{user.city}}</ion-label>
         </ion-item>
-        <ion-item *ngIf="(user.instrument)&&(user.instrument.length!=0)">
+
+        <!--<ion-item *ngIf="(user.instrument)&&(user.instrument.length!=0)">
           <ion-label style="font-weight: bold">Instruments: </ion-label>
           <ion-label>{{user.instrument}}</ion-label>
         </ion-item>
         <ion-item *ngIf="(user.grups)&&(user.grups.length!=0)">
           <ion-label style="font-weight: bold">Grups: </ion-label>
-          <ion-label>{{user.grups}}</ion-label>
-        </ion-item>
+          <ion-label>{{user.grups.length}}</ion-label>
+        </ion-item>-->
+
         <ion-item *ngIf="(user.jams)&&(user.jams.length!=0)">
           <ion-label style="font-weight: bold">Jams: </ion-label>
           <ion-label>{{user.jams}}</ion-label>
         </ion-item>
+
+        <ion-item *ngIf="(user.estils)&&(user.estils.length!=0)">
+          <ion-label style="font-weight: bold">Estils: </ion-label>
+          <ion-label>{{user.estils}}</ion-label>
+        </ion-item>
+
+
+
+
+        <div *ngIf="((user.instrument)&&(user.instrument.length!=0))||((user.grups)&&(user.grups.length!=0))" class="row">
+
+          <div id="instrumentColumn" *ngIf="(user.instrument)&&(user.instrument.length!=0)" class="column">
+            <ion-item >
+              <h2>Instrumentos</h2>
+              <p>Some text..</p>
+            </ion-item>
+          </div>
+
+          <div id="groupColumn" class="column">
+            <ion-item *ngIf="(user.grups)&&(user.grups.length!=0)">
+              <h2>Grupo</h2>
+              <p>Some text..</p>
+            </ion-item>
+          </div>
+
+        </div>
+
       </div>
     </div>
   </div>
