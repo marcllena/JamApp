@@ -101,7 +101,7 @@ export class LoginComponent implements OnInit {
     let user = new User(this.loginForm.value.email,"", this.loginForm.value.password);
     this.userService.signin(user)
       .subscribe(response => {
-          console.log("Resposta del BackEnd"+response);
+          console.log("Resposta del BackEnd"+JSON.stringify(response.body));
           if(response.status==200){
             //Operació Realitzada Correctament
             let token = response.body['token'];
@@ -109,8 +109,16 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('id',response.body['_id']);
             localStorage.setItem('userType', response.body['userType']);
             localStorage.setItem('username',response.body['username']);
+            localStorage.setItem('facebookId', response.body['facebookId']);
             this.singleton.changeUserId(response.body['_id']);
             this.singleton.changeUsername(response.body['username']);
+            console.log(response.body['facebookId'])
+            if(response.body['facebookId'] == "0"){
+              this.singleton.changeFacebookId(false)
+            }
+            else{
+            this.singleton.changeFacebookId(response.body['facebookId'])
+            }
             this.router.navigateByUrl("/api/menu/home");
           }
           else {
@@ -146,13 +154,21 @@ export class LoginComponent implements OnInit {
             console.log("Resposta del BackEnd" + response);
             if (response.status == 200) {
               //El usuari ja te login
+              console.log(JSON.stringify(response.body))
               let token = response.body['token'];
               localStorage.setItem('token', token);
               localStorage.setItem('id',response.body['_id']);
               localStorage.setItem('userType', response.body['userType']);
               localStorage.setItem('username',response.body['username']);
+              localStorage.setItem('facebookId',response.body['facebookId']);
               this.singleton.changeUserId(response.body['_id']);
               this.singleton.changeUsername(response.body['username']);
+              if(response.body['facebookId'] == "0"){
+                this.singleton.changeFacebookId(false)
+              }
+              else{
+              this.singleton.changeFacebookId(response.body['facebookId'])
+              }
               this.router.navigateByUrl("/api/menu/home");
             } else {
               //Error desconegut

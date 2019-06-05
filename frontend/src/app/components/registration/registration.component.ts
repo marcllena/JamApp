@@ -129,6 +129,7 @@ export class RegistrationComponent implements OnInit {
         localStorage.setItem('id',response.body['_id']);
         localStorage.setItem('userType', response.body['userType']);
         localStorage.setItem('username',response.body['username']);
+        localStorage.setItem('facebookId',response.body['facebookId']);
         //Li passem la ubicació al registrarse:
         this.router.navigateByUrl("api/pickLocation");
       }

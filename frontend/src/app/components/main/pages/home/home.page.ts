@@ -33,7 +33,8 @@ export class HomePage {
   salesFilter:boolean;
   distanciaBooleanFilter:boolean;
   distanciaValueFilter:number;
-
+  validation_messages:any
+  facebookId: any = false;
   constructor(
     private singleton: DataService,
     private geolocation: Geolocation,
@@ -42,10 +43,12 @@ export class HomePage {
     public platform: Platform,
     private userService: UserServices,
     private router: Router,
-    private activatedRoute:ActivatedRoute
+    private activatedRoute:ActivatedRoute,
+    
   ) {
     this.markersListUsers=[];
     this.markersListSalas=[];
+    
     activatedRoute.params.subscribe(val => {
       this.refresh();
     });
@@ -56,6 +59,10 @@ export class HomePage {
     this.singleton.newSalesFilter.subscribe(result => this.salesFilter = result);
     this.singleton.newDistanciaBooleanFilter.subscribe(result => this.distanciaBooleanFilter = result);
     this.singleton.newDistanciaValueFilter.subscribe(result => this.distanciaValueFilter= result);
+    this.singleton.newFacebookId.subscribe(result => {this.facebookId= result
+    console.log(this.facebookId)});
+      
+    
     this.obtindreUbicacio();
     (window as any).fbAsyncInit = function() {
       FB.init({
@@ -74,7 +81,7 @@ export class HomePage {
        js.src = "https://connect.facebook.net/en_US/sdk.js";
        fjs.parentNode.insertBefore(js, fjs);
      }(document, 'script', 'facebook-jssdk'));
-    this.validation_messages = {
+    this.validation_messages = { 
       'email': [
         { type: 'required', message: 'Mail: Requerido' },
         { type: 'error', message: 'Error: Correo o contraseña incorrecta'} ,

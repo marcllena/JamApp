@@ -18,7 +18,7 @@ const userBase = new mongoose.Schema({
         email: {type: String, unique: true, lowercase:true},
         password: {type: String,select: false },
         signupDate: {type: Date, default: Date.now() },
-        facebookId: {type: String, default: ""},
+        facebookId: {type: String, default: "0"},
         lastlogin: Date},
     baseOptions);
 

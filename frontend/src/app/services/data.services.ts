@@ -18,7 +18,7 @@ export class DataService {
   private originalGroupMail = new BehaviorSubject("Null");
   private originalGroupDescription = new BehaviorSubject("Null");
   private originalGroupEstils = new BehaviorSubject("Null");
-
+  private originalFacebookId = new BehaviorSubject(false);
 
   newChatDestination = this.originalChatDestination.asObservable();
   newClickedUserId = this.originalClickedUserId.asObservable();
@@ -32,11 +32,13 @@ export class DataService {
   newGroupMail=this.originalGroupMail.asObservable();
   newGroupDescription=this.originalGroupDescription.asObservable();
   newGroupEstils=this.originalGroupEstils.asObservable();
-
+  newFacebookId=this.originalFacebookId.asObservable();
 
   constructor() { }
 
-
+  changeFacebookId(id: any) {
+    this.originalFacebookId.next(id);
+  }
   changeUserId(name: string) {
     this.originalUserId.next(name);
   }

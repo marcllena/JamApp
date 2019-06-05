@@ -146,6 +146,7 @@ function signIn(req,res) {
                     message: "Te has logeado correctamente",
                     token: service.createToken(user[0]),
                     _id: cryptr.encrypt(user[0]._id),
+                    facebookId: user[0].facebookId,
                     username: user[0].username,
                     userType: user[0].userType,
                 })
@@ -154,6 +155,7 @@ function signIn(req,res) {
                     token: service.createToken(user[0]),
                     _id: cryptr.encrypt(user[0]._id),
                     username: user[0].username,
+                    facebookId: user[0].facebookId,
                     userType: "User",
                 })
             } else {
@@ -206,6 +208,7 @@ function refreshToken(req,res) {
                 message: "Te has logeado correctamente",
                 token: service.createToken(user),
                 _id: cryptr.encrypt(user._id),
+                facebookId: user[0].facebookId,
                 username: user.username,
                 userType: user.userType,
             });
@@ -421,8 +424,40 @@ function filterDistance(req,res){
 }
 function linkFacebookId(req, res){
     //NO ENTENC PERQUE NO EM DETECTA RES AL BODY
-    console.log(req)
-    return res.status(200).send({message: `Va be`})
+    let userId;
+    if (req.params.userId) {
+        try {
+            userId = cryptr.decrypt(req.params.userId);
+        }
+        catch(error) {
+            return res.status(500).send({message: `Error on the ID`});
+        }
+    }
+    else userId = req.user;
+    console.log(req.body.id, userId)
+    User.findById(userId, (err, user) => {
+        if(err){
+            return res.status(500).send({message: `Error updating the user: ${err}`});
+        }
+        if(!user){
+            return res.status(404).send({message: `User does not exist`});}
+        else{
+            user.facebookId = req.body.id;
+            user.save((err,user) => {
+                if(err) {
+                    console.log("Error al crear usuari:");
+                    return res.status(409).send({message: `Error al crear el usuario: ${err}`})
+                }
+                else
+                {
+                    console.log(user)
+                    return res.status(200).send({message: `Va be`})
+                }
+                
+    } )     
+            
+    }})
+    
 
 }
 
