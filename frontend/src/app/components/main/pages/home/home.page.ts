@@ -8,7 +8,7 @@ import { UserServices } from "../../../../services/user.services";
 import {HttpResponse} from "@angular/common/http";
 import {DataService} from '../../../../services/data.services';
 import {ActivatedRoute, Router} from "@angular/router";
-
+declare var FB: any;
 declare var google;
 
 @Component({
@@ -57,6 +57,35 @@ export class HomePage {
     this.singleton.newDistanciaBooleanFilter.subscribe(result => this.distanciaBooleanFilter = result);
     this.singleton.newDistanciaValueFilter.subscribe(result => this.distanciaValueFilter= result);
     this.obtindreUbicacio();
+    (window as any).fbAsyncInit = function() {
+      FB.init({
+        appId      : '753500388379761',
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v3.2'
+      });
+      FB.AppEvents.logPageView();
+    };
+
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "https://connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+    this.validation_messages = {
+      'email': [
+        { type: 'required', message: 'Mail: Requerido' },
+        { type: 'error', message: 'Error: Correo o contraseña incorrecta'} ,
+        { type: 'pattern', message: 'Mail: Debe ser una dirección de correo válida' }
+      ],
+      'password': [
+        { type: 'required', message: 'Contraseña: Requerida' },
+        { type: 'pattern', message: 'Contraseña: Debe contener más de 4, incluyendo un número como mínimo' },
+        { type: 'error', message: 'Error: Correo o contraseña incorrecta'} ,
+      ],
+    }
   }
 
   refresh(){
@@ -322,6 +351,39 @@ export class HomePage {
             console.log("Error")
           }
         });
+  }
+  submitLogin(){
+    console.log("Mandando petición de logueo en Facebook...");
+    let id;
+    FB.login((response)=>
+        {
+                    
+          if (response.authResponse)
+          {
+            console.log(response);
+            /*FB.api('/me', function(response) {
+
+              console.log('Good to see you, ' + JSON.stringify(response));
+              
+            });*/
+            //Aqui hem de fer feina Gabri ;)
+            id = response.authResponse.userID;
+            let token = localStorage.getItem('token')
+            console.log(id)
+            this.userService.linkWithFacebook(token, id).subscribe(
+              async response => {
+                console.log(response)
+              });
+           // this._router.navigate(['/special'])
+            //login success
+            //login success code here
+            //redirect to home page
+           }
+           else
+           {
+           console.log('User login failed');
+         }
+      });
   }
 
 }

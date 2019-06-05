@@ -3,6 +3,7 @@ export class User {
   email: string;
   username: string;
   password: string;
+  facebookId: string;
   edat: number;
   instrument: string[];
   ubicacio:string;
@@ -15,8 +16,9 @@ export class User {
   descripcio: string;
 
 
-  constructor( email = '', username = '', password = '',edat=0, instrument=[], estils=[], descripcio= '', video='') {
+  constructor( email = '', username = '', password = '',edat=0, instrument=[], estils=[], descripcio= '', video='', facebookId = '') {
     this.email = email;
+    this.facebookId = facebookId;
     this.username = username;
     this.password = password;
     this.edat = edat;

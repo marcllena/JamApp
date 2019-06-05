@@ -419,7 +419,12 @@ function filterDistance(req,res){
         }
     });*/
 }
+function linkFacebookId(req, res){
+    //NO ENTENC PERQUE NO EM DETECTA RES AL BODY
+    console.log(req)
+    return res.status(200).send({message: `Va be`})
 
+}
 
 module.exports={
     signUp,
@@ -431,5 +436,6 @@ module.exports={
     updateUser,
     setLocation,
     getUsersLocation,
-    filterDistance
+    filterDistance,
+    linkFacebookId
 };

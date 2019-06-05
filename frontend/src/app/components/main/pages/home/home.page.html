@@ -13,6 +13,10 @@
 
     <ion-buttons slot="end">
       <ion-label>{{toolbarService.getUserName()}}</ion-label>
+      <ion-button color="primary" (click)="submitLogin()">
+        <ion-icon slot="icon-only" name="logo-facebook"></ion-icon>
+        Link
+    </ion-button>
       <ion-button color="primary" (click)="toolbarService.profile()">
         <ion-icon slot="icon-only" name="contact"></ion-icon>
       </ion-button>

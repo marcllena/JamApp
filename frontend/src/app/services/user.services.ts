@@ -101,6 +101,14 @@ export class UserServices {
     const headers = {
       'Authorization': `Bearer ${token}`,
     }
-    return this.http.put(this.environment.urlUser + "user/",user,{headers: headers,observe: 'response'});
+    return this.http.put(this.environment.urlUser + "user/",user,);
+  }
+  linkWithFacebook(token, facebook){
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+    }
+    let face = {'id': facebook}
+    console.log("enviant id face: "+face)
+    return this.http.post(this.environment.urlUser + "user/facebook/link", face,{headers: headers,observe: 'response'})
   }
 }

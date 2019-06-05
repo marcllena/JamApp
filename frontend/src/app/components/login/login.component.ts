@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit {
             console.log(response);
             FB.api('/me', function(response) {
 
-              console.log('Good to see you, ' + response.name + '.' + ' Email: ' + response.email + ' Facebook ID: ' + response.id);
+              console.log('Good to see you, ' + JSON.stringify(response));
             });
             //Aqui hem de fer feina Gabri ;)
       
