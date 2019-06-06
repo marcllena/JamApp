@@ -69,6 +69,11 @@ export class UserInfoComponent implements OnInit {
         });
   }
 
+  getUserGrups(){
+    let token =localStorage.getItem('token');
+
+  }
+
   chatButton() {
     console.log("Works!")
   }
