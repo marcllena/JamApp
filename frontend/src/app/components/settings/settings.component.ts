@@ -78,7 +78,7 @@ export class SettingsComponent implements OnInit {
 
   async presentToastError() {
     const toast = await this.toastController.create({
-      message: 'Este mail ya existe, introduce otro por favor.',
+      message: 'Este mail o nombre ya existe, introduce otro por favor.',
       duration: 3000
     });
     toast.present();
