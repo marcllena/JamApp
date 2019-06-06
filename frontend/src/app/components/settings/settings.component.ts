@@ -6,6 +6,7 @@ import { UserServices } from 'src/app/services/user.services';
 import { User } from 'src/app/models/user';
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {DataService} from '../../services/data.services';
+import { ToastController } from '@ionic/angular';
 
 declare var M: any;
 
@@ -25,7 +26,7 @@ export class SettingsComponent implements OnInit {
   items1 = ["guitarra","piano","ukelele","triangle","pito","maraques","harmonica"]
   items2 = ["Regeton","Trap","Dembow"]
 
-  constructor(private settingsService: SettingsService,private router: Router,private userServices: UserServices,private formBuilder: FormBuilder, private singleton: DataService) {
+  constructor(private settingsService: SettingsService,private router: Router,private userServices: UserServices,private formBuilder: FormBuilder, private singleton: DataService, public toastController: ToastController) {
     //this.singleton.newClickedUserId.subscribe(Id => this.Id = Id)
     this.Id=localStorage.getItem('id');
     this.settingsForm = this.formBuilder.group({
@@ -73,6 +74,14 @@ export class SettingsComponent implements OnInit {
 
   goBack() {
     this.router.navigateByUrl('');
+  }
+
+  async presentToastError() {
+    const toast = await this.toastController.create({
+      message: 'Este mail ya existe, introduce otro por favor.',
+      duration: 3000
+    });
+    toast.present();
   }
 
   updateUser(){
@@ -128,6 +137,7 @@ export class SettingsComponent implements OnInit {
         }
         else if(err.status == 500){
           console.log("Error 500");
+          this.presentToastError();
         }
       });
   }
