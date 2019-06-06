@@ -208,7 +208,7 @@ function refreshToken(req,res) {
                 message: "Te has logeado correctamente",
                 token: service.createToken(user),
                 _id: cryptr.encrypt(user._id),
-                facebookId: user[0].facebookId,
+                facebookId: user.facebookId,
                 username: user.username,
                 userType: user.userType,
             });

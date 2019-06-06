@@ -114,6 +114,7 @@ export class LoginComponent implements OnInit {
             this.singleton.changeUsername(response.body['username']);
             console.log(response.body['facebookId'])
             if(response.body['facebookId'] == "0"){
+              console.log(response.body['facebookId'])
               this.singleton.changeFacebookId(false)
             }
             else{
