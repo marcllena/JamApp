@@ -5,7 +5,7 @@ import {Router} from "@angular/router";
 import {DataService} from '../../services/data.services'
 import { ElementRef } from '@angular/core';
 import { User } from "../../models/user";
-import { ToastController } from '@ionic/angular';
+import {Platform, ToastController} from '@ionic/angular';
 
 //import { App} from '@ionic/angular';
 
@@ -35,7 +35,7 @@ export class UserInfoComponent implements OnInit {
   //desc,city,;
 
 
-  constructor(private singleton: DataService, private userService: UserServices, private router: Router) {
+  constructor(private singleton: DataService, private userService: UserServices, private router: Router, public platform: Platform) {
     this.singleton.newClickedUserId.subscribe(Id => this.Id = Id)
   }
 
@@ -67,6 +67,10 @@ export class UserInfoComponent implements OnInit {
           console.log("Error del BackEnd"+err);
           //console.log(err);
         });
+  }
+
+  chatButton() {
+    console.log("Works!")
   }
 
 }

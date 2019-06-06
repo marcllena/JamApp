@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title name="title" *ngIf="user.username">
-      {{this.user.username | uppercase}}
+      {{user.username | uppercase}}
     </ion-title>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="api/menu/pages/grup-list"></ion-back-button>
@@ -13,7 +13,17 @@
   <div class="limiter">
     <div class="container-login100">
       <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-        <ion-item *ngIf="this.user.username">
+        <ion-item>
+          <ion-label>Aqui va la foto</ion-label>
+          <ion-button class="list-buttons" color="primary" (click)="chatButton()" >
+            <ion-icon *ngIf="!platform.is('desktop')" slot="icon-only" name="chatbubbles"></ion-icon>
+            <ion-icon *ngIf="platform.is('desktop')" style="padding-right:7px" slot="icon-only" name="chatbubbles"></ion-icon>
+            <ion-label *ngIf="platform.is('desktop')">Chat</ion-label>
+          </ion-button>
+        </ion-item>
+
+
+        <ion-item *ngIf="user.email">
           <ion-label *ngIf="user" style="font-weight: bold">Email: </ion-label>
           <ion-label *ngIf="user">{{user.email}}</ion-label>
         </ion-item>
