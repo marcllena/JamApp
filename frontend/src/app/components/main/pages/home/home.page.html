@@ -13,7 +13,7 @@
 
     <ion-buttons slot="end">
       <ion-label>{{toolbarService.getUserName()}}</ion-label>
-      <ion-button color="primary" (click)="submitLogin()" *ngIf="this.facebookId == false">
+      <ion-button color="primary" (click)="submitLogin()" *ngIf="this.facebookId == false || this.facebookId == 'pending'">
         <ion-icon slot="icon-only" name="logo-facebook"></ion-icon>
         Link
     </ion-button>

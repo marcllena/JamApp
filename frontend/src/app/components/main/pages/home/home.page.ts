@@ -59,8 +59,8 @@ export class HomePage {
     this.singleton.newSalesFilter.subscribe(result => this.salesFilter = result);
     this.singleton.newDistanciaBooleanFilter.subscribe(result => this.distanciaBooleanFilter = result);
     this.singleton.newDistanciaValueFilter.subscribe(result => this.distanciaValueFilter= result);
-    this.singleton.newFacebookId.subscribe(result => {this.facebookId= result
-    console.log(this.facebookId)});
+    this.facebookId=localStorage.getItem('facebookId');
+    console.log(this.facebookId)
       
     
     this.obtindreUbicacio();
@@ -379,6 +379,11 @@ export class HomePage {
             console.log(id)
             this.userService.linkWithFacebook(token, id).subscribe(
               async response => {
+                if(response.status == 200){
+                  this.singleton.changeFacebookId(true)
+                  this.facebookId = true;
+                  localStorage.setItem('facebookId', "commingup");
+                }
                 console.log(response)
               });
            // this._router.navigate(['/special'])

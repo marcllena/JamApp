@@ -5,6 +5,7 @@ import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from "@angular/
 import {Router} from "@angular/router";
 import { User } from "../../models/user";
 import {passValidator} from "./validator";
+import { DataService } from 'src/app/services/data.services';
 
 @Component({
   selector: 'app-registration',
@@ -19,7 +20,7 @@ export class RegistrationComponent implements OnInit {
   registerForm: FormGroup;
   validation_messages: any;
 
-  constructor(private userService: AuthService,
+  constructor(private userService: AuthService, private singleton: DataService,
               private router: Router, private formBuilder: FormBuilder) {
     this.registerForm = this.formBuilder.group({
         username: new FormControl('', Validators.compose([
@@ -121,7 +122,7 @@ export class RegistrationComponent implements OnInit {
     
     this.userService.signup(user)
       .subscribe(response => {
-      console.log("Resposta del BackEnd"+response);
+      console.log("Resposta del BackEnd"+JSON.stringify(response));
       if(response.status==200){
         //Operació Realitzada Correctament
         let token = response.body['token'];
@@ -129,7 +130,8 @@ export class RegistrationComponent implements OnInit {
         localStorage.setItem('id',response.body['_id']);
         localStorage.setItem('userType', response.body['userType']);
         localStorage.setItem('username',response.body['username']);
-        localStorage.setItem('facebookId',response.body['facebookId']);
+        localStorage.setItem('facebookId','pending');
+        this.singleton.changeFacebookId(true)
         //Li passem la ubicació al registrarse:
         this.router.navigateByUrl("api/pickLocation");
       }
