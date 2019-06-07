@@ -18,6 +18,14 @@
           JamApp Editar Perfil
         </span>
 
+        <div class="card" style="width:200px">
+          <img src="https://img.icons8.com/nolan/96/000000/guitar.png" id="img-preview" />
+          <label class="file-upload-container" for="file-upload">
+            <input id="file-upload" type="file" style="display:none;">
+            Select an image
+          </label>
+        </div>
+
         <form [formGroup]="settingsForm" *ngIf="user">
           <div class="login100-form validate-form">
             <span class="login100-form-title p-b-49" style="font-size: 20px">
@@ -116,5 +124,7 @@
 <script src="vendor/daterangepicker/daterangepicker.js"></script>
 <!--===============================================================================================-->
 <script src="vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+<script src="../../../../../backend/public/fotosCloud.js"></script>
 <!--===============================================================================================-->
 </ion-content>
