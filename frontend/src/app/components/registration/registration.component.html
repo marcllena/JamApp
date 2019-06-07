@@ -42,7 +42,6 @@
           <input class="input100" type="password" formControlName="confirmPassword" placeholder="Repite la contraseña">
           <span class="focus-input100" data-symbol="&#xf190;"></span>
         </div>
-        <br> 
         <div *ngIf="this.registerForm.value.profile=='admin'"class="wrap-input100 m-b-23">
           <span class="label-input100">Contraseña de admin</span>
           <input class="input100" type="password" formControlName="adminPassword" placeholder="Escribe la contraseña">
@@ -57,6 +56,12 @@
             <ion-select-option *ngIf="adminCandidate" value="admin">Admin</ion-select-option>
           </ion-select>
         </ion-item>
+          <br>
+          <p>
+          <ion-checkbox class="checkbox" (click)="checkPolitica()" style="padding-right:5px"></ion-checkbox>
+            He leido y acepto
+          <a href="api/politica" target="_blank"> nuestra politica de privacidad</a>
+          </p>
         </form>
         <pre></pre>
 

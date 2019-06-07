@@ -6,6 +6,8 @@ import {Router} from "@angular/router";
 import { User } from "../../models/user";
 import {passValidator} from "./validator";
 import { DataService } from 'src/app/services/data.services';
+import {AlertController} from "@ionic/angular";
+
 
 @Component({
   selector: 'app-registration',
@@ -19,9 +21,11 @@ export class RegistrationComponent implements OnInit {
 
   registerForm: FormGroup;
   validation_messages: any;
+  politicaChecked:boolean;
 
   constructor(private userService: AuthService, private singleton: DataService,
-              private router: Router, private formBuilder: FormBuilder) {
+              private router: Router, private formBuilder: FormBuilder,private alertController: AlertController) {
+    this.politicaChecked=false;
     this.registerForm = this.formBuilder.group({
         username: new FormControl('', Validators.compose([
           Validators.required,
@@ -50,7 +54,7 @@ export class RegistrationComponent implements OnInit {
     this.validation_messages = {
       'username': [
         { type: 'required', message: 'Nombre de Usuario: Requerido'},
-        { type: 'pattern', message: 'Nombre de Usuario: Debe contener 15 carácteres como máximo' }
+        { type: 'pattern', message: 'Nombre de Usuario: Debe contener 15 carácteres como máximo' },
       ],
       'email': [
         { type: 'required', message: 'Mail: Requerido' },
@@ -99,65 +103,86 @@ export class RegistrationComponent implements OnInit {
     }
   }
 
-
-  registrarse() {
-    console.log("Operació de registre realitzada al BackEnd:"+this.registerForm.value);
-    let user = new User(this.registerForm.value.email, this.registerForm.value.username, this.registerForm.value.password);
-    
-    switch(this.registerForm.value.profile){
-      case "user":
-        user.userType = 0;
-        break;
-      case "music":
-        user.userType = 1;
-        break;
-      case "room":
-        user.userType = 2;
-        break;
-      case "admin":
-        user.userType = 3;
-        user.pass = this.registerForm.value.adminPassword;
-        break;
+  checkPolitica(){
+    if(this.politicaChecked){
+      this.politicaChecked=false;
     }
-    
-    this.userService.signup(user)
-      .subscribe(response => {
-      console.log("Resposta del BackEnd"+JSON.stringify(response));
-      if(response.status==200){
-        //Operació Realitzada Correctament
-        let token = response.body['token'];
-        localStorage.setItem('token', token);
-        localStorage.setItem('id',response.body['_id']);
-        localStorage.setItem('userType', response.body['userType']);
-        localStorage.setItem('username',response.body['username']);
-        localStorage.setItem('facebookId','pending');
-        this.singleton.changeFacebookId(true)
-        //Li passem la ubicació al registrarse:
-        this.router.navigateByUrl("api/pickLocation");
-      }
-      else {
-        //Error desconegut
-        console.log("Error");
-        this.registerForm.get("username").setErrors({
-          error: true,
-        });
-      }
-    },
-      err => {
-        console.log("Error del BackEnd"+err);
-        if(err.status==409) {
-          console.log("409");
-          this.registerForm.get("email").setErrors({
-            error: true
-          });
-        }
-        else if(err.status==500) {
-          console.log("500");
-          this.registerForm.get("password").setErrors({
-            error: true,
-          });
-        }
+    else {
+      this.politicaChecked = true;
+    }
+  }
+
+  async registrarse() {
+    if (!this.politicaChecked) {
+      const alert = await this.alertController.create({
+        header: 'Alerta',
+        message: 'Debe aceptar nuestra política de privacidad',
+        buttons: [
+          {
+            text: 'OK',
+            handler: () => {
+            }
+          }
+        ]
       });
+      await alert.present();
+    } else {
+      console.log("Operació de registre realitzada al BackEnd:" + this.registerForm.value);
+      let user = new User(this.registerForm.value.email, this.registerForm.value.username, this.registerForm.value.password);
+
+      switch (this.registerForm.value.profile) {
+        case "user":
+          user.userType = 0;
+          break;
+        case "music":
+          user.userType = 1;
+          break;
+        case "room":
+          user.userType = 2;
+          break;
+        case "admin":
+          user.userType = 3;
+          user.pass = this.registerForm.value.adminPassword;
+          break;
+      }
+
+      this.userService.signup(user)
+        .subscribe(response => {
+            console.log("Resposta del BackEnd" + JSON.stringify(response));
+            if (response.status == 200) {
+              //Operació Realitzada Correctament
+              let token = response.body['token'];
+              localStorage.setItem('token', token);
+              localStorage.setItem('id', response.body['_id']);
+              localStorage.setItem('userType', response.body['userType']);
+              localStorage.setItem('username', response.body['username']);
+              localStorage.setItem('facebookId', 'pending');
+              this.singleton.changeFacebookId(true)
+              //Li passem la ubicació al registrarse:
+              this.router.navigateByUrl("api/pickLocation");
+            } else {
+              //Error desconegut
+              console.log("Error");
+              this.registerForm.get("username").setErrors({
+                error: true,
+              });
+            }
+          },
+          err => {
+            console.log("Error del BackEnd" + err);
+            if (err.status == 409) {
+              console.log("409");
+              this.registerForm.get("email").setErrors({
+                error: true
+              });
+            } else if (err.status == 500) {
+              console.log("500");
+              this.registerForm.get("password").setErrors({
+                error: true,
+              });
+            }
+          });
+    }
   }
 
 }
