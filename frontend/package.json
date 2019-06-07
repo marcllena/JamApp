@@ -31,6 +31,7 @@
     "@ionic/pro": "2.0.4",
     "@reactivex/rxjs": "^6.5.2",
     "all": "0.0.0",
+    "axios": "^0.19.0",
     "cloudinary-core": "^2.6.3",
     "cordova-android": "7.1.4",
     "cordova-browser": "5.0.4",
