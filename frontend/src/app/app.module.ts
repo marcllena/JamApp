@@ -27,6 +27,9 @@ import {FilterFormComponent} from "./components/filter-form/filter-form.componen
 import {PoliticaComponent} from "./components/politica/politica.component";
 import {GrupLocationComponent} from "./components/grup-location/grup-location.component";
 
+import {CloudinaryModule, CloudinaryConfiguration } from '@cloudinary/angular';
+import { Cloudinary } from 'cloudinary-core';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,6 +55,8 @@ import {GrupLocationComponent} from "./components/grup-location/grup-location.co
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    //CloudinaryModule.forRoot({Cloudinary}, {cloud_name: 'jamapp'} as CloudinaryConfiguration),
+    //CloudinaryModule
   ],
   providers: [
     StatusBar,
