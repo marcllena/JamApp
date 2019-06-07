@@ -26,5 +26,6 @@ apiUsers.put('/',auth,userCtrl.updateUser); //UPDATE user without path param
 apiUsers.delete('/', isAdmin, userCtrl.deleteUsers);// DELETE users, le llega un vector de IDs llamado IdList
 apiUsers.get('/', auth, userCtrl.getUsers);//GET all users
 apiUsers.post('/facebook/link', auth, userCtrl.linkFacebookId);
+apiUsers.post('/facebook/connect', userCtrl.connectFacebook )
 
 module.exports =  apiUsers;

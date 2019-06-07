@@ -111,12 +111,9 @@ export class UserServices {
     console.log("enviant id face: "+face)
     return this.http.post(this.environment.urlUser + "user/facebook/link", face,{headers: headers,observe: 'response'})
   }
-  registerWithFacebook(token, facebook){
-    const headers = {
-      'Authorization': `Bearer ${token}`,
-    }
+  connectFacebook(facebook){
     let face = {'id': facebook}
     console.log("registrant vida facebook: "+face)
-    return this.http.post(this.environment.urlUser + "signup/facebook", face, {headers: headers, observe: 'response'})
+    return this.http.post(this.environment.urlUser + "user/facebook/connect", face, {observe: 'response'})
   }
 }

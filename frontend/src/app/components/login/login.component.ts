@@ -5,6 +5,7 @@ import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from "@angular/
 import {Router} from "@angular/router";
 import { User } from "../../models/user";
 import {DataService} from "../../services/data.services";
+import { UserServices } from 'src/app/services/user.services';
 declare var FB: any;
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   validation_messages: any;
 
-  constructor(private userService: AuthService, private router: Router, private formBuilder: FormBuilder,private singleton: DataService) {
+  constructor(private userService: AuthService, private router: Router, private formBuilder: FormBuilder,private singleton: DataService, private uservice: UserServices) {
     this.loginForm = this.formBuilder.group({
         email: new FormControl('', Validators.compose([
           Validators.required,
@@ -71,6 +72,7 @@ export class LoginComponent implements OnInit {
 
   submitLogin(){
     console.log("Mandando petición de logueo en Facebook...");
+    let id;
     //FB.login();
     FB.login((response)=>
         {
@@ -78,12 +80,45 @@ export class LoginComponent implements OnInit {
           if (response.authResponse)
           {
             console.log(response);
-            FB.api('/me', function(response) {
+           /* FB.api('/me', function(response) {
 
               console.log('Good to see you, ' + JSON.stringify(response));
-            });
+            });*/
             //Aqui hem de fer feina Gabri ;)
-      
+            id = response.authResponse.userID;
+            console.log(id)
+            this.uservice.connectFacebook(id).subscribe(
+              async response => {
+                console.log(response)
+                if(response.status == 201){
+                  //Registre
+                  //Podria agafar parametres estil email i tal de facebook, si voleu s'implementa.
+                  this.router.navigateByUrl("/api/signup");
+                }
+                else if(response.status == 200){
+                  if(response.status==200){
+                    //Operació Realitzada Correctament
+                    let token = response.body['token'];
+                    localStorage.setItem('token', token);
+                    localStorage.setItem('id',response.body['_id']);
+                    localStorage.setItem('userType', response.body['userType']);
+                    localStorage.setItem('username',response.body['username']);
+                    localStorage.setItem('facebookId', response.body['facebookId']);
+                    this.singleton.changeUserId(response.body['_id']);
+                    this.singleton.changeUsername(response.body['username']);
+                    console.log(response.body['facebookId'])
+                    if(response.body['facebookId'] == "0"){
+                      console.log(response.body['facebookId'])
+                      this.singleton.changeFacebookId(false)
+                    }
+                    else{
+                    this.singleton.changeFacebookId(response.body['facebookId'])
+                    }
+                    this.router.navigateByUrl("/api/menu/home");
+                  }
+                }
+                console.log(response)
+              });
             
            // this._router.navigate(['/special'])
             //login success
@@ -94,7 +129,7 @@ export class LoginComponent implements OnInit {
            {
            console.log('User login failed');
          }
-      }, { scope: 'email' });
+      });
   }
   login() {
     console.log("Operació de login realitzada al BackEnd:"+this.loginForm.value);

@@ -460,6 +460,36 @@ function linkFacebookId(req, res){
     
 
 }
+    function connectFacebook(req,res){
+        User.find({facebookId: req.body.id}, (err, user)=>{
+            if(err){
+                return res.status(500).send({message: `Error : ${err}`});
+            }
+            console.log(user)
+            if(user.length==0){
+                return res.status(201).send({message: `Need to register that facebook account.`});}
+            else{
+                if("userType" in user[0])
+                res.status(200).send({
+                    message: "Te has logeado correctamente",
+                    token: service.createToken(user[0]),
+                    _id: cryptr.encrypt(user[0]._id),
+                    facebookId: user[0].facebookId,
+                    username: user[0].username,
+                    userType: user[0].userType,
+                })
+                else res.status(200).send({
+                    message: "Te has logeado correctamente",
+                    token: service.createToken(user[0]),
+                    _id: cryptr.encrypt(user[0]._id),
+                    username: user[0].username,
+                    facebookId: user[0].facebookId,
+                    userType: "User",
+                })
+            }
+
+        })
+    }
 
 module.exports={
     signUp,
@@ -472,5 +502,6 @@ module.exports={
     setLocation,
     getUsersLocation,
     filterDistance,
-    linkFacebookId
+    linkFacebookId,
+    connectFacebook
 };
