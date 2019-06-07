@@ -86,6 +86,9 @@ function signUp(req,res) {
             });
             break;
     }
+    if(req.body.facebookId){
+        userNew.facebookId = req.body.facebookId
+    }
     //console.log(userNew);
     console.log("Petició de SignUp del seguent user: "+userNew.email);
     if(req.body.password==null)

@@ -22,12 +22,18 @@ export class RegistrationComponent implements OnInit {
   registerForm: FormGroup;
   validation_messages: any;
   politicaChecked:boolean;
-
+  facebookId: any;
   constructor(private userService: AuthService, private singleton: DataService,
               private router: Router, private formBuilder: FormBuilder,private alertController: AlertController) {
     this.politicaChecked=false;
+    let name;
+    this.singleton.newUsername.subscribe(nam => name = nam)
+    console.log(name)
+    
+    this.singleton.newFacebookId.subscribe(facebookI => this.facebookId = facebookI)
     this.registerForm = this.formBuilder.group({
-        username: new FormControl('', Validators.compose([
+      
+        username: new FormControl(name, Validators.compose([
           Validators.required,
           Validators.pattern(/.{0,15}$/)])),
 
@@ -129,7 +135,8 @@ export class RegistrationComponent implements OnInit {
     } else {
       console.log("Operació de registre realitzada al BackEnd:" + this.registerForm.value);
       let user = new User(this.registerForm.value.email, this.registerForm.value.username, this.registerForm.value.password);
-
+      user.facebookId = this.facebookId
+      localStorage.setItem('username', this.facebookId);
       switch (this.registerForm.value.profile) {
         case "user":
           user.userType = 0;
@@ -156,7 +163,9 @@ export class RegistrationComponent implements OnInit {
               localStorage.setItem('id', response.body['_id']);
               localStorage.setItem('userType', response.body['userType']);
               localStorage.setItem('username', response.body['username']);
-              localStorage.setItem('facebookId', 'pending');
+              if(localStorage.getItem('facebookId')!= user.facebookId){
+                 localStorage.setItem('facebookId', 'pending');
+              }
               this.singleton.changeFacebookId(true)
               //Li passem la ubicació al registrarse:
               this.router.navigateByUrl("api/pickLocation");

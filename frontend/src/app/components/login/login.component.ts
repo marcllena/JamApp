@@ -93,7 +93,18 @@ export class LoginComponent implements OnInit {
                 if(response.status == 201){
                   //Registre
                   //Podria agafar parametres estil email i tal de facebook, si voleu s'implementa.
-                  this.router.navigateByUrl("/api/signup");
+                  let name, id;
+                   FB.api('/me', function(response) {
+                     console.log('Good to see you, ' + JSON.stringify(response));
+                     name = response.name;
+                     id = response.id;
+                     this.singleton.changeFacebookId(id);
+                     console.log(name)
+                     this.singleton.changeUsername(name);
+                     this.router.navigateByUrl("/api/signup");
+                    }.bind(this));
+                    
+                    
                 }
                 else if(response.status == 200){
                   if(response.status==200){

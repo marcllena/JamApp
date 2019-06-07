@@ -9,7 +9,7 @@ export class DataService {
   private originalChatDestination = new BehaviorSubject("0");
   private originalClickedUserId = new BehaviorSubject("0");
   private originalUserId = new BehaviorSubject("0");
-  private originalUsername = new BehaviorSubject("Null");
+  private originalUsername = new BehaviorSubject("");
   private originalMusicsFilter = new BehaviorSubject(true);
   private originalSalesFilter = new BehaviorSubject(true);
   private originalDistanciaBooleanFilter = new BehaviorSubject(false);
