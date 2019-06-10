@@ -16,6 +16,12 @@
     <div class="container-login100">
       <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
         <div  *ngIf="user">
+        <div *ngIf="platform.is('desktop')" >
+          <br>
+          <span class="login100-form-title">
+          {{user.username}}
+          </span>
+        </div>
         <ion-item>
           <ion-label>Aqui va la foto</ion-label>
           <ion-button class="list-buttons" color="primary" (click)="chatButton()" >
