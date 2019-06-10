@@ -75,34 +75,40 @@ export class UserServices {
   getUserLocation(){
       return this.http.get("http://ip-api.com/json/", {observe: 'response'})
   }
+
   setLocation(token,coor) {
     const headers = {
       'Authorization': `Bearer ${token}`,
     }
     return this.http.post(this.environment.urlUser + "user/location/", coor,{headers: headers,observe: 'response'})
   }
+
   getLocation(token,id) {
     const headers = {
       'Authorization': `Bearer ${token}`,
     }
     return this.http.get(this.environment.urlUser + "user/"+id, {headers: headers,observe: 'response'})
   }
+
   getLocations() {
 
     return this.http.get(this.environment.urlUser + "user/location",{observe: 'response'})
   }
+
   getLocationsFiltered(token,filter) {
     const headers = {
       'Authorization': `Bearer ${token}`,
     }
     return this.http.post(this.environment.urlUser + "user/filter", filter,{headers: headers,observe: 'response'})
   }
+
   updateUser(token,user){
     const headers = {
       'Authorization': `Bearer ${token}`,
     }
     return this.http.put(this.environment.urlUser + "user/",user,{headers: headers, observe: 'response'});
   }
+
   linkWithFacebook(token, facebook){
     const headers = {
       'Authorization': `Bearer ${token}`,
@@ -111,9 +117,17 @@ export class UserServices {
     console.log("enviant id face: "+face)
     return this.http.post(this.environment.urlUser + "user/facebook/link", face,{headers: headers,observe: 'response'})
   }
+
   connectFacebook(facebook){
     let face = {'id': facebook}
     console.log("registrant vida facebook: "+face)
     return this.http.post(this.environment.urlUser + "user/facebook/connect", face, {observe: 'response'})
+  }
+
+  getUserGroups(token, userId){
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+    }
+    return this.http.get(this.environment.urlUser + "musician/getGroups/"+userId,{headers: headers,observe: 'response'})
   }
 }

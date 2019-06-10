@@ -4,7 +4,7 @@ const musicianCtrl = require('../controllers/musician');
 const auth = require('../middlewares/auth');
 
 apiMusician.post('/requestMembership', auth, musicianCtrl.requestMembership) //a musician request to participate in a group
-apiMusician.get('/getGroups', auth, musicianCtrl.getGroups)
+apiMusician.get('/getGroups/:userId', auth, musicianCtrl.getGroups)
 
 
 module.exports =  apiMusician

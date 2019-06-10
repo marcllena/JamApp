@@ -24,6 +24,7 @@ export class UserInfoComponent implements OnInit {
 
   Id: string;
   user: Object;
+  groups: Object;
   description:boolean;
   edat: boolean;
   city:boolean;
@@ -53,10 +54,7 @@ export class UserInfoComponent implements OnInit {
           if(response.status==200){
             this.user=response.body;
             console.log(this.user);
-            //if (this.user.descripcio){
-
-            //}
-            //this.title = this.user.username;
+            this.getUserGroups()
           }
           else {
             //Error desconegut
@@ -69,13 +67,30 @@ export class UserInfoComponent implements OnInit {
         });
   }
 
-  getUserGrups(){
-    let token =localStorage.getItem('token');
-
-  }
 
   chatButton() {
     console.log("Works!")
+  }
+
+  getUserGroups(){
+    let token =localStorage.getItem('token');
+
+    this.userService.getUserGroups(token,this.Id)
+      .subscribe(response => {
+          console.log("Resposta del BackEnd"+response.body);
+          if(response.status==200){
+            this.groups=response.body;
+            console.log(this.groups);
+          }
+          else {
+            //Error desconegut
+            console.log("Error");
+          }
+        },
+        err => {
+          console.log("Error del BackEnd"+err);
+          //console.log(err);
+        });
   }
 
 }
