@@ -105,8 +105,17 @@ function createGroup(req, res) {
         }
     })
 }
+
 function answerRequest(req, res) {
-    Group.findById(req.body.idGrup, (err, group)=>{
+    let idGrup;
+
+    try {
+        idGrup = cryptr.decrypt(req.body.idGrup);
+    }
+    catch(error) {
+        return res.status(500).send({message: `Error on the ID`});
+    }
+    Group.findById(idGrup, (err, group)=>{
         console.log(group)
     if(group==null){
         return res.status(404).send({message: `Grup no trobat`})
@@ -114,8 +123,16 @@ function answerRequest(req, res) {
     else {
         //Buscar la request del usuari
         var trobat=-1;
+        let userId;
+        try {
+            userId = cryptr.decrypt(req.body.id);
+        }
+        catch(error) {
+            return res.status(500).send({message: `Error on the ID`});
+        }
+
         for(var i=0; i<group.solicituds.length;i++){
-            if(group.solicituds[i].id.toString() == req.body.id){
+            if(group.solicituds[i].id.toString() == userId){
                 trobat = i;
                 break
             }
@@ -155,23 +172,42 @@ function answerRequest(req, res) {
     }
 })
 }
+
 function deleteMember(req,res) {
-    Group.findById(req.body.idGrup, (err, group)=>{
+    let idGrup;
+
+    try {
+        idGrup = cryptr.decrypt(req.body.idGrup);
+    }
+    catch(error) {
+        return res.status(500).send({message: `Error on the ID`});
+    }
+
+    Group.findById(idGrup, (err, group)=>{
         console.log(group)
 if(group==null){
     return res.status(404).send({message: `Grup no trobat`})
 }
 else {
     var trobat=-1;
+    let musicId;
+
+    try {
+        musicId = cryptr.decrypt(req.body.id);
+    }
+    catch(error) {
+        return res.status(500).send({message: `Error on the ID`});
+    }
     for(var i=0; i<group.integrants.length;i++){
-        if(group.integrants[i].equals(req.body.id)){
+        if(group.integrants[i].equals(musicId)){
             trobat = i;
             break
         }
     }
     if(trobat!=-1){
+
         group.integrants.splice(trobat,1)
-        Musician.findById(req.body.id, (err, user)=>{
+        Musician.findById(musicId, (err, user)=>{
         if(err) {
                 console.log("Error al buscar music")
                 return res.status(500).send({message: `Error al buscar user: ${err}`})
@@ -179,7 +215,7 @@ else {
         if(user!=null){
             var trobat=-1;
         for(var i=0; i<user.grups.length;i++){
-            if(user.grups[i]=== (req.body.idGrup)){
+            if(user.grups[i]=== (idGrup)){
             trobat = i;
             break
             }
@@ -217,8 +253,17 @@ else {
 }
 })
 }
+
 function editGroup(req,res){
-    Group.findById(req.body.id, (err, group)=>{
+    let idGrup;
+    try {
+        idGrup = cryptr.decrypt(req.body.id);
+    }
+    catch(error) {
+        return res.status(500).send({message: `Error on the ID`});
+    }
+
+    Group.findById(idGrup, (err, group)=>{
         console.log(group)
 if(group==null){
     return res.status(404).send({message: `Grup no trobat`})
@@ -254,6 +299,7 @@ else {
 }
 })
 }
+
 function searchFiltered(req, res) {
     Group.find({}, (err,group)=>{
         if(req.body.estils!=null){
@@ -263,7 +309,7 @@ function searchFiltered(req, res) {
     })
 }
 
-function searchGroup(req,res) {
+function searchGroup(req,res) /*no esta el try and catch*/{
     Group.find({}, (err,groups)=>{
         let selectedGroups = [];
         let userId;

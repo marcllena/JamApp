@@ -4,15 +4,26 @@
 On estan implementades totes les operacions de jams. Així, aqui s'accedeix a la base de dades, i es conecta amb Node JS
 */
 
+
 const Jam = require('../models/jam');
 const mongoose = require('mongoose');
 const User = require('../models/user');
+const Group = require('../models/group');
+const config = require('../config');
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr(config.SECRET_TOKEN);
+
 
 function getJam (req,res){
     console.log('GET /api/jam/:idJam');
 
-    let jamId = req.params.idJam;
-  
+    let jamId;
+    try {
+        jamId = cryptr.decrypt(req.params.idJam);
+    }
+    catch(error) {
+        return res.status(500).send({message: `Error on the ID`});
+    }
     Jam.findById(jamId,(err, jam) => {
         if(err) 
         return res.status(500).send({message: `Error al realizar la peticion: ${err}`});
@@ -62,7 +73,13 @@ function saveJam(req,res){
 function updateJam (req,res){
     console.log('PUT /api/jam/:jamId');
 
-    let jamId = req.params.jamId;
+    let jamId;
+    try {
+        jamId = cryptr.decrypt(req.params.jamId);
+    }
+    catch(error) {
+        return res.status(500).send({message: `Error on the ID`});
+    }
     let update = req.body;
   
     Jam.findByIdAndUpdate(jamId,update,(err, jamUpdated) => {
@@ -79,7 +96,13 @@ function updateJam (req,res){
 function deleteJam (req,res){
     console.log('DELETE /api/jam/:jamId');
 
-    let jamId = req.params.jamId;
+    let jamId;
+    try {
+        jamId = cryptr.decrypt(req.params.jamId);
+    }
+    catch(error) {
+        return res.status(500).send({message: `Error on the ID`});
+    }
   
     Jam.findById(jamId,(err, jam) => {
         if(err) 
@@ -92,33 +115,70 @@ function deleteJam (req,res){
   
         jam.remove(err =>{ 
             if(err)
-            return res.status(500).send({message: `Error al borrar el jamo: ${err}`});
+            return res.status(500).send({message: `Error removing jam: ${err}`});
   
-            res.status(200).send({message: "El jamo se ha eliminado correctamente"})
+            res.status(200).send({message: "Jam removed correctly"})
         })
     })
 }
 
 
 function removeMember (req,res){
-    User.findById(req.params.idMember, (err, user) => {
+    let memberId;
+    let jamId;
+    try {
+        memberId = cryptr.decrypt(req.params.idMember);
+    }
+    catch(error) {
+        return res.status(500).send({message: `Error on the ID`});
+    }
+    try {
+        jamId = cryptr.decrypt(req.params.idJam);
+    }
+    catch(error) {
+        return res.status(500).send({message: `Error on the ID`});
+    }
+
+    User.findById(memberId, (err, user) => {
         if (err)
-            return res.status(500).send({message: `Error searching users: ${err}`});
+            return res.status(500).send({message: `Error searching member: ${err}`});
 
-        if (!user)
-            return res.status(400).send({message: `The user does not exist`});
+        if (!user){
+            Group.findById(memberId, (err,grup)=>{
+                if (err)
+                    return res.status(500).send({message: `Error searching member: ${err}`});
+                if(!grup){
+                    return res.status(400).send({message: `The user does not exist`});
+                }
 
-        Jam.update({_id: req.params.idJam},{$pull:{participants: req.params.idMember}}, (err, doc)=>{
+                Jam.update({_id: jamId},{$pull:{participantsSolistes: memberId}}, (err, doc)=>{
+                    if (err)
+                        return res.status(500).send({message: `Error updating jam: ${err}`});
+
+                    if (!doc)
+                        return res.status(400).send({message: `Jam does not exist`});
+
+                    Jam.findById(jamId, (err, jam) =>{
+                        if (err)
+                            return res.status(500).send({message: `Error searching jam: ${err}`});
+                        return res.status(200).send(jam);
+                    })
+                })
+            });
+
+        }
+
+        Jam.update({_id: jamId},{$pull:{participantsSolistes: memberId}}, (err, doc)=>{
             if (err)
                 return res.status(500).send({message: `Error updating jam: ${err}`});
 
             if (!doc)
                 return res.status(400).send({message: `Jam does not exist`});
 
-            Jam.findById(req.params.idJam, (err, jam) =>{
+            Jam.findById(jamId, (err, jam) =>{
                 if (err)
                     return res.status(500).send({message: `Error searching jam: ${err}`});
-                return res.status(200).send(jam)
+                return res.status(200).send(jam);
             })
         })
     })

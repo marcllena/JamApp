@@ -21,6 +21,7 @@ function getGroups(req, res){
         if(err)
             return res.status(500).send({message: `Error searching the user: ${err}`});
         if(user==null) return res.status(404).send({message: `User not found`});
+
         Group.find({ '_id': { $in: user.grups}}, function(err, grups){
             if(err)
                 return res.status(500).send({message: `Error searching groups: ${err}`});
