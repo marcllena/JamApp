@@ -1,3 +1,47 @@
-<p>
-  jam-create works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Create Jam Session Form
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="api/menu/pages/jam-list"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="limiter">
+    <div class="container-login100">
+      <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+        <form class="login100-form validate-form">
+          <span class="login100-form-title p-b-49">
+            JamApp crear una Jam Session
+          </span>
+
+          <form [formGroup]="createJamForm">
+
+          </form>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="dropDownSelect1"></div>
+
+<!--===============================================================================================-->
+<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/bootstrap/js/popper.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/daterangepicker/moment.min.js"></script>
+<script src="vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+</ion-content>
