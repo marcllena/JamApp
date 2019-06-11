@@ -31,6 +31,12 @@ export class JamService {
     return this.http.delete(this.environment.urlUser + "jam",httpOptions)
   }
 
+  createJam(token,jam){
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+    }
+    return this.http.post(this.environment.urlUser + "jam/", jam, {headers: headers,observe: 'response'})
+  }
 
 
 }

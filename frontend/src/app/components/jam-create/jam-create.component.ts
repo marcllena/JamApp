@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import { Router } from "@angular/router";
+import { Jam } from "../../models/jam";
+import { JamService } from "../../services/jam.service";
+import {Platform, ToastController} from "@ionic/angular";
 
 @Component({
   selector: 'app-jam-create',
@@ -12,7 +16,7 @@ export class JamCreateComponent implements OnInit {
 
   createJamForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private jamService: JamService, public toastController: ToastController) {
     this.createJamForm = this.formBuilder.group({
       name:'',
       local:'',
@@ -21,5 +25,32 @@ export class JamCreateComponent implements OnInit {
    }
 
   ngOnInit() {}
+
+  guardar() {
+    console.log("Operacio de crear un grup realitzada al backend: ");
+    let jam = new Jam(this.createJamForm.value.name, this.createJamForm.value.local, this.createJamForm.value.dataIntencio);
+    let token =localStorage.getItem('token');
+    this.jamService.createJam(token,jam)
+      .subscribe(async response =>{
+        console.log("Resposta del backend" + response);
+        if(response.status == 200){
+          const toast = await this.toastController.create({
+            message: "Grupo Correctamente Creado",
+            duration: 3000,
+            position: 'bottom',
+          });
+          toast.present();
+          this.router.navigateByUrl("/api/menu/home");
+        } else {
+          console.log("Error");
+        } 
+      },
+      err=>{
+        console.log("Error al backend"+err);
+         if(err.status == 500){
+          console.log("Error 500");
+        }
+      });
+  }
 
 }
