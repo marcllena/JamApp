@@ -2,6 +2,7 @@ var express = require('express');
 var apiJam = express.Router();
 const jamCtrl = require('../controllers/jam');
 const auth = require('../middlewares/auth');
+const isAdmin = require('../middlewares/admin');
 
 
 //apiJam.post('/answerRequest', auth,  jamCtrl.answerRequest);//a jam respond a request
