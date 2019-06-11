@@ -4,6 +4,7 @@ import {AlertController, Platform, ToastController} from "@ionic/angular";
 import {Jam} from "../../../../models/jam";
 import {JamService} from "../../../../services/jam.service";
 import {Router} from "@angular/router";
+import {HttpResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-jam-list',
@@ -51,6 +52,122 @@ export class JamListPage implements OnInit {
         });
   }
 
+  editarJam(jamId){}
+
+  async eliminarJam(jamId) {
+    const alert = await this.alertController.create({
+      header: 'Alerta',
+      message: '¿Seguro que desea eliminar al usuario?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {
+          }
+        }, {
+          text: 'Si',
+          handler: () => {
+            console.log(jamId);
+            let token = localStorage.getItem('token');
+            this.jamService.deleteJams(token, {IdList: jamId})
+              .subscribe(
+                async response => {
+                  var result = response as HttpResponse<JSON>;
+                  if (result.status == 200) {
+                    const toast = await this.toastController.create({
+                      message: "Usuario Eliminado Correctamente",
+                      duration: 2000,
+                      position: 'bottom',
+                    });
+                    toast.present();
+                  }
+                  this.llistaJams();
+                },
+                async err => {
+                  var result = err as HttpResponse<JSON>;
+                  if (result.status == 403) {
+                    const toast = await this.toastController.create({
+                      message: "Debes estar logeado como administrador para eliminar usuarios",
+                      duration: 2000,
+                      position: 'bottom',
+                    });
+                    toast.present();
+                  }
+                  this.llistaJams();
+                });
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async eliminarVariasJams() {
+    if(this.jamsSelected.length>0) {
+      const alert = await this.alertController.create({
+        header: 'Alerta',
+        message: '¿Seguro que desea eliminar a varios usuarios?',
+        buttons: [
+          {
+            text: 'Cancelar',
+            handler: () => {
+            }
+          }, {
+            text: 'Si',
+            handler: () => {
+              let token = localStorage.getItem('token');
+              this.jamService.deleteJams(token, {IdList: this.jamsSelected})
+                .subscribe(
+                  async response => {
+                    var result = response as HttpResponse<JSON>;
+                    if (result.status == 200) {
+                      const toast = await this.toastController.create({
+                        message: "Usuarios Eliminados Correctamente",
+                        duration: 2000,
+                        position: 'bottom',
+                      });
+                      toast.present();
+                    }
+                    this.llistaJams();
+                  },
+                  async err => {
+                    var result = err as HttpResponse<JSON>;
+                    if (result.status == 403) {
+                      const toast = await this.toastController.create({
+                        message: "Debes estar logeado como administrador para eliminar usuarios",
+                        duration: 2000,
+                        position: 'bottom',
+                      });
+                      toast.present();
+                    }
+                    this.llistaJams();
+                  });
+            }
+          }
+        ]
+      });
+      await alert.present();
+    }
+  }
+
+  selectJam(jamId){
+    var trobat=false;
+
+    for (let i = 0; i < this.jamsSelected.length&&trobat==false; i++) {
+      if(this.jamsSelected[i]==jamId)
+      {
+        trobat=true;
+        this.jamsSelected.splice(i,1);
+        //console.log("Usuari deseleccionat")
+
+      }
+    }
+    if(trobat==false)
+    {
+      this.jamsSelected.push(jamId);
+      //console.log("Usuari seleccionat")
+    }
+  }
 
   filterItems() {
     var filtered= this.jams.filter(item => {

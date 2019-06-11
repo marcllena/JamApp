@@ -119,6 +119,7 @@ export class UserlistPage implements OnInit {
       console.log("Usuari seleccionat")
     }
   }
+
   async eliminarVariosUsers() {
     if(this.usersSelected.length>0) {
       const alert = await this.alertController.create({
@@ -166,6 +167,7 @@ export class UserlistPage implements OnInit {
       await alert.present();
     }
   }
+
   filterItems() {
     var filtered= this.users.filter(item => {
       return item.username.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;

@@ -14,7 +14,7 @@ apiJam.delete('/:idJam/:idMember', auth, jamCtrl.removeMember); //delete a membe
 apiJam.get('/:idJam', auth, jamCtrl.getJam);//get an specific jam
 
 
-apiJam.delete('/', auth, jamCtrl.deleteJam); //delete a member from a jam
+apiJam.delete('/', isAdmin, jamCtrl.deleteJam); //delete a jam
 apiJam.put('/', auth, jamCtrl.updateJam); //edit a jam
 apiJam.post('/', auth, jamCtrl.saveJam);  //create a new jam with name, estils, description
 apiJam.get('/', auth, jamCtrl.getJams); //search a all jams

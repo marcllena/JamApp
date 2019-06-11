@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Environment} from "./environment";
 import {Jam} from "../models/jam";
 
@@ -21,5 +21,16 @@ export class JamService {
     }
     return this.http.get(this.environment.urlUser + "jam", {headers: headers,observe: 'response'})
   }
+
+  deleteJams(token,idsList) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Authorization': `Bearer ${token}`,'Content-Type': 'application/json' }),
+      body: idsList,
+
+    };
+    return this.http.delete(this.environment.urlUser + "jam",httpOptions)
+  }
+
+
 
 }
