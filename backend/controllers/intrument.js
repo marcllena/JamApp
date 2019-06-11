@@ -4,7 +4,7 @@
 On estan implementades totes les operacions de instrumentes. Així, aqui s'accedeix a la base de dades, i es conecta amb Node JS
 */
 
-const Instrument = require('../models/instrument')
+const Instrument = require('../models/intrument')
 
 function getInstrument (req,res){
     console.log('GET /api/instrument/:instrumentId')
@@ -36,15 +36,14 @@ function getInstruments (req,res){
     })
 }
 
-function saveInstrument(req,res){
+function saveInstrument(instrumentName){
     console.log('POST /api/instrument')
-    console.log(req.body)
 
     let instrument = new Instrument()
-    instrument.name = req.instrumentName[0].toUpperCase() + req.instrumentName.substring(1)
+    instrument.name = instrumentName[0].toUpperCase() + instrumentName.substring(1)
     instrument.save((err,instrumentStored) => {
         if(err)
-        return es.status(500).send({message: `Error al salvar en la base de datos: ${err}`})
+        return res.status(500).send({message: `Error al salvar en la base de datos: ${err}`})
 
         res.status(200).send({instrument: instrumentStored})
 

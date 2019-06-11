@@ -22,12 +22,14 @@ export class UserServices {
     }
     return this.http.get(this.environment.urlUser + "user/" + userId, {headers: headers,observe: 'response'})
   }
+
   obtainUsers(token) {
     const headers = {
       'Authorization': `Bearer ${token}`,
     }
     return this.http.get(this.environment.urlUser + "user", {headers: headers,observe: 'response'})
   }
+
   deleteUsers(token,idsList) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Authorization': `Bearer ${token}`,'Content-Type': 'application/json' }),

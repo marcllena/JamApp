@@ -30,7 +30,37 @@
 
       <div class="wrap-login100 p-l-20 p-r-20 p-t-20 p-b-20">
         <br>
-        <ion-label>Works!</ion-label>
+        <ion-searchbar
+          [(ngModel)]="searchTerm"
+          (ionChange)="filterItems()"
+        ></ion-searchbar>
+        <br>
+        <ion-list-header *ngIf="jams" >
+          <ion-label>Nombre del Usuario</ion-label>
+          <ion-label>Email</ion-label>
+          <ion-label>Tipo de Usuario</ion-label>
+          <ion-label> </ion-label>
+          <ion-label *ngIf="userType=='Admin'"> </ion-label>
+          <ion-label *ngIf="userType=='Admin'"> </ion-label>
+        </ion-list-header>
+        <ion-list *ngFor="let jam of jams">
+          <ion-item>
+            <ion-label>{{jam.name}}</ion-label>
+            <ion-label>{{jam.dataIntencio}}</ion-label>
+            <ion-label>{{jam.local}}</ion-label>
+            <ion-checkbox *ngIf="userType=='Admin'" class="checkbox"  (click)="selectUser(jam._id)"></ion-checkbox>
+            <ion-button *ngIf="userType=='Admin'" class="list-buttons" color="primary" (click)="editarUser(jam._id)" >
+              <ion-icon *ngIf="!platform.is('desktop')" slot="icon-only" name="create"></ion-icon>
+              <ion-icon *ngIf="platform.is('desktop')" style="padding-right:7px" slot="icon-only" name="create"></ion-icon>
+              <ion-label *ngIf="platform.is('desktop')">Editar</ion-label>
+            </ion-button>
+            <ion-button *ngIf="userType=='Admin'" class="list-buttons" color="primary" (click)="eliminarUser(jam._id)">
+              <ion-icon *ngIf="!platform.is('desktop')" slot="icon-only" name="trash"></ion-icon>
+              <ion-icon *ngIf="platform.is('desktop')" style="padding-right:7px" slot="icon-only" name="trash"></ion-icon>
+              <ion-label *ngIf="platform.is('desktop')">Eliminar</ion-label>
+            </ion-button>
+          </ion-item>
+        </ion-list>
         <br>
       </div>
     </div>

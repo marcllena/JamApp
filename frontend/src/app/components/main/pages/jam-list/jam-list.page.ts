@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {ToolbarService} from "../../../../services/toolbar.service";
-import {Platform} from "@ionic/angular";
+import {AlertController, Platform, ToastController} from "@ionic/angular";
+import {Jam} from "../../../../models/jam";
+import {JamService} from "../../../../services/jam.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-jam-list',
@@ -11,9 +14,53 @@ import {Platform} from "@ionic/angular";
 })
 export class JamListPage implements OnInit {
 
-  constructor(private toolbarService: ToolbarService, public platform: Platform) { }
+  jams: Jam[];
+  jamsOriginal: Jam[];
+  jamsSelected=[];
+  searchTerm: string = "";
+  private userType: string;
+  
+  constructor(private jamService: JamService, private router: Router,public toastController: ToastController,
+              private toolbarService: ToolbarService, public platform: Platform,private alertController: AlertController) { }
+  
+  
 
   ngOnInit() {
+    this.userType=localStorage.getItem('userType');
+    this.llistaJams();
   }
 
+  llistaJams() {
+    
+    let token =localStorage.getItem('token');
+    this.jamService.obtainJams(token)
+      .subscribe(response => {
+          console.log("Resposta del BackEnd"+response.body);
+          if(response.status==200){
+            this.jams=response.body as Jam[];
+            this.jamsOriginal=this.jams;
+          }
+          else {
+            //Error desconegut
+            console.log("Error");
+          }
+        },
+        err => {
+          console.log("Error del BackEnd"+err);
+          //console.log(err);
+        });
+  }
+
+
+  filterItems() {
+    var filtered= this.jams.filter(item => {
+      return item.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
+    });
+    if(this.searchTerm=="")
+      this.jams=this.jamsOriginal;
+    else{
+      this.jams=filtered;
+    }
+
+  }
 }

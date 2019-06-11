@@ -188,7 +188,7 @@ function getUser(req,res) {
 }
 
 function getUsers(req,res) {
-    User.find( (err,users)=>{
+    User.find({userType: {$ne: 'Admin'}}, (err,users)=>{
         console.log("Peticio per obtindre tots els usuaris");
         if(err)
             return res.status(500).send({message: `Error en el logging: ${err}`});
@@ -280,7 +280,7 @@ function updateUser(req,res){
     
     let update = req.body;
 
-    Musician.findByIdAndUpdate(userId,update,{new: true}, (err, userUpdated) => {
+    User.findByIdAndUpdate(userId,update,{new: true}, (err, userUpdated) => {
         if(err)
             return res.status(500).send({message: `Error updating the user: ${err}`});
 
@@ -463,7 +463,7 @@ function linkFacebookId(req, res){
     
 
 }
-    function connectFacebook(req,res){
+function connectFacebook(req,res){
         User.find({facebookId: req.body.id}, (err, user)=>{
             if(err){
                 return res.status(500).send({message: `Error : ${err}`});
