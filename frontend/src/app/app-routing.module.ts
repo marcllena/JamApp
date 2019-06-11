@@ -13,6 +13,7 @@ import { ChatListComponent } from './components/main/pages/chat-list/chat-list.c
 import {FilterFormComponent} from "./components/filter-form/filter-form.component";
 import {PoliticaComponent} from "./components/politica/politica.component";
 import {GrupLocationComponent} from "./components/grup-location/grup-location.component";
+import { JamCreateComponent } from "./components/jam-create/jam-create.component";
 
 const routes: Routes = [
   { path: 'api/signin', component: LoginComponent },
@@ -29,6 +30,7 @@ const routes: Routes = [
   {path: 'api/filter', component: FilterFormComponent},
   {path: 'api/politica', component: PoliticaComponent},
   { path: 'api/grupLocation', component: GrupLocationComponent},
+  {path: 'api/jamCreate', component: JamCreateComponent},
 
 ];
 

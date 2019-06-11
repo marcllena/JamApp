@@ -26,6 +26,7 @@ import { ChatListComponent } from './components/main/pages/chat-list/chat-list.c
 import {FilterFormComponent} from "./components/filter-form/filter-form.component";
 import {PoliticaComponent} from "./components/politica/politica.component";
 import {GrupLocationComponent} from "./components/grup-location/grup-location.component";
+import { JamCreateComponent } from "./components/jam-create/jam-create.component";
 
 import {CloudinaryModule, CloudinaryConfiguration } from '@cloudinary/angular';
 import { Cloudinary } from 'cloudinary-core';
@@ -45,7 +46,8 @@ import { Cloudinary } from 'cloudinary-core';
     ChatListComponent,
     FilterFormComponent,
     PoliticaComponent,
-    GrupLocationComponent
+    GrupLocationComponent,
+    JamCreateComponent
   ],
   entryComponents: [],
   imports: [

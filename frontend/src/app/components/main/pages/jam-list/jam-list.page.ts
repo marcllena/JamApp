@@ -31,6 +31,10 @@ export class JamListPage implements OnInit {
     this.llistaJams();
   }
 
+  createJam(){
+    this.router.navigateByUrl("api/jamCreate");
+  }
+
   llistaJams() {
     
     let token =localStorage.getItem('token');
