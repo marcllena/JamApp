@@ -14,7 +14,9 @@ export class JamCreateComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder) {
     this.createJamForm = this.formBuilder.group({
-
+      name:'',
+      local:'',
+      dataIntencio:''
     })
    }
 

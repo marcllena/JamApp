@@ -19,9 +19,32 @@
           </span>
 
           <form [formGroup]="createJamForm">
+              <div class="wrap-input100 validate-input m-b-23">
+                <span class="label-input100">Nombre de la Jam</span>
+                <input class="input100" type="text" formControlName="name" placeholder="Escribe el nombre de la Jam">
+                <span class="focus-input100" data-symbol="&#xf206;"></span>
+              </div>
+
+              <div class="wrap-input100 validate-input m-b-23">
+                <span class="label-input100">Local de la Jam Session</span>
+                <input class="input100" type="text" formControlName="local" placeholder="Escribe el nombre del Local">
+                <span class="focus-input100" data-symbol="&#xf206;"></span>
+              </div>
+
+              <div class="wrap-input100 validate-input m-b-23">
+                <span class="label-input100">Fecha</span>
+                <input class="input100" type="text" formControlName="dataIntencio" placeholder="Escribe la fecha">
+                <span class="focus-input100" data-symbol="&#xf206;"></span>
+              </div>
+
+              <div class="container-login100-form-btn">
+                <div class="wrap-login100-form-btn">
+                  <div class="login100-form-bgbtn"></div>
+                  <ion-button color="primary" (click)="guardar()" expand="block">Crear Jam!</ion-button>
+                </div>
+              </div>
 
           </form>
-
         </form>
       </div>
     </div>
