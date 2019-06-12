@@ -43,6 +43,9 @@ function signUp(req,res) {
                 email: req.body.email,
                 username: req.body.username,
                 password: req.body.password,
+                city: null,
+                descripcio: null,
+                video: null,
                 location: point,
                 latitud: null,
                 longitud: null,
@@ -60,6 +63,8 @@ function signUp(req,res) {
                 email: req.body.email,
                 username: req.body.username,
                 password: req.body.password,
+                city: null,
+                descripcio: null,
                 location: point,
                 latitud: null,
                 longitud: null
@@ -280,14 +285,83 @@ function updateUser(req,res){
     
     let update = req.body;
 
-    User.findByIdAndUpdate(userId,update,{new: true}, (err, userUpdated) => {
-        if(err)
-            return res.status(500).send({message: `Error updating the user: ${err}`});
+    User.findById(userId,(err,user)=> {
+        if (err) return res.status(500).send({message: `Error updating the user: ${err}`});
+        if (!user) return res.status(404).send({message: `User does not exist`});
 
-        if(!userUpdated)
-            return res.status(404).send({message: `User does not exist`});
-        res.status(200).send({user: userUpdated})
+        if ('userType' in user) {
+
+            if (user.userType == 'Musician') {
+                Musician.findByIdAndUpdate(userId,update,{new: true}, (err, userUpdated) => {
+                    if(err)
+                        return res.status(500).send({message: `Error updating the user: ${err}`});
+
+                    if(!userUpdated)
+                        return res.status(404).send({message: `User does not exist`});
+                    res.status(200).send({user: userUpdated})
+                })
+            }else{
+                Room.findByIdAndUpdate(userId,update,{new: true}, (err, userUpdated) => {
+                    if(err)
+                        return res.status(500).send({message: `Error updating the user: ${err}`});
+
+                    if(!userUpdated)
+                        return res.status(404).send({message: `User does not exist`});
+                    res.status(200).send({user: userUpdated})
+                })
+            }
+        }
+        else{
+            User.findByIdAndUpdate(userId,update,{new: true}, (err, userUpdated) => {
+                if(err)
+                    return res.status(500).send({message: `Error updating the user: ${err}`});
+
+                if(!userUpdated)
+                    return res.status(404).send({message: `User does not exist`});
+                res.status(200).send({user: userUpdated})
+            })
+        }
+
     })
+
+
+    //NO BORRAR LO DE ABAJO!!!! SE PUEDE REAPROVECHAR PARA FILTROS DINAMICOS!!!!!
+
+    /*let queryParam = {};
+    let setParam={};
+
+    User.findById(userId,(err,user)=>{
+        if(err) return res.status(500).send({message: `Error updating the user: ${err}`});
+        if(!user) return res.status(404).send({message: `User does not exist`});
+        setParam['username']=update.username;
+        setParam['edat']=update.edat;
+        if ('userType' in user){
+
+            if(user.userType=='Musician'){
+                setParam['instrument']=update.instrument;
+                setParam['descripcio']=update.descripcio;
+                setParam['video']=update.video;
+                setParam['estils']=update.estils;
+            }
+
+        }
+        //let setName='\$set';
+        queryParam['\$set'] = setParam;
+
+        console.log("==================================================");
+        console.log(queryParam);
+        if (user.userType=='Musician')
+        User.updateOne({_id: userId}, queryParam, (err,userUpdated)=> {
+            if (err)
+                return res.status(500).send({message: `Error updating the user: ${err}`});
+
+            if (!userUpdated)
+                return res.status(404).send({message: `User does not exist`});
+
+            res.status(200).send({user: userUpdated})
+        })
+
+    })*/
 }
 
 function setLocation(req,res){

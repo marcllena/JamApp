@@ -120,6 +120,10 @@ export class SettingsComponent implements OnInit {
       user2.video = this.user.video;
     }
 
+
+    console.log(user2.instrument);
+    console.log(user2.estils);
+
     this.userServices.updateUser(token,user2)
       .subscribe(response =>{
         if(response.status == 200){
