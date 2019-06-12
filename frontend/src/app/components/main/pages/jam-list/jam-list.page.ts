@@ -43,6 +43,7 @@ export class JamListPage implements OnInit {
           console.log("Resposta del BackEnd"+response.body);
           if(response.status==200){
             this.jams=response.body as Jam[];
+            console.log(this.jams.length+ " jams");
             this.jamsOriginal=this.jams;
           }
           else {

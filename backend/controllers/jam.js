@@ -9,6 +9,7 @@ const Jam = require('../models/jam');
 const mongoose = require('mongoose');
 const User = require('../models/user');
 const Group = require('../models/group');
+const Room = require('../models/room');
 const config = require('../config');
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr(config.SECRET_TOKEN);
@@ -41,39 +42,76 @@ function getJams (req,res){
     Jam.find({},(err, jams) => {
       if(err)
       return res.status(500).send({message: `Error al realizar la peticion: ${err}`});
-  
-      if(!jams)
-        return res.status(404).send({message: `No existen jamos`});
-        
+
+      if(jams.length==0)
+        return res.status(404).send({message: `No existen jams`});
+
         res.status(200).send({jams})
     })
 }
+
 
 function saveJam(req,res){
     console.log('POST /api/jam');
     console.log(req.body);
 
     let jam = new Jam();
+
+    if('local' in req.body){
+
+        try {
+            jam.local = cryptr.decrypt(req.body.local);
+        }
+        catch(error) {
+            return res.status(500).send({message: `Error on the ID`});
+        }
+
+        //jam.local = req.body.local;
+        jam.localName = "";
+
+    }else{
+        return res.status(500).send({message: 'Place unspecified'})
+    }
+
     jam.name = req.body.name;
-    jam.price = req.body.price;
+    //jam.price = req.body.price;
     jam.dataIntencio = req.body.dataIntencio;
     jam.description = req.body.description;
-    jam.local = req.body.room;
-    jam.organitzador=req.user;
-    
-    jam.save((err,jamStored) => {
+    jam.organitzador = req.user;
+
+    Room.findById(jam.local,(err, room) => {
         if(err)
-        return es.status(500).send({message: `Error al salvar en la base de datos: ${err}`});
+            return res.status(500).send({message: `Error al realizar la peticion: ${err}`});
+        if(!room){
+            return res.status(404).send({message: `Ala no encontrada: ${err}`});
+        }
 
-        res.status(200).send({jam: jamStored})
+        jam.localName=room.username;
 
-    })
+        jam.save((err,jamStored) => {
+            if(err)
+                return res.status(500).send({message: `Error al salvar en la base de datos: ${err}`});
+
+            room.jams.push(jam);
+
+            room.save((err)=>{
+                if(err)
+                    return res.status(500).send({message: `Error al salvar en la base de datos: ${err}`});
+
+                res.status(200).send({jam: jamStored})
+            })
+
+
+        })
+    });
+
 }
 
 function updateJam (req,res){
     console.log('PUT /api/jam/:jamId');
 
     let jamId;
+
     try {
         jamId = cryptr.decrypt(req.params.jamId);
     }

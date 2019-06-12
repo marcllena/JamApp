@@ -29,6 +29,16 @@ GroupSchema.set('toJSON', {
     transform: (doc, ret, options) => {
         delete ret.__v;
         ret._id = cryptr.encrypt(ret._id);
+
+        ret.integrants.forEach(function(integrant,i){
+            ret.integrants[i]=cryptr.encrypt(integrant)
+        });
+
+        /*ret.solicituds.forEach(function(solicitud,i){
+            ret.solicituds[i].id=cryptr.encrypt(solicitud.id)
+        });*/
+
+
     },
 });
 

@@ -62,7 +62,7 @@ function createGroup(req, res) {
                     });
             }
 
-            newGroup.integrants.push(user[0]);
+            //newGroup.integrants.push(user[0]);
             /*for(var i=0; i<req.body.styles.length;i++){
             newGroup.estils.push(req.body.styles[i])
             }*/

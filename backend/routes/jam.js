@@ -12,7 +12,11 @@ const isAdmin = require('../middlewares/admin');
 
 apiJam.delete('/:idJam/:idMember', auth, jamCtrl.removeMember); //delete a member from a jam
 //apiJam.get('/myjams', auth, jamCtrl.searchJam); //search a jam mine
+
+
+
 apiJam.get('/:idJam', auth, jamCtrl.getJam);//get an specific jam
+
 
 
 apiJam.delete('/', isAdmin, jamCtrl.deleteJam); //delete a jam

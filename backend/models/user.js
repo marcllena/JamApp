@@ -27,6 +27,29 @@ userBase.set('toJSON', {
     transform: (doc, ret, options) => {
         delete ret.__v;
         ret._id = cryptr.encrypt(ret._id);
+
+        if('userType' in ret){
+            if(ret.userType=='Musician'){
+
+                if('grups' in ret) {
+                    ret.grups.forEach(function (grup, i) {
+                        ret.grups[i] = cryptr.encrypt(grup)
+                    });
+                }
+
+            }else if(ret.userType=='Room'){
+
+                if('jams' in ret) {
+                    ret.jams.forEach(function (jam, i) {
+                        ret.jams[i] = cryptr.encrypt(jam)
+                    });
+                }
+
+            }
+
+        }
+
+
     },
 });
 

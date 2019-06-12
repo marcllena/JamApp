@@ -36,6 +36,7 @@
         ></ion-searchbar>
         <br>
         <ion-label *ngIf="jams.length==0">There are no jams</ion-label>
+
         <ion-list-header *ngIf="jams.length!=0" >
           <ion-label>Nombre</ion-label>
           <ion-label>Local</ion-label>
@@ -44,24 +45,30 @@
           <ion-label *ngIf="userType=='Admin'"> </ion-label>
           <ion-label *ngIf="userType=='Admin'"> </ion-label>
         </ion-list-header>
+
         <ion-list *ngFor="let jam of jams">
           <ion-item>
             <ion-label>{{jam.name}}</ion-label>
-            <ion-label>{{jam.local}}</ion-label>
+            <ion-label>{{jam.localName}}</ion-label>
             <ion-label>{{jam.dataIntencio}}</ion-label>
+
             <ion-checkbox *ngIf="userType=='Admin'" class="checkbox"  (click)="selectJam(jam._id)"></ion-checkbox>
+
             <ion-button *ngIf="userType=='Admin'" class="list-buttons" color="primary" (click)="editarJam(jam._id)" >
               <ion-icon *ngIf="!platform.is('desktop')" slot="icon-only" name="create"></ion-icon>
               <ion-icon *ngIf="platform.is('desktop')" style="padding-right:7px" slot="icon-only" name="create"></ion-icon>
               <ion-label *ngIf="platform.is('desktop')">Editar</ion-label>
             </ion-button>
+
             <ion-button *ngIf="userType=='Admin'" class="list-buttons" color="primary" (click)="eliminarJam(jam._id)">
               <ion-icon *ngIf="!platform.is('desktop')" slot="icon-only" name="trash"></ion-icon>
               <ion-icon *ngIf="platform.is('desktop')" style="padding-right:7px" slot="icon-only" name="trash"></ion-icon>
               <ion-label *ngIf="platform.is('desktop')">Eliminar</ion-label>
             </ion-button>
+
           </ion-item>
         </ion-list>
+
         <br>
 
         <br><br>
