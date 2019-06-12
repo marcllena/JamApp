@@ -14,7 +14,7 @@ export class GrupListPage implements OnInit {
   private userType: string;
   groups: Object;
   requests: Object;
-
+  group: Object;
   constructor(private alertController: AlertController,private toolbarService: ToolbarService, private router: Router,
               private userService: UserServices, private singleton: DataService, public platform: Platform) { }
 
@@ -91,8 +91,10 @@ export class GrupListPage implements OnInit {
   }
 
   // VEURE SOLICITUDS DELS MEUS GRUPS
-  editGroup(name){
-    console.log(name)
+  editGroup(group){
+    
+    this.singleton.changeGroupDetails(group);
+    this.router.navigateByUrl('api/grup/info')
   }
   getRequests(){
     console.log("Operacio de demanar grups realitzada al Backend: ");

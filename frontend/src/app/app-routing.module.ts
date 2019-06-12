@@ -15,6 +15,7 @@ import {PoliticaComponent} from "./components/politica/politica.component";
 import {GrupLocationComponent} from "./components/grup-location/grup-location.component";
 import { JamCreateComponent } from "./components/jam-create/jam-create.component";
 import { SalaInfoComponent } from './components/sala-info/sala-info.component';
+import { GroupInfoComponent } from './components/group-info/group-info.component';
 
 const routes: Routes = [
   { path: 'api/signin', component: LoginComponent },
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path: 'api/grupLocation', component: GrupLocationComponent},
   {path: 'api/jamCreate', component: JamCreateComponent},
   {path: 'api/salaInfo', component: SalaInfoComponent},
+  {path: 'api/grup/info', component: GroupInfoComponent},
 
 ];
 
