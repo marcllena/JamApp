@@ -48,7 +48,15 @@ function getGroups(req, res){
 }
 
 function requestMembership(req, res){
-    Group.findById(req.body.idGroup, (err,group)=>{
+    console.log(req.params, req.body)
+    let userId;
+    try {
+        userId = cryptr.decrypt(req.body.idGroup);
+    }
+    catch(error) {
+        return res.status(500).send({message: `Error on the ID`});
+    }
+    Group.findById(userId, (err,group)=>{
         if(err){
             return res.status(500).send({message: 'Error al buscar grup'})
         }

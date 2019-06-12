@@ -66,6 +66,16 @@
         <br><br>
 
         <span *ngIf="requests?.length!=0" class="login100-form-title">
+          Mis grupos
+      </span>
+
+      <div *ngFor="let request of requests">
+            <ion-card-header>
+              <ion-button style="margin: 5px"  color="primary" size="small" (click)="editGroup(request)" strong="true">{{request.name}}</ion-button>
+            </ion-card-header>
+
+        </div>
+        <span *ngIf="requests?.length!=0" class="login100-form-title">
             Solicitudes a mis grupos
         </span>
 
