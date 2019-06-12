@@ -46,7 +46,7 @@ function getJams (req,res){
       if(jams.length==0)
         return res.status(404).send({message: `No existen jams`});
 
-        res.status(200).send({jams})
+        res.status(200).send(jams)
     })
 }
 
