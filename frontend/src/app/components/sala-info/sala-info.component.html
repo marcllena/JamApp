@@ -1,0 +1,103 @@
+<ion-header>
+  <ion-toolbar>
+    <div  *ngIf="user">
+    <ion-title name="title" *ngIf="user.username">
+      {{user.username | uppercase}}
+    </ion-title>
+    </div>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="api/menu/home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="limiter">
+    <div class="container-login100">
+      <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+        <div  *ngIf="user">
+        <div *ngIf="platform.is('desktop')" >
+          <br>
+          <span class="login100-form-title">
+          {{user.username}}
+          </span>
+        </div>
+        <ion-item >
+          <ion-button class="list-buttons" color="primary" (click)="chatButton(user.username)"style="float: right" >
+            <ion-icon *ngIf="!platform.is('desktop')" slot="icon-only" name="chatbubbles"></ion-icon>
+            <ion-icon *ngIf="platform.is('desktop')" style="padding-right:7px" slot="icon-only" name="chatbubbles"></ion-icon>
+            <ion-label *ngIf="platform.is('desktop')">Chat</ion-label>
+          </ion-button>
+        </ion-item>
+
+
+        <ion-item *ngIf="user.email">
+          <ion-label *ngIf="user" style="font-weight: bold">Email: </ion-label>
+          <ion-label *ngIf="user">{{user.email}}</ion-label>
+        </ion-item>
+        <!--
+        <ion-item>
+          <ion-label *ngIf="("edat" in this.user)" style="font-weight: bold">Edat: </ion-label>
+          <ion-label *ngIf="("edat" in this.user)">{{user.edat}}</ion-label>
+        </ion-item>
+        -->
+        <ion-item *ngIf="user.descripcio">
+          <ion-label style="font-weight: bold">Description: </ion-label>
+          <ion-label>{{user.descripcio}}</ion-label>
+        </ion-item>
+
+        <ion-item *ngIf="user.city">
+          <ion-label  style="font-weight: bold">City: </ion-label>
+          <ion-label>{{user.city}}</ion-label>
+        </ion-item>
+
+
+
+
+
+          <div *ngIf="(user.estils)" id="genreColumn" class="column">
+
+              <ion-list-header style="padding-left: 20px">
+                <ion-label style="font-weight: bold">Genre</ion-label>
+              </ion-list-header>
+
+              <ion-list style="padding-left: 5px" *ngFor="let genre of user.estils">
+                <ion-item>{{genre}}</ion-item>
+              </ion-list>
+
+        </div>
+
+        <div *ngIf="(user.jams.length!=0)" >
+        <ion-list-header style="padding-left: 10px; margin: auto">
+          <ion-label style="font-weight: bold">Jams</ion-label>
+        </ion-list-header>
+
+        <ion-list  style="padding-left: 5px; margin: auto" *ngFor="let jam of user.jams">
+          <ion-item style="text-align: center">{{jam.name}}</ion-item>
+        </ion-list>
+        </div>
+
+
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="dropDownSelect1"></div>
+
+  <!--===============================================================================================-->
+  <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+  <!--===============================================================================================-->
+  <script src="vendor/animsition/js/animsition.min.js"></script>
+  <!--===============================================================================================-->
+  <script src="vendor/bootstrap/js/popper.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <!--===============================================================================================-->
+  <script src="vendor/select2/select2.min.js"></script>
+  <!--===============================================================================================-->
+  <script src="vendor/daterangepicker/moment.min.js"></script>
+  <script src="vendor/daterangepicker/daterangepicker.js"></script>
+  <!--===============================================================================================-->
+  <script src="vendor/countdowntime/countdowntime.js"></script>
+  <!--===============================================================================================-->
+</ion-content>

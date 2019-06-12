@@ -30,6 +30,7 @@ import { JamCreateComponent } from "./components/jam-create/jam-create.component
 
 import {CloudinaryModule, CloudinaryConfiguration } from '@cloudinary/angular';
 import { Cloudinary } from 'cloudinary-core';
+import { SalaInfoComponent } from './components/sala-info/sala-info.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { Cloudinary } from 'cloudinary-core';
     FilterFormComponent,
     PoliticaComponent,
     GrupLocationComponent,
-    JamCreateComponent
+    JamCreateComponent,
+    SalaInfoComponent
   ],
   entryComponents: [],
   imports: [

@@ -253,8 +253,9 @@ export class HomePage {
                 google.maps.event.addListener(this.markersListSalas[i], 'click', () =>{
                   console.log("Click a la sala " + this.userList.rooms[i].username)
                   this.salaClicked=this.userList.rooms[i];
-                  this.singleton.changeClickedUserId(this.salaClicked._id);
-                  this.router.navigateByUrl("/api/userInfo");
+                  console.log(this.salaClicked)
+                  this.singleton.changeClickedSalaId(this.salaClicked._id);
+                  this.router.navigateByUrl("/api/salaInfo");
                 });
               }
             }

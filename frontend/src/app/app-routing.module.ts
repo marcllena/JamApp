@@ -14,6 +14,7 @@ import {FilterFormComponent} from "./components/filter-form/filter-form.componen
 import {PoliticaComponent} from "./components/politica/politica.component";
 import {GrupLocationComponent} from "./components/grup-location/grup-location.component";
 import { JamCreateComponent } from "./components/jam-create/jam-create.component";
+import { SalaInfoComponent } from './components/sala-info/sala-info.component';
 
 const routes: Routes = [
   { path: 'api/signin', component: LoginComponent },
@@ -31,6 +32,7 @@ const routes: Routes = [
   {path: 'api/politica', component: PoliticaComponent},
   { path: 'api/grupLocation', component: GrupLocationComponent},
   {path: 'api/jamCreate', component: JamCreateComponent},
+  {path: 'api/salaInfo', component: SalaInfoComponent},
 
 ];
 
