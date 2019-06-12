@@ -91,7 +91,9 @@ export class GrupListPage implements OnInit {
   }
 
   // VEURE SOLICITUDS DELS MEUS GRUPS
-
+  editGroup(name){
+    console.log(name)
+  }
   getRequests(){
     console.log("Operacio de demanar grups realitzada al Backend: ");
     let token =localStorage.getItem('token');
