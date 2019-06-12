@@ -1,3 +1,95 @@
-<p>
-  group-info works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Editar grupo
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="api/menu/home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<div class="limiter">
+  <div class="container-login100">
+    <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+      <form class="login100-form validate-form">
+        <span class="login100-form-title p-b-49">
+          JamApp - Editar Grupo
+        </span>
+
+        <form [formGroup]="settingsForm" *ngIf="this.grup">
+          <div class="login100-form validate-form">
+            <span class="login100-form-title p-b-49" style="font-size: 20px">
+              {{this.grup.name}}
+            </span>
+          </div>
+
+          <div class="wrap-input100 validate-input m-b-23">
+            <span class="label-input100">Email del grupo</span>
+            <input class="input100" type="text" formControlName="email" value={{this.grup.email}}>
+            <span class="focus-input100" data-symbol="&#xf206;"></span>
+          </div>
+
+          <div class="wrap-input100 validate-input m-b-23">
+            <span class="label-input100">Nombre del grupo</span>
+            <input class="input100" type="text" formControlName="username" value={{this.grup.name}}>
+            <span class="focus-input100" data-symbol="&#xf206;"></span>
+          </div>
+
+          <!--<div class="wrap-input100 validate-input m-b-23">
+            <span class="label-input100">Contrasenya</span>
+            <input class="input100" type="text" formControlName="password" placeholder={{this.user.password}}>
+            <span class="focus-input100" data-symbol="&#xf206;"></span>
+          </div>-->
+          <div class="wrap-input100 validate-input m-b-23">
+            <span class="label-input100">Descripcion</span>
+            <input class="input100" type="string" formControlName="descripcio" value={{this.grup.descripcio}}>
+            <span class="focus-input100" data-symbol="&#xf206;"></span>
+          </div>
+
+          <div class="wrap-input100 validate-input m-b-23">
+            <span class="label-input100">Video</span>
+            <input class="input100" type="string" formControlName="video" value={{this.grup.video}}>
+            <span class="focus-input100" data-symbol="&#xf206;"></span>
+          </div>
+
+
+
+          <div class="container-login100-form-btn">
+            <div class="wrap-login100-form-btn">
+              <div class="login100-form-bgbtn"></div>
+              <ion-button color="primary" (click)="updateUser()" expand="block">Guardar</ion-button>
+            </div>
+          </div>
+          <br>
+
+
+        </form>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="dropDownSelect1"></div>
+
+<!--===============================================================================================-->
+<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/bootstrap/js/popper.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/daterangepicker/moment.min.js"></script>
+<script src="vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!--===============================================================================================-->
+<script src="../../../../../backend/public/fotosCloud.js"></script>
+<!--===============================================================================================-->
+</ion-content>
