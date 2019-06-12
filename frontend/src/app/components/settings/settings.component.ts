@@ -23,7 +23,7 @@ export class SettingsComponent implements OnInit {
   user: User;
 
   settingsForm: FormGroup;
-  items1 = ["guitarra","piano","ukelele","triangle","pito","maraques","harmonica"]
+  items1 = ['Guitarra','Piano','Pito','Triangle','Bateria','Violi','Veu','Teclat','Cello','Flauta','Ukelele','Maraques','Harmonica']
   items2 = ["Regeton","Trap","Dembow"]
 
   constructor(private settingsService: SettingsService,private router: Router,private userServices: UserServices,private formBuilder: FormBuilder, private singleton: DataService, public toastController: ToastController) {

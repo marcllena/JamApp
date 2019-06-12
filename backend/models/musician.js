@@ -9,7 +9,7 @@ const Point = require('./point');
 
 const MusicianSchema = UserBase.discriminator('Musician', new mongoose.Schema({
     fotoPerfil: String,
-    instrument:[{type: String, enum:['Guitarra','Piano','Pito','Triangle','Bateria','Violi','Veu','Teclat','Cello','Flauta'] }],
+    instrument: [String], //[{type: String, enum:['Guitarra','Piano','Pito','Triangle','Bateria','Violi','Veu','Teclat','Cello','Flauta','Ukelele','Maraques','Harmonica'] }],
     city: String,
     //coordenades:[Number],
     location: {type: Point.schema},

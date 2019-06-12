@@ -24,21 +24,21 @@ function getGroups(req, res){
         return res.status(500).send({message: `Error on the ID`});
     }
 
-    console.log("CHECKPOINT 1")
+    //console.log("CHECKPOINT 1")
     Musician.findById(userId, (err,user)=>{
         if(err)
             return res.status(500).send({message: `Error searching the user: ${err}`});
-        console.log("CHECKPOINT 2")
+        //console.log("CHECKPOINT 2")
         if(user==null) return res.status(404).send({message: `User not found`});
-        console.log("CHECKPOINT 3 "+ user.grups)
+        //console.log("CHECKPOINT 3 "+ user.grups)
 
-        console.log("CHECKPOINT 3.5")
+        //console.log("CHECKPOINT 3.5")
         Group.find({ '_id': { $in: user.grups}}, function(err, grups){
             if(err)
                 return res.status(500).send({message: `Error searching groups: ${err}`});
-            console.log("CHECKPOINT 4")
+            //console.log("CHECKPOINT 4")
             if(grups.length==0) return res.status(404).send({message: `There are no groups`});
-            console.log("CHECKPOINT 5")
+            //console.log("CHECKPOINT 5")
             return res.status(200).send({
                 grups: grups
             });
