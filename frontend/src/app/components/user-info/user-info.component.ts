@@ -68,8 +68,10 @@ export class UserInfoComponent implements OnInit {
   }
 
 
-  chatButton() {
-    console.log("Works!")
+  chatButton(name) {
+      this.singleton.changeChatDestination(name)
+      this.router.navigateByUrl("/api/chat1to1")
+    
   }
 
   getUserGroups(){

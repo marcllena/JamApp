@@ -24,7 +24,7 @@
         </div>
         <ion-item>
           <ion-label>Aqui va la foto</ion-label>
-          <ion-button class="list-buttons" color="primary" (click)="chatButton()" >
+          <ion-button class="list-buttons" color="primary" (click)="chatButton(user.username)" >
             <ion-icon *ngIf="!platform.is('desktop')" slot="icon-only" name="chatbubbles"></ion-icon>
             <ion-icon *ngIf="platform.is('desktop')" style="padding-right:7px" slot="icon-only" name="chatbubbles"></ion-icon>
             <ion-label *ngIf="platform.is('desktop')">Chat</ion-label>
@@ -96,9 +96,9 @@
 
         </div>
 
-        <div *ngIf="(user.grups.length!=0)" style="text-align: center; margin: auto; width: 50%;">
-        <ion-list-header style="padding-left: 20px; margin: auto">
-          <ion-label style="font-weight: bold; text-align: center">Groups</ion-label>
+        <div *ngIf="(user.grups.length!=0)" >
+        <ion-list-header style="padding-left: 10px; margin: auto">
+          <ion-label style="font-weight: bold">Groups</ion-label>
         </ion-list-header>
 
         <ion-list  style="padding-left: 5px; margin: auto" *ngFor="let grup of groups.grups">
