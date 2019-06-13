@@ -17,7 +17,18 @@ import { ToastController } from '@ionic/angular';
 export class GroupInfoComponent implements OnInit {
   grup: Object;
   settingsForm: FormGroup;
-  constructor(private settingsService: SettingsService,private router: Router,private userServices: UserServices,private formBuilder: FormBuilder, private singleton: DataService, public toastController: ToastController) { }
+  constructor(private settingsService: SettingsService,private router: Router,private userServices: UserServices,private formBuilder: FormBuilder, private singleton: DataService, public toastController: ToastController) { 
+    this.settingsForm = this.formBuilder.group({
+      email:'',
+      username:'',
+      //password:'',
+      edat:0,
+      instrument:[],
+      estils:[],
+      descripcio:'',
+      video:''
+    })
+  }
 
   ngOnInit() {
     
