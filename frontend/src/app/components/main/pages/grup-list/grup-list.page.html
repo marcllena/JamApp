@@ -39,14 +39,14 @@
         <div *ngIf="groups">
           <ion-card style="display: inline-block;" *ngFor="let group of groups">
             <ion-card-header>
-              <ion-card-title style="margin: 5px">Grupo: {{group.name}}</ion-card-title>
+              <ion-card-title style="margin: 5px">{{group.name}}</ion-card-title>
             </ion-card-header>
             <div >
                 <ion-card-content style="margin: 5px">
-                    Email: {{group.email}}
+                    {{group.email}}
                 </ion-card-content>
                 <ion-card-content style="margin: 5px">
-                    Descripción: {{group.description}}
+                    {{group.description}}
                 </ion-card-content>
             </div>
             <ion-button style="margin: 5px" color="primary" size="small" (click)="requestMembership(group)" strong="true">
@@ -65,16 +65,38 @@
         </div>
         <br><br>
 
-        <span *ngIf="requests?.length!=0" class="login100-form-title">
+        <span *ngIf="requests.length!=0" class="login100-form-title">
           Mis grupos
-      </span>
+        </span>
 
-      <div *ngFor="let request of requests">
+        <div *ngIf="requests.length!=0">
+          <ion-card style="display: inline-block;" *ngFor="let request of requests">
+            <ion-card-header>
+              <ion-card-title style="margin: 5px">{{request.name}}</ion-card-title>
+            </ion-card-header>
+            <div >
+              <ion-card-content style="margin: 5px">
+                {{request.email}}
+              </ion-card-content>
+              <ion-card-content style="margin: 5px">
+                {{request.description}}
+              </ion-card-content>
+            </div>
+            <ion-button style="margin: 5px" color="primary" size="small" (click)="editGroup(request)" strong="true">
+              Editar
+              <ion-icon slot="icon-only" name="create"></ion-icon>
+            </ion-button>
+          </ion-card>
+        </div>
+
+        <!--<div *ngFor="let request of requests">
             <ion-card-header>
               <ion-button style="margin: 5px"  color="primary" size="small" (click)="editGroup(request)" strong="true">{{request.name}}</ion-button>
             </ion-card-header>
 
-        </div>
+        </div>-->
+
+
         <span *ngIf="requests?.length!=0" class="login100-form-title">
             Solicitudes a mis grupos
         </span>
