@@ -56,14 +56,17 @@ function saveJam(req,res){
     console.log(req.body);
 
     let jam = new Jam();
+    let salaError = false;
+
 
     if('local' in req.body){
-
         try {
             jam.local = cryptr.decrypt(req.body.local);
         }
         catch(error) {
-            return res.status(500).send({message: `Error on the ID`});
+
+            salaError = true;
+            //eturn res.status(500).send({message: `Error on the ID sala`});
         }
 
         //jam.local = req.body.local;
@@ -72,6 +75,13 @@ function saveJam(req,res){
     }else{
         return res.status(500).send({message: 'Place unspecified'})
     }
+    let query={}
+
+    if (salaError===true){
+        query['username']=req.body.local;
+    }else{
+        query['_id']=jam.local;
+    }
 
     jam.name = req.body.name;
     //jam.price = req.body.price;
@@ -79,22 +89,23 @@ function saveJam(req,res){
     jam.description = req.body.description;
     jam.organitzador = req.user;
 
-    Room.findById(jam.local,(err, room) => {
+    Room.find(query,(err, room) => {
         if(err)
             return res.status(500).send({message: `Error al realizar la peticion: ${err}`});
-        if(!room){
-            return res.status(404).send({message: `Ala no encontrada: ${err}`});
+        if(room.length==0){
+            return res.status(404).send({message: `Sala no encontrada: ${err}`});
         }
 
-        jam.localName=room.username;
+        jam.localName=room[0].username;
+        jam.local=room[0]._id;
 
         jam.save((err,jamStored) => {
             if(err)
                 return res.status(500).send({message: `Error al salvar en la base de datos: ${err}`});
 
-            room.jams.push(jam);
+            room[0].jams.push(jam);
 
-            room.save((err)=>{
+            room[0].save((err)=>{
                 if(err)
                     return res.status(500).send({message: `Error al salvar en la base de datos: ${err}`});
 

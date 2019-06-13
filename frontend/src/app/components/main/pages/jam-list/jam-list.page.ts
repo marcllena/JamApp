@@ -16,6 +16,7 @@ import {HttpResponse} from "@angular/common/http";
 export class JamListPage implements OnInit {
 
   jams: Jam[];
+  booleanData: boolean;
   jamsOriginal: Jam[];
   jamsSelected=[];
   searchTerm: string = "";
@@ -43,6 +44,30 @@ export class JamListPage implements OnInit {
           console.log("Resposta del BackEnd"+response.body);
           if(response.status==200){
             this.jams=response.body as Jam[];
+
+            for(let i=0;i<this.jams.length;i++){
+              if(this.jams[i].dataIntencio!=null) {
+                let dataIntencioString;
+                let vector = this.jams[i].dataIntencio.split('T');
+                let vectorDia = vector[0].split('-');
+                let vectorHora = vector[1].split(':');
+                dataIntencioString = vectorHora[0] + ':' + vectorHora[1] + ' ' + vectorDia[2] + '/' + vectorDia[1] + '/' + vectorDia[0];
+                this.jams[i].dataIntencioString = dataIntencioString;
+              }
+            }
+
+            this.booleanData=true;
+
+
+            /*this.jams.forEach(function(jam,i){
+              let dataIntencioString;
+              let vector=jam.dataIntencio.split('T');
+              let vectorDia=vector[0].split('-');
+              let vectorHora=vector[1].split(':');
+              dataIntencioString= vectorHora[0]+':'+vectorHora[1] + ' ' + vectorDia[2] +'/'+ vectorDia[1] +'/'+ vectorDia[0];
+              this.jams[i].dataIntencioString=dataIntencioString;
+            });
+*/
             console.log(this.jams.length+ " jams");
             this.jamsOriginal=this.jams;
           }

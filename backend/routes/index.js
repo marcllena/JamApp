@@ -17,6 +17,7 @@ const apiAdmin= require('./admin');
 const apiMusician = require('./musician');
 const apiGroup = require('./group');
 const apiJam = require('./jam');
+const apiRoom = require('./room');
 
 
 api.use('/user',apiUsers);
@@ -24,6 +25,7 @@ api.use('/admin',apiAdmin);
 api.use('/musician',apiMusician);
 api.use('/group', apiGroup);
 api.use('/jam', apiJam);
+api.use('/room', apiRoom);
 
 
 api.post('/signup', userCtrl.signUp);//registre, rep al body els parametres de nom, password i email i el camp userType 0 si user, 1 si music, 2 si sala, 3 si admin

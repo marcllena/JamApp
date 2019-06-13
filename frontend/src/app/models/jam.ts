@@ -11,9 +11,10 @@ export class Jam {
   localName: string;
   description: string;
   organitzador: string;
+  dataIntencioString: string;
 
 
-  constructor( dataIntencio = '', name = '', dataConfirmda = '', local="", participantsSolistes=[], participantsGrups=[], estils=[], description= '', organitzador='', localName="") {
+  constructor( name = '', local="", dataIntencio = '', dataConfirmda = '', participantsSolistes=[], participantsGrups=[], estils=[], description= '', organitzador='', localName="",dataIntencioString = '') {
     this.name = name;
     this.estils = estils;
     this.description = description;
@@ -23,7 +24,8 @@ export class Jam {
     this.dataConfirmda=dataConfirmda;
     this.local=local;
     this.localName=localName;
-    this.organitzador=organitzador
+    this.organitzador=organitzador;
+    this.dataIntencioString=dataIntencioString;
 
   }
   

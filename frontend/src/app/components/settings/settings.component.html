@@ -73,8 +73,8 @@
             <ion-label class="label-input100">Instrumentos</ion-label>
             <br>
             <ion-select placeholder="Seleccionar instrumentos" multiple="true" (ionChange)="logsito()" value="Guitarra" formControlName="instrument" okText="Aceptar" cancelText="Cancelar">
-            <ion-select-option *ngFor="let item of items1" [value]="item">{{item}}</ion-select-option>
-          </ion-select>
+              <ion-select-option *ngFor="let item of items1" [value]="item">{{item}}</ion-select-option>
+            </ion-select>
           </ion-list>
           <br>
 

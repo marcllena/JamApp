@@ -132,4 +132,11 @@ export class UserServices {
     }
     return this.http.get(this.environment.urlUser + "musician/getGroups/"+userId,{headers: headers,observe: 'response'})
   }
+
+  getRooms(token){
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+    }
+    return this.http.get(this.environment.urlUser + "room/",{headers: headers,observe: 'response'})
+  }
 }

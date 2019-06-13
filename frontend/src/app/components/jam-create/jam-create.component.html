@@ -25,17 +25,29 @@
                 <span class="focus-input100" data-symbol="&#xf206;"></span>
               </div>
 
-              <div class="wrap-input100 validate-input m-b-23">
+            <ion-label class="label-input100">Local</ion-label>
+            <br>
+            <ion-select [interfaceOptions]="selectOptions" placeholder="Selecciona local" multiple="false" value="" formControlName="local" okText="Aceptar" cancelText="Cancelar">
+              <ion-select-option *ngFor="let item of rooms" [value]="item.username">{{item.username}}</ion-select-option>
+            </ion-select>
+
+
+              <!--<div class="wrap-input100 validate-input m-b-23">
                 <span class="label-input100">Local de la Jam Session</span>
                 <input class="input100" type="text" formControlName="local" placeholder="Escribe el nombre del Local">
                 <span class="focus-input100" data-symbol="&#xf206;"></span>
-              </div>
+              </div>-->
 
               <div class="wrap-input100 validate-input m-b-23">
                 <span class="label-input100">Fecha</span>
                 <input class="input100" type="text" formControlName="dataIntencio" placeholder="Escribe la fecha">
                 <span class="focus-input100" data-symbol="&#xf206;"></span>
               </div>
+
+            <ion-item>
+              <ion-label>Fecha</ion-label>
+              <ion-datetime display-format="MMM DD, YYYY HH:mm" formControlName="fecha"></ion-datetime>
+            </ion-item>
 
               <div class="container-login100-form-btn">
                 <div class="wrap-login100-form-btn">

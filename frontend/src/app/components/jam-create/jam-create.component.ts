@@ -4,6 +4,8 @@ import { Router } from "@angular/router";
 import { Jam } from "../../models/jam";
 import { JamService } from "../../services/jam.service";
 import {Platform, ToastController} from "@ionic/angular";
+import {Room} from "../../models/room";
+import {UserServices} from "../../services/user.services";
 
 @Component({
   selector: 'app-jam-create',
@@ -15,21 +17,42 @@ import {Platform, ToastController} from "@ionic/angular";
 export class JamCreateComponent implements OnInit {
 
   createJamForm: FormGroup;
+  rooms: Room[];
+  selectOptions = {
+    header: 'Locals',
+  };
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private jamService: JamService, public toastController: ToastController) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private jamService: JamService, private userService: UserServices, public toastController: ToastController) {
     this.createJamForm = this.formBuilder.group({
       name:'',
-      local:'',
-      dataIntencio:''
+      local:[],
+      dataIntencio:'',
+      fecha:'',
     })
    }
 
-  ngOnInit() {}
+  ngOnInit() {
+    let token =localStorage.getItem('token');
+    this.userService.getRooms(token).subscribe(response=>{
+      if (response.status==200){
+        this.rooms=response.body as Room[];
+      }
+      else {
+        //Error desconegut
+        console.log("Error");
+      }
+      },
+      err => {
+        console.log("Error del BackEnd"+err);
+        //console.log(err);
+      });
+  }
 
   guardar() {
     console.log("Operacio de crear un grup realitzada al backend: ");
-    let jam = new Jam(this.createJamForm.value.name, this.createJamForm.value.local, this.createJamForm.value.dataIntencio);
+    let jam = new Jam(this.createJamForm.value.name, this.createJamForm.value.local, this.createJamForm.value.fecha/*this.createJamForm.value.dataIntenci*/);
     let token =localStorage.getItem('token');
+
     this.jamService.createJam(token,jam)
       .subscribe(async response =>{
         console.log("Resposta del backend" + response);
