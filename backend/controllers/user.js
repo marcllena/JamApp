@@ -273,6 +273,7 @@ function updateUser(req,res){
     console.log(req.body);
 
     let userId;
+    console.log(req.params.userId)
     if (req.params.userId) {
         try {
             userId = cryptr.decrypt(req.params.userId);

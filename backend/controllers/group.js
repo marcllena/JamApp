@@ -256,6 +256,7 @@ else {
 
 function editGroup(req,res){
     let idGrup;
+    console.log(req.body.id)
     try {
         idGrup = cryptr.decrypt(req.body.id);
     }
@@ -269,6 +270,7 @@ if(group==null){
     return res.status(404).send({message: `Grup no trobat`})
 }
 else {
+    
     if(req.body.name!=null){
         group.name=req.body.name
     }

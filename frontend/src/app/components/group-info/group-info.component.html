@@ -18,22 +18,22 @@
           JamApp - Editar Grupo
         </span>
 
-        <form [formGroup]="settingsForm" *ngIf="this.grup">
+        <form [formGroup]="settingsForm" *ngIf="this.group">
           <div class="login100-form validate-form">
             <span class="login100-form-title p-b-49" style="font-size: 20px">
-              {{this.grup.name}}
+              {{this.group.name}}
             </span>
           </div>
 
           <div class="wrap-input100 validate-input m-b-23">
             <span class="label-input100">Email del grupo</span>
-            <input class="input100" type="text" formControlName="email" value={{this.grup.email}}>
+            <input class="input100" type="text" formControlName="email" value={{this.group.email}}>
             <span class="focus-input100" data-symbol="&#xf206;"></span>
           </div>
 
           <div class="wrap-input100 validate-input m-b-23">
             <span class="label-input100">Nombre del grupo</span>
-            <input class="input100" type="text" formControlName="username" value={{this.grup.name}}>
+            <input class="input100" type="text" formControlName="username" value={{this.group.name}}>
             <span class="focus-input100" data-symbol="&#xf206;"></span>
           </div>
 
@@ -44,22 +44,38 @@
           </div>-->
           <div class="wrap-input100 validate-input m-b-23">
             <span class="label-input100">Descripcion</span>
-            <input class="input100" type="string" formControlName="descripcio" value={{this.grup.descripcio}}>
+            <input class="input100" type="string" formControlName="descripcio" value={{this.group.description}}>
             <span class="focus-input100" data-symbol="&#xf206;"></span>
           </div>
 
           <div class="wrap-input100 validate-input m-b-23">
             <span class="label-input100">Video</span>
-            <input class="input100" type="string" formControlName="video" value={{this.grup.video}}>
+            <input class="input100" type="string" formControlName="video" value={{this.group.video}}>
             <span class="focus-input100" data-symbol="&#xf206;"></span>
           </div>
+          <ion-list-header style="padding-left: 20px">
+              <ion-label style="font-weight: bold">Músicos</ion-label>
+            </ion-list-header>
 
+            <!--<ion-list style="padding-left: 5px" *ngFor="let instrument of user.instrument">
+              <ion-item>{{instrument}}</ion-item>
+            </ion-list>-->
+          <br>
+
+          <ion-list>
+            <ion-label class="label-input100">Estilos</ion-label>
+            <br>
+            <ion-select  placeholder="Selecciona estilos" multiple="true" value="regeton" formControlName="estils" okText="Aceptar" cancelText="Cancelar">
+            <ion-select-option *ngFor="let item of items2" [value]="item">{{item}}</ion-select-option>
+            </ion-select>
+          </ion-list>
+          <br>
 
 
           <div class="container-login100-form-btn">
             <div class="wrap-login100-form-btn">
               <div class="login100-form-bgbtn"></div>
-              <ion-button color="primary" (click)="updateUser()" expand="block">Guardar</ion-button>
+              <ion-button color="primary" (click)="updateGroup()" expand="block">Guardar</ion-button>
             </div>
           </div>
           <br>

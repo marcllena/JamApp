@@ -110,6 +110,12 @@ export class UserServices {
     }
     return this.http.put(this.environment.urlUser + "user/",user,{headers: headers, observe: 'response'});
   }
+  updateGroup(token,group){
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+    }
+    return this.http.put(this.environment.urlUser + "group/",group,{headers: headers, observe: 'response'});
+  }
 
   linkWithFacebook(token, facebook){
     const headers = {
