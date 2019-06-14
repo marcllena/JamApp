@@ -17,6 +17,7 @@ io.on('connection',function(socket){
                 if(err){
                     console.log("error al buscar music")
                 }
+                else if(!user){console.log("error al buscar music, music no encontrado")}
                 else{
                     socket.nickname = user.username
                 }

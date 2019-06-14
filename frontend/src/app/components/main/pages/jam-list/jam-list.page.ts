@@ -5,6 +5,7 @@ import {Jam} from "../../../../models/jam";
 import {JamService} from "../../../../services/jam.service";
 import {Router} from "@angular/router";
 import {HttpResponse} from "@angular/common/http";
+import {DataService} from "../../../../services/data.services";
 
 @Component({
   selector: 'app-jam-list',
@@ -21,8 +22,9 @@ export class JamListPage implements OnInit {
   jamsSelected=[];
   searchTerm: string = "";
   private userType: string;
+  myJamsList: Jam[];
   
-  constructor(private jamService: JamService, private router: Router,public toastController: ToastController,
+  constructor(private jamService: JamService, private singleton: DataService, private router: Router,public toastController: ToastController,
               private toolbarService: ToolbarService, public platform: Platform,private alertController: AlertController) { }
   
   
@@ -30,6 +32,7 @@ export class JamListPage implements OnInit {
   ngOnInit() {
     this.userType=localStorage.getItem('userType');
     this.llistaJams();
+    this.myJams();
   }
 
   createJam(){
@@ -70,6 +73,24 @@ export class JamListPage implements OnInit {
 */
             console.log(this.jams.length+ " jams");
             this.jamsOriginal=this.jams;
+          }
+          else {
+            //Error desconegut
+            console.log("Error");
+          }
+        },
+        err => {
+          console.log("Error del BackEnd"+err);
+          //console.log(err);
+        });
+  }
+
+  myJams(){
+    let token =localStorage.getItem('token');
+    this.jamService.getJamsbyOwner(token)
+      .subscribe(response => {
+          if(response.status==200){
+            this.myJamsList=response.body as Jam[];
           }
           else {
             //Error desconegut
@@ -209,5 +230,10 @@ export class JamListPage implements OnInit {
       this.jams=filtered;
     }
 
+  }
+
+  infoJam(JamId){
+    this.singleton.changeClickedJamId(JamId);
+    this.router.navigateByUrl("api/jamInfo");
   }
 }

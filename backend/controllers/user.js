@@ -400,7 +400,7 @@ function getUsersLocation(req,res){
         if(err)
             return res.status(500).send({message: `Error searching musicians: ${err}`});
 
-        Room.find({}, '_id name latitud longitud location', (err,rooms)=>{
+        Room.find({}, '_id jams name latitud longitud location', (err,rooms)=>{
             if(err)
                 return res.status(500).send({message: `Error searching rooms: ${err}`});
 
@@ -430,7 +430,7 @@ function filterDistance(req,res){
                 if (err)
                     return res.status(500).send({message: `Error searching musicians: ${err}`});
                 if (req.body.room==true) {
-                    Room.find({location: {$geoWithin: {$centerSphere: [[longitud, latitud], distancia / 6378.1]}}}, '_id name latitud longitud location', (err, rooms) => {
+                    Room.find({location: {$geoWithin: {$centerSphere: [[longitud, latitud], distancia / 6378.1]}}}, '_id jams name latitud longitud location', (err, rooms) => {
                         if (err)
                             return res.status(500).send({message: `Error searching rooms: ${err}`});
                             res.status(200).send({
@@ -447,7 +447,7 @@ function filterDistance(req,res){
             });
         }
         else{
-            Room.find({location: {$geoWithin: {$centerSphere: [[longitud, latitud], distancia / 6378.1]}}}, '_id name latitud longitud location', (err, rooms) => {
+            Room.find({location: {$geoWithin: {$centerSphere: [[longitud, latitud], distancia / 6378.1]}}}, '_id jams name latitud longitud location', (err, rooms) => {
                 if (err)
                     return res.status(500).send({message: `Error searching rooms: ${err}`});
                 res.status(200).send({
@@ -568,6 +568,7 @@ function connectFacebook(req,res){
 
         })
     }
+
 
 module.exports={
     signUp,

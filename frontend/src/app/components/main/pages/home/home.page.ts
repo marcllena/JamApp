@@ -190,7 +190,7 @@ export class HomePage {
             //Mostrem els musics
             if(this.musicsFilter) {
               var image1 = {
-                url: '../../../assets/markers/music-marker.png',
+                url: '../../../assets/markers/music-marker2.png',
                 scaledSize: new google.maps.Size(50, 50)
               };
               /*for (let i = 0; i < this.userList.musicians.length; i++) {
@@ -224,8 +224,14 @@ export class HomePage {
             }
             //Mostrem les sales
             if(this.salesFilter) {
+
+
               var image2 = {
-                url: '../../../assets/markers/star-marker.png',
+                url: '../../../assets/markers/star-marker1.png',
+                scaledSize: new google.maps.Size(50, 50)
+              };
+              var image3 = {
+                url: '../../../assets/markers/star-marker2.png',
                 scaledSize: new google.maps.Size(50, 50)
               };
               /*for (let i = 0; i < this.userList.rooms.length; i++) {
@@ -239,12 +245,24 @@ export class HomePage {
               }*/
               for (let i = 0; i < this.userList.rooms.length; i++) {
                 if (this.userList.rooms[i].latitud != null && this.userList.rooms[i].longitud != null) {
-                  this.markersListSalas[i] = new google.maps.Marker(
-                    {
-                      position: {lat: this.userList.rooms[i].latitud, lng: this.userList.rooms[i].longitud},
-                      map: this.map,
-                      icon: image2,
-                    });
+                  if(this.userList.rooms[i].jams.length!=0) {
+                    this.markersListSalas[i] = new google.maps.Marker(
+                      {
+                        position: {lat: this.userList.rooms[i].latitud, lng: this.userList.rooms[i].longitud},
+                        map: this.map,
+                        icon: image3,
+                      });
+                    console.log("lila");
+                  }
+                  else{
+                    this.markersListSalas[i] = new google.maps.Marker(
+                      {
+                        position: {lat: this.userList.rooms[i].latitud, lng: this.userList.rooms[i].longitud},
+                        map: this.map,
+                        icon: image2,
+                      });
+                    console.log("azul");
+                  }
                   console.log("Marcador a " + this.userList.rooms[i].latitud)
                 }
               }

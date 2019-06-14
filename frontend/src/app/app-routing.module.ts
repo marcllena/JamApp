@@ -16,6 +16,7 @@ import {GrupLocationComponent} from "./components/grup-location/grup-location.co
 import { JamCreateComponent } from "./components/jam-create/jam-create.component";
 import { SalaInfoComponent } from './components/sala-info/sala-info.component';
 import { GroupInfoComponent } from './components/group-info/group-info.component';
+import {JamInfoComponent} from "./components/jam-info/jam-info.component";
 
 const routes: Routes = [
   { path: 'api/signin', component: LoginComponent },
@@ -35,6 +36,7 @@ const routes: Routes = [
   {path: 'api/jamCreate', component: JamCreateComponent},
   {path: 'api/salaInfo', component: SalaInfoComponent},
   {path: 'api/grup/info', component: GroupInfoComponent},
+  {path: 'api/jamInfo', component: JamInfoComponent},
 
 ];
 

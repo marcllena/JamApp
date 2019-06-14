@@ -23,6 +23,7 @@
           </span>
         </div>
         <ion-item >
+          
           <ion-button class="list-buttons" color="primary" (click)="chatButton(user.username)"style="float: right" >
             <ion-icon *ngIf="!platform.is('desktop')" slot="icon-only" name="chatbubbles"></ion-icon>
             <ion-icon *ngIf="platform.is('desktop')" style="padding-right:7px" slot="icon-only" name="chatbubbles"></ion-icon>

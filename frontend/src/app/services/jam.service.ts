@@ -38,5 +38,12 @@ export class JamService {
     return this.http.post(this.environment.urlUser + "jam/", jam, {headers: headers,observe: 'response'})
   }
 
+  getJamsbyOwner(token){
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+    }
+    return this.http.get(this.environment.urlUser + "jam/byOwner",{headers: headers,observe: 'response'})
+  }
+
 
 }

@@ -20,7 +20,8 @@ export class DataService {
   private originalGroupDescription = new BehaviorSubject("Null");
   private originalGroupEstils = new BehaviorSubject("Null");
   private originalFacebookId = new BehaviorSubject(false);
-  private originalGroupDetails = new BehaviorSubject(new Group('', '','', 0,0,[]))
+  private originalGroupDetails = new BehaviorSubject(new Group('', '','', 0,0,[]));
+  private originalClickedJamId = new BehaviorSubject("0");
 
   newChatDestination = this.originalChatDestination.asObservable();
   newClickedUserId = this.originalClickedUserId.asObservable();
@@ -37,6 +38,7 @@ export class DataService {
   newFacebookId=this.originalFacebookId.asObservable();
   newClickedSalaId = this.originalClickedSalaId.asObservable();
   newGroupDetails = this.originalGroupDetails.asObservable();
+  newClickedJamId = this.originalClickedJamId.asObservable();
   constructor() { }
 
   changeGroupDetails(group){
@@ -50,6 +52,10 @@ export class DataService {
   }
   changeUserId(name: string) {
     this.originalUserId.next(name);
+  }
+
+  changeClickedJamId(id: any) {
+    this.originalClickedJamId.next(id);
   }
 
   changeUsername(name: string) {
