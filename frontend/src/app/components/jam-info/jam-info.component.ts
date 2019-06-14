@@ -36,6 +36,9 @@ export class JamInfoComponent implements OnInit {
 
   ngOnInit() {
     this.singleton.newClickedJamId.subscribe(result => this.jamId = result);
+    if(this.jamId=="0"){
+      this.router.navigateByUrl("/api/menu/home")
+    }
     this.obtainJam();
   }
 
@@ -52,7 +55,6 @@ export class JamInfoComponent implements OnInit {
           console.log("Resposta del BackEnd"+response.body);
           if(response.status==200){
             this.jam=response.body as Jam;
-
             this.getParticipants();
 
           }
@@ -69,20 +71,20 @@ export class JamInfoComponent implements OnInit {
 
   getParticipants(){
     let token =localStorage.getItem('token');
-    this.jamService.getJam(token,this.jamId)
+    this.jamService.getParticipants(token,this.jamId)
       .subscribe(response => {
           console.log("Resposta del BackEnd"+response.body);
           if(response.status==200){
-            this.jam=response.body as Jam;
-
+            var result:any;
+            result=response.body;
+            this.participantsGrups=result.users;
+            this.participantsGrups=result.groups;
             let dataIntencioString;
             let vector = this.jam.dataIntencio.split('T');
             let vectorDia = vector[0].split('-');
             let vectorHora = vector[1].split(':');
             dataIntencioString = vectorHora[0] + ':' + vectorHora[1] + ' ' + vectorDia[2] + '/' + vectorDia[1] + '/' + vectorDia[0];
             this.jam.dataIntencioString = dataIntencioString;
-
-            this.getParticipants();
 
           }
           else {

@@ -53,9 +53,8 @@
             </ion-button>
           </ion-item>
 
-
+          <div *ngIf="participantsSolistes.length>0||participantsGrups.length>0">
           <div *ngIf="((participantsSolistes)&&(participantsSolistes.length!=0))&&((participantsGrups)&&(participantsGrups.length!=0))" class="row">
-
             <div id="instrumentColumn" *ngIf="((participantsSolistes)&&(participantsSolistes.length!=0))" class="column">
               <ion-list-header style="padding-left: 20px">
                 <ion-label style="font-weight: bold">Musics Solistes</ion-label>
@@ -73,38 +72,38 @@
                 <ion-label style="font-weight: bold">Grups</ion-label>
               </ion-list-header>
 
-              <ion-list style="padding-left: 5px" *ngFor="let grup of participantsGrups">
+              <!--<ion-list style="padding-left: 5px" *ngFor="let grup of participantsGrups">
                 <ion-item>{{grup.name}}</ion-item>
-              </ion-list>
+              </ion-list>-->
 
             </div>
-
           </div>
+          <div *ngIf="participantsSolistes.length>0">
+            <div *ngIf="((participantsSolistes)&&(participantsSolistes.length!=0))&&(!(participantsGrups)&&(participantsGrups.length!=0))" >
+              <ion-list-header style="padding-left: 20px">
+                <ion-label style="font-weight: bold">Musics Solistes</ion-label>
+              </ion-list-header>
 
-          <div *ngIf="((participantsSolistes)&&(participantsSolistes.length!=0))&&(!(participantsGrups)&&(participantsGrups.length!=0))" >
-            <ion-list-header style="padding-left: 20px">
-              <ion-label style="font-weight: bold">Musics Solistes</ion-label>
-            </ion-list-header>
+              <!--<ion-list style="padding-left: 5px" *ngFor="let part of participantsSolistes">
+                <ion-item>{{part.username}}</ion-item>
+              </ion-list>-->
+            </div>
 
-            <ion-list style="padding-left: 5px" *ngFor="let part of participantsSolistes">
-              <ion-item>{{part.username}}</ion-item>
-            </ion-list>
+
+            <div *ngIf="(!(participantsSolistes)&&(participantsSolistes.length!=0))&&((participantsGrups)&&(participantsGrups.length!=0))" >
+              <ion-list-header style="padding-left: 20px">
+                <ion-label style="font-weight: bold">Grups</ion-label>
+              </ion-list-header>
+
+              <!--<ion-list style="padding-left: 5px" *ngFor="let grup of participantsGrups">
+                <ion-item>{{grup.name}}</ion-item>
+              </ion-list>-->
+            </div>
           </div>
-
-
-          <div *ngIf="(!(participantsSolistes)&&(participantsSolistes.length!=0))&&((participantsGrups)&&(participantsGrups.length!=0))" >
-            <ion-list-header style="padding-left: 20px">
-              <ion-label style="font-weight: bold">Grups</ion-label>
-            </ion-list-header>
-
-            <ion-list style="padding-left: 5px" *ngFor="let grup of participantsGrups">
-              <ion-item>{{grup.name}}</ion-item>
-            </ion-list>
-          </div>
-
         </div>
       </div>
     </div>
+  </div>
   </div>
 
   <div id="dropDownSelect1"></div>

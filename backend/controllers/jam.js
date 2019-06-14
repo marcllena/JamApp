@@ -33,7 +33,7 @@ function getJam (req,res){
         if(!jam)
         return res.status(404).send({message: `El jamo no existe`});
   
-        res.status(200).send({jam: jam})
+        res.status(200).send(jam)
     })
 }
 

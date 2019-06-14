@@ -29,6 +29,7 @@
     <div class="container-login100">
 
       <div class="wrap-login100 p-l-20 p-r-20 p-t-20 p-b-20">
+        <div *ngIf="jams">
         <br>
         <ion-searchbar
           [(ngModel)]="searchTerm"
@@ -109,7 +110,7 @@
           </div>
         </div>
         <br><br>
-
+        <div *ngIf="myJamsList">
         <span *ngIf="myJamsList.length!=0" class="login100-form-title">
           Mis jams
         </span>
@@ -148,16 +149,12 @@
 
             <ion-col col-6>
 
-              <ion-button class="list-buttons" color="primary" (click)="editarJam(jam._id)" >
-                <ion-icon *ngIf="!platform.is('desktop')" slot="icon-only" name="create"></ion-icon>
-                <ion-icon *ngIf="platform.is('desktop')" style="padding-right:7px" slot="icon-only" name="create"></ion-icon>
-                <ion-label *ngIf="platform.is('desktop')">Editar</ion-label>
+              <ion-button style="padding-right:20px" class="list-buttons" color="primary" (click)="editarJam(jam._id)" >
+                <ion-icon slot="icon-only" name="create"></ion-icon>
               </ion-button>
 
-              <ion-button class="list-buttons" color="primary" (click)="eliminarJam(jam._id)">
-                <ion-icon *ngIf="!platform.is('desktop')" slot="icon-only" name="trash"></ion-icon>
-                <ion-icon *ngIf="platform.is('desktop')" style="padding-right:7px" slot="icon-only" name="trash"></ion-icon>
-                <ion-label *ngIf="platform.is('desktop')">Eliminar</ion-label>
+              <ion-button style="padding-right:20px" class="list-buttons" color="primary" (click)="eliminarJam(jam._id)">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
               </ion-button>
 
               <ion-button class="list-buttons" color="primary" (click)="infoJam(jam._id)" >
@@ -167,10 +164,8 @@
 
           </ion-item>
         </ion-list>
-
-
-
-
+        </div>
+        </div>
       </div>
     </div>
   </div>

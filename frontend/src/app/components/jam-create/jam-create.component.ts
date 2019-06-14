@@ -58,7 +58,7 @@ export class JamCreateComponent implements OnInit {
         console.log("Resposta del backend" + response);
         if(response.status == 200){
           const toast = await this.toastController.create({
-            message: "Grupo Correctamente Creado",
+            message: "Jam Correctamente Creada",
             duration: 3000,
             position: 'bottom',
           });
