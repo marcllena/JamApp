@@ -148,7 +148,7 @@
 
             <ion-col col-6>
 
-              <ion-button class="list-buttons" color="primary" (click)="editarJam(jam._id)" >
+              <ion-button class="list-buttons" color="primary" (click)="editarJam(jam)" >
                 <ion-icon *ngIf="!platform.is('desktop')" slot="icon-only" name="create"></ion-icon>
                 <ion-icon *ngIf="platform.is('desktop')" style="padding-right:7px" slot="icon-only" name="create"></ion-icon>
                 <ion-label *ngIf="platform.is('desktop')">Editar</ion-label>

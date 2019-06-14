@@ -54,6 +54,7 @@ export class ToolbarService {
   }
 
   getUserName(): string {
+    console.log(this.userName)
     return this.userName;
   }
 }
