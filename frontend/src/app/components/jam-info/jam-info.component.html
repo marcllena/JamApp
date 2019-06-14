@@ -21,7 +21,33 @@
               <br>
               <span class="login100-form-title">{{jam.name}}</span>
             </div>
+
             <br>
+            <ion-button style="margin: 5px" color="primary" size="small" (click)="unirseButton(jam._id)" strong="true">
+              Unirse
+              <ion-icon slot="icon-only" name="add-circle"></ion-icon>
+            </ion-button>
+
+            <br>
+            <br>
+            <ion-label *ngIf="(jam.dataIntencioString!=null)">Fecha: {{jam.dataIntencioString}}</ion-label>
+            <ion-label *ngIf="(jam.dataIntencioString==null)">Fecha: Sin especificar</ion-label>
+
+            <br>
+            <br>
+            <ion-label *ngIf="(jam.description!=null)">Descripcion: {{jam.description}}</ion-label>
+            <ion-label *ngIf="(jam.description==null)">Descripcion: Sin especificar</ion-label>
+
+            <br>
+            <br>
+            <ion-label>Nombre de la sala: {{jam.localName}}</ion-label>
+
+            <br>
+            <br>
+            <ion-button style="margin: 5px" color="primary" size="small" (click)="localButton()" strong="true">
+              Informacion del local
+            </ion-button>
+
           </div>
         </div>
       </div>

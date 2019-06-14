@@ -8,6 +8,7 @@ import {JamService} from "../../services/jam.service";
 import {Jam} from "../../models/jam";
 import {User} from "../../models/user";
 import {Group} from "../../models/group";
+import {HttpResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-jam-info',
@@ -24,6 +25,7 @@ export class JamInfoComponent implements OnInit {
   participantsSolistes: User[];
   participantsGrups: Group[];
   boolJam=false;
+  userId: string;
 
   constructor(
     private singleton: DataService,
@@ -33,7 +35,9 @@ export class JamInfoComponent implements OnInit {
     public platform: Platform,
     private jamService: JamService,
     private alertController: AlertController
-  ) { }
+  ) { 
+    this.userId=localStorage.getItem('id');
+  }
 
   ngOnInit() {
     this.singleton.newClickedJamId.subscribe(result => this.jamId = result);
@@ -43,8 +47,43 @@ export class JamInfoComponent implements OnInit {
     this.obtainJam();
   }
 
-  unirseButton(){
-
+  unirseButton(jamId){
+    let token =localStorage.getItem('token');
+    console.log("El id del usuari es: "+this.userId);
+    console.log("El id de la jam es: "+ jamId);
+    this.jamService.addUser(token,jamId,this.userId)
+    .subscribe(
+      async response => {
+        var result = response as HttpResponse<JSON>;
+        if(result.status == 200){
+          const toast = await this.toastController.create({
+            message: "Usuarios Añadido a la jam Correctamente",
+            duration: 2000,
+            position: 'bottom',
+          });
+          toast.present();
+        }
+      },
+      async err => {
+        var result = err as HttpResponse<JSON>;
+        if (result.status == 400) {
+          const toast = await this.toastController.create({
+            message: "El usuario o la jam no existen",
+            duration: 2000,
+            position: 'bottom',
+          });
+          toast.present();
+        }
+        else if(result.status == 500){
+          const toast = await this.toastController.create({
+            message: "Error de busqueda, id o actualizacion",
+            duration: 2000,
+            position: 'bottom',
+          });
+          toast.present();
+        }
+      }
+    )
   }
 
   localButton(){
