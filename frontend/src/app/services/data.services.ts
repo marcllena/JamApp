@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import {Group} from '../models/group'
+import { Jam } from '../models/jam';
 @Injectable()
 export class DataService {
 
@@ -22,6 +23,7 @@ export class DataService {
   private originalFacebookId = new BehaviorSubject(false);
   private originalGroupDetails = new BehaviorSubject(new Group('', '','', 0,0,[]));
   private originalClickedJamId = new BehaviorSubject("0");
+  private originalJamDetails = new BehaviorSubject(new Jam());
 
   newChatDestination = this.originalChatDestination.asObservable();
   newClickedUserId = this.originalClickedUserId.asObservable();
@@ -39,10 +41,15 @@ export class DataService {
   newClickedSalaId = this.originalClickedSalaId.asObservable();
   newGroupDetails = this.originalGroupDetails.asObservable();
   newClickedJamId = this.originalClickedJamId.asObservable();
+  newJamDetails = this.originalJamDetails.asObservable();
+
   constructor() { }
 
   changeGroupDetails(group){
     this.originalGroupDetails.next(group)
+  }
+  changeJamDetails(jam){
+    this.originalJamDetails.next(jam)
   }
   changeClickedSalaId(name: string){
     this.originalClickedSalaId.next(name)

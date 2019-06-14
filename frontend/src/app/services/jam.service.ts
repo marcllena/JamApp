@@ -51,6 +51,12 @@ export class JamService {
     }
     return this.http.get(this.environment.urlUser + "jam/"+jamId,{headers: headers,observe: 'response'})
   }
+  editJam(token,jam){
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+    }
+    return this.http.put(this.environment.urlUser + "jam/",jam,{headers: headers,observe: 'response'})
+  }
 
   getParticipants(token,jamId){
     const headers = {

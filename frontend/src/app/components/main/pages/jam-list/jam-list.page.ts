@@ -103,7 +103,10 @@ export class JamListPage implements OnInit {
         });
   }
 
-  editarJam(jamId){}
+  editarJam(jam){
+    this.singleton.changeJamDetails(jam);
+    this.router.navigateByUrl('api/jam/edit')
+  }
 
   async eliminarJam(jamId) {
     const alert = await this.alertController.create({

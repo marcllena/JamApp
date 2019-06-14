@@ -121,20 +121,29 @@ function saveJam(req,res){
 
 function updateJam (req,res){
     console.log('PUT /api/jam/:jamId');
-
+    console.log(req.body)
     let jamId;
 
     try {
-        jamId = cryptr.decrypt(req.params.jamId);
+        jamId = cryptr.decrypt(req.body._id);
+    }
+    catch(error) {
+        return res.status(500).send({message: `Error on the ID`});
+    }
+    try {
+        jamId = cryptr.decrypt(req.body._id);
     }
     catch(error) {
         return res.status(500).send({message: `Error on the ID`});
     }
     let update = req.body;
-
-    User.findbyId(req.user,(err,user)=> {
-        if (err) return res.status(500).send({message: `Error al borrar la jam: ${err}`});
-        if (!user) return res.status(404).send({message: 'Error al encontrat jam'});
+    update._id = jamId;
+    let savedJam = {
+        _id: update._id,
+        name: update.name,
+        dataIntencio: update.dataIntencio,
+        local: update.local
+    }
 
 
         Jam.findById(jamId, (err, jam) => {
@@ -144,11 +153,15 @@ function updateJam (req,res){
             if (!jam)
                 return res.status(404).send({message: `Esta jam no existe`});
 
-            if ((user.userType != 'Admin') && (jam.organitzador != user._id)) {
+            /*if ((user.userType != 'Admin') && (jam.organitzador != user._id)) {
                 return res.status(403).send({message: 'Forbidden'})
-            }
-
-            Jam.findByIdAndUpdate(jamId, update, (err, jamUpdated) => {
+            }*/
+            Room.findOne({name: update.local._id}, (err, room)=>{
+                if (err)
+                return res.status(500).send({message: `Error al actualizar la jam: ${err}`});
+                console.log(room)
+                savedJam.local = room._id;
+                jam.update(savedJam, (err, jamUpdated) => {
                 if (err)
                     return res.status(500).send({message: `Error al actualizar el jamo: ${err}`});
 
@@ -157,8 +170,9 @@ function updateJam (req,res){
 
                 res.status(200).send({jam: jamUpdated})
             })
+            })
+            
         })
-    })
 }
 
 function deleteJam (req,res){

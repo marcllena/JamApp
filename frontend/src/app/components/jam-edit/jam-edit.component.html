@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Editar grupo
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="api/menu/home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<div class="limiter">
+  <div class="container-login100">
+    <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+      <form class="login100-form validate-form">
+        <span class="login100-form-title p-b-49">
+          JamApp - Editar Jam
+        </span>
+
+        <form [formGroup]="settingsForm" *ngIf="this.jam">
+          <div class="login100-form validate-form">
+            <span class="login100-form-title p-b-49" style="font-size: 20px">
+              {{this.jam.name}}
+            </span>
+          </div>
+
+          <div class="wrap-input100 validate-input m-b-23">
+            <span class="label-input100">Nombre de la Jam</span>
+            <input class="input100" type="text" formControlName="name" value={{this.jam.name}}>
+            <span class="focus-input100" data-symbol="&#xf206;"></span>
+          </div>
+
+          <!--<div class="wrap-input100 validate-input m-b-23">
+            <span class="label-input100">Contrasenya</span>
+            <input class="input100" type="text" formControlName="password" placeholder={{this.user.password}}>
+            <span class="focus-input100" data-symbol="&#xf206;"></span>
+          </div>-->
+          <ion-label class="label-input100">Local</ion-label>
+          <br>
+          <ion-select [interfaceOptions]="selectOptions" placeholder="Selecciona local" multiple="false" value="" formControlName="local" okText="Aceptar" cancelText="Cancelar">
+            <ion-select-option *ngFor="let item of rooms" [value]="item.username">{{item.username}}</ion-select-option>
+          </ion-select>
+            <!--<ion-list style="padding-left: 5px" *ngFor="let instrument of user.instrument">
+              <ion-item>{{instrument}}</ion-item>
+            </ion-list>-->
+          <br>
+
+          <ion-item>
+            <ion-label>Fecha</ion-label>
+            <ion-datetime display-format="MMM DD, YYYY HH:mm" formControlName="fecha"></ion-datetime>
+          </ion-item>
+
+
+          <div class="container-login100-form-btn">
+            <div class="wrap-login100-form-btn">
+              <div class="login100-form-bgbtn"></div>
+              <ion-button color="primary" (click)="updateJam()" expand="block">Guardar</ion-button>
+            </div>
+          </div>
+          <br>
+
+
+        </form>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="dropDownSelect1"></div>
+
+<!--===============================================================================================-->
+<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/bootstrap/js/popper.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/daterangepicker/moment.min.js"></script>
+<script src="vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!--===============================================================================================-->
+<script src="../../../../../backend/public/fotosCloud.js"></script>
+<!--===============================================================================================-->
+</ion-content>
