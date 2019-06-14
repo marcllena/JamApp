@@ -7,6 +7,7 @@ import {UserServices} from "../../services/user.services";
 import {JamService} from "../../services/jam.service";
 import {Jam} from "../../models/jam";
 import {User} from "../../models/user";
+import {Group} from "../../models/group";
 
 @Component({
   selector: 'app-jam-info',
@@ -21,6 +22,7 @@ export class JamInfoComponent implements OnInit {
   jamId: string;
   jam: Jam;
   participantsSolistes: User[];
+  participantsGrups: Group[];
 
   constructor(
     private singleton: DataService,
@@ -35,6 +37,12 @@ export class JamInfoComponent implements OnInit {
   ngOnInit() {
     this.singleton.newClickedJamId.subscribe(result => this.jamId = result);
     this.obtainJam();
+  }
+
+
+  localButton(){
+    this.singleton.changeClickedSalaId(this.jam.local);
+    this.router.navigateByUrl("/api/salaInfo");
   }
 
   obtainJam(){
@@ -60,7 +68,32 @@ export class JamInfoComponent implements OnInit {
   }
 
   getParticipants(){
+    let token =localStorage.getItem('token');
+    this.jamService.getJam(token,this.jamId)
+      .subscribe(response => {
+          console.log("Resposta del BackEnd"+response.body);
+          if(response.status==200){
+            this.jam=response.body as Jam;
 
+            let dataIntencioString;
+            let vector = this.jam.dataIntencio.split('T');
+            let vectorDia = vector[0].split('-');
+            let vectorHora = vector[1].split(':');
+            dataIntencioString = vectorHora[0] + ':' + vectorHora[1] + ' ' + vectorDia[2] + '/' + vectorDia[1] + '/' + vectorDia[0];
+            this.jam.dataIntencioString = dataIntencioString;
+
+            this.getParticipants();
+
+          }
+          else {
+            //Error desconegut
+            console.log("Error");
+          }
+        },
+        err => {
+          console.log("Error del BackEnd"+err);
+          //console.log(err);
+        });
   }
 
 
