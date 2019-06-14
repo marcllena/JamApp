@@ -282,16 +282,18 @@ function addMember (req,res){
     let memberId;
     let jamId;
     try {
+        console.log("id del usuari: "+ req.params.idMember);
         memberId = cryptr.decrypt(req.params.idMember);
     }
     catch(error) {
-        return res.status(500).send({message: `Error on the ID`});
+        return res.status(500).send({message: `Error on the member ID: `+ memberId});
     }
     try {
+        console.log("id de la jam: "+req.params.idJam);
         jamId = cryptr.decrypt(req.params.idJam);
     }
     catch(error) {
-        return res.status(500).send({message: `Error on the ID`});
+        return res.status(500).send({message: `Error on the jam ID`});
     }
 
     User.findById(memberId, (err, user) => {

@@ -6,6 +6,7 @@ import {JamService} from "../../../../services/jam.service";
 import {Router} from "@angular/router";
 import {HttpResponse} from "@angular/common/http";
 import {DataService} from "../../../../services/data.services";
+import {User} from "../../../../models/user";
 
 @Component({
   selector: 'app-jam-list',
@@ -23,9 +24,12 @@ export class JamListPage implements OnInit {
   searchTerm: string = "";
   private userType: string;
   myJamsList: Jam[];
+  userId: String;
   
   constructor(private jamService: JamService, private singleton: DataService, private router: Router,public toastController: ToastController,
-              private toolbarService: ToolbarService, public platform: Platform,private alertController: AlertController) { }
+              private toolbarService: ToolbarService, public platform: Platform,private alertController: AlertController) {
+                this.userId=localStorage.getItem('id');
+               }
   
   
 
@@ -33,6 +37,7 @@ export class JamListPage implements OnInit {
     this.userType=localStorage.getItem('userType');
     this.llistaJams();
     this.myJams();
+    console.log("The user id is: "+this.userId);
   }
 
   createJam(){
@@ -238,5 +243,44 @@ export class JamListPage implements OnInit {
   infoJam(JamId){
     this.singleton.changeClickedJamId(JamId);
     this.router.navigateByUrl("api/jamInfo");
+  }
+
+  addUser(jamId){
+    let token =localStorage.getItem('token');
+    console.log("El id del usuari es: "+this.userId);
+    console.log("El id de la jam es: "+ jamId);
+    this.jamService.addUser(token,jamId,this.userId)
+    .subscribe(
+      async response => {
+        var result = response as HttpResponse<JSON>;
+        if(result.status == 200){
+          const toast = await this.toastController.create({
+            message: "Usuarios Añadido a la jam Correctamente",
+            duration: 2000,
+            position: 'bottom',
+          });
+          toast.present();
+        }
+      },
+      async err => {
+        var result = err as HttpResponse<JSON>;
+        if (result.status == 400) {
+          const toast = await this.toastController.create({
+            message: "El usuario o la jam no existen",
+            duration: 2000,
+            position: 'bottom',
+          });
+          toast.present();
+        }
+        else if(result.status == 500){
+          const toast = await this.toastController.create({
+            message: "Error de busqueda, id o actualizacion",
+            duration: 2000,
+            position: 'bottom',
+          });
+          toast.present();
+        }
+      }
+    )
   }
 }
