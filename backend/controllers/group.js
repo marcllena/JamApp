@@ -2,13 +2,14 @@
 /*
 On estan implementades totes les operacions dels musics.
 */
-
+const config = require('../config');
 const mongoose = require('mongoose')
 const Musician = require('../models/musician')
 const User = require('../models/user')
 const service = require('../services')
 const Group = require('../models/group')
-
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr(config.SECRET_TOKEN);
 
 
 function createGroup(req, res) {
@@ -108,7 +109,7 @@ function createGroup(req, res) {
 
 function answerRequest(req, res) {
     let idGrup;
-
+    console.log(req.body)
     try {
         idGrup = cryptr.decrypt(req.body.idGrup);
     }
@@ -123,15 +124,11 @@ function answerRequest(req, res) {
     else {
         //Buscar la request del usuari
         var trobat=-1;
-        let userId;
-        try {
-            userId = cryptr.decrypt(req.body.id);
-        }
-        catch(error) {
-            return res.status(500).send({message: `Error on the ID`});
-        }
+        let userId = req.body.id;
+
 
         for(var i=0; i<group.solicituds.length;i++){
+            console.log(group.solicituds[i].id.toString(), userId)
             if(group.solicituds[i].id.toString() == userId){
                 trobat = i;
                 break
