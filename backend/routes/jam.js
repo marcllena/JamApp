@@ -16,13 +16,15 @@ apiJam.get('/:idJam/:idMemeber', auth, jamCtrl.addMember);//add a member to a ja
 
 apiJam.get('/byOwner', auth, jamCtrl.getJamsfromOwner);//get an specific jam
 
+apiJam.get('/participants/:idJam',auth,jamCtrl.getParticipants);
+
 
 
 apiJam.get('/:idJam', auth, jamCtrl.getJam);//get an specific jam
 
 
 
-apiJam.delete('/', isAdmin, jamCtrl.deleteJam); //delete a jam
+apiJam.delete('/', auth, jamCtrl.deleteJam); //delete a jam
 apiJam.put('/', auth, jamCtrl.updateJam); //edit a jam
 apiJam.post('/', auth, jamCtrl.saveJam);  //create a new jam with name, estils, description
 apiJam.get('/', auth, jamCtrl.getJams); //search a all jams

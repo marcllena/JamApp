@@ -131,16 +131,34 @@ function updateJam (req,res){
         return res.status(500).send({message: `Error on the ID`});
     }
     let update = req.body;
-  
-    Jam.findByIdAndUpdate(jamId,update,(err, jamUpdated) => {
-        if(err) 
-        return res.status(500).send({message: `Error al actualizar el jamo: ${err}`});
-  
-        if(!jamUpdated)
-        return res.status(404).send({message: `El jamo no existe`});
-  
-        res.status(200).send({jam: jamUpdated})
+
+    User.findbyId(req.user,(err,user)=> {
+        if (err) return res.status(500).send({message: `Error al borrar la jam: ${err}`});
+        if (!user) return res.status(404).send({message: 'Error al encontrat jam'});
+
+
+        Jam.findById(jamId, (err, jam) => {
+            if (err)
+                return res.status(500).send({message: `Error al actualizar la jam: ${err}`});
+
+            if (!jam)
+                return res.status(404).send({message: `Esta jam no existe`});
+
+            if ((user.userType != 'Admin') && (jam.organitzador != user._id)) {
+                return res.status(403).send({message: 'Forbidden'})
+            }
+
+            Jam.findByIdAndUpdate(jamId, update, (err, jamUpdated) => {
+                if (err)
+                    return res.status(500).send({message: `Error al actualizar el jamo: ${err}`});
+
+                if (!jamUpdated)
+                    return res.status(404).send({message: `El jamo no existe`});
+
+                res.status(200).send({jam: jamUpdated})
+            })
         })
+    })
 }
 
 function deleteJam (req,res){
@@ -153,23 +171,35 @@ function deleteJam (req,res){
     catch(error) {
         return res.status(500).send({message: `Error on the ID`});
     }
-  
-    Jam.findById(jamId,(err, jam) => {
-        if(err) 
-        return res.status(500).send({message: `Error al borrar el jamo: ${err}`});
-  
-        if(!jam)
-        return res.status(404).send({message: `El jamo no existe`});
-        
-        if (req.user==jam.organitzador)
-  
-        jam.remove(err =>{ 
+
+    User.findbyId(req.user,(err,user)=>{
+        if (err) return res.status(500).send({message: `Error al borrar la jam: ${err}`});
+        if (!user) return res.status(404).send({message: 'Error al encontrat jam'});
+
+
+        Jam.findById(jamId,(err, jam) => {
             if(err)
-            return res.status(500).send({message: `Error removing jam: ${err}`});
-  
-            res.status(200).send({message: "Jam removed correctly"})
+                return res.status(500).send({message: `Error al borrar la jam: ${err}`});
+
+            if(!jam)
+                return res.status(404).send({message: `Esta jam no existe`});
+
+            if((user.userType!='Admin')&&(jam.organitzador!=user._id)){
+                return res.status(403).send({message: 'Forbidden'})
+            }
+
+            if (req.user==jam.organitzador)
+
+                jam.remove(err =>{
+                    if(err)
+                        return res.status(500).send({message: `Error removing jam: ${err}`});
+
+                    res.status(200).send({message: "Jam removed correctly"})
+                })
         })
-    })
+
+    });
+
 }
 
 
@@ -318,6 +348,36 @@ function getJamsfromOwner (req,res){
 
 }
 
+function getParticipants(req,res){
+    console.log('GET /api/jam/participants/:idJam');
+
+    let jamId;
+    try {
+        jamId = cryptr.decrypt(req.params.idJam);
+    }
+    catch(error) {
+        return res.status(500).send({message: `Error on the ID`});
+    }
+    Jam.findById(jamId,(err, jam) => {
+        if(err)
+            return res.status(500).send({message: `Error al realizar la peticion: ${err}`});
+
+        if(!jam)
+            return res.status(404).send({message: `El jamo no existe`});
+
+        Group.find({'_id': {$in: jam.participantsGrups}},(err,grups)=>{
+            if (err) return res.status(500).send({message: 'Internal error'});
+
+            User.find({'_id': {$in: jam.participantsSolistes}},(err,usuaris)=>{
+                if (err) return res.status(500).send({message: 'Internal error'});
+
+                res.status(200).send({users: usuaris, groups: grups});
+            })
+
+        });
+    })
+}
+
 module.exports = {
     getJam,
     getJams,
@@ -326,6 +386,7 @@ module.exports = {
     deleteJam,
     removeMember,
     addMember,
-    getJamsfromOwner
+    getJamsfromOwner,
+    getParticipants
     
 };
