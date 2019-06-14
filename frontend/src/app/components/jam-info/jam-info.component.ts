@@ -23,6 +23,7 @@ export class JamInfoComponent implements OnInit {
   jam: Jam;
   participantsSolistes: User[];
   participantsGrups: Group[];
+  boolJam=false;
 
   constructor(
     private singleton: DataService,
@@ -42,6 +43,9 @@ export class JamInfoComponent implements OnInit {
     this.obtainJam();
   }
 
+  unirseButton(){
+
+  }
 
   localButton(){
     this.singleton.changeClickedSalaId(this.jam.local);
@@ -52,9 +56,23 @@ export class JamInfoComponent implements OnInit {
     let token =localStorage.getItem('token');
     this.jamService.getJam(token,this.jamId)
       .subscribe(response => {
-          console.log("Resposta del BackEnd"+response.body);
+          console.log("Resposta del BackEnd 1: "+response.body);
           if(response.status==200){
             this.jam=response.body as Jam;
+
+
+            let dataIntencioString;
+            let vector = this.jam.dataIntencio.split('T');
+            let vectorDia = vector[0].split('-');
+            let vectorHora = vector[1].split(':');
+            dataIntencioString = vectorHora[0] + ':' + vectorHora[1] + ' ' + vectorDia[2] + '/' + vectorDia[1] + '/' + vectorDia[0];
+            this.jam.dataIntencioString = dataIntencioString;
+            console.log(this.jam.name);
+            console.log(this.jam.description);
+            console.log(this.jam.dataIntencioString);
+            console.log(this.jam.localName);
+            this.boolJam=true;
+
             this.getParticipants();
 
           }
@@ -79,12 +97,7 @@ export class JamInfoComponent implements OnInit {
             result=response.body;
             this.participantsGrups=result.users;
             this.participantsGrups=result.groups;
-            let dataIntencioString;
-            let vector = this.jam.dataIntencio.split('T');
-            let vectorDia = vector[0].split('-');
-            let vectorHora = vector[1].split(':');
-            dataIntencioString = vectorHora[0] + ':' + vectorHora[1] + ' ' + vectorDia[2] + '/' + vectorDia[1] + '/' + vectorDia[0];
-            this.jam.dataIntencioString = dataIntencioString;
+
 
           }
           else {

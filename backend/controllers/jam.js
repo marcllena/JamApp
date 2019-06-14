@@ -363,6 +363,7 @@ function getJamsfromOwner (req,res){
 }
 
 function getParticipants(req,res){
+
     console.log('GET /api/jam/participants/:idJam');
 
     let jamId;
@@ -370,6 +371,7 @@ function getParticipants(req,res){
         jamId = cryptr.decrypt(req.params.idJam);
     }
     catch(error) {
+        console.log(error);
         return res.status(500).send({message: `Error on the ID`});
     }
     Jam.findById(jamId,(err, jam) => {

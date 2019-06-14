@@ -17,92 +17,14 @@
       <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
         <div  *ngIf="jam">
           <div *ngIf="platform.is('desktop')" >
+            <div *ngIf="platform.is('desktop')" >
+              <br>
+              <span class="login100-form-title">{{jam.name}}</span>
+            </div>
             <br>
-            <span class="login100-form-title">
-          {{jam.name}}
-          </span>
-          </div>
-          <br>
-          <ion-item>
-
-            <ion-button class="list-buttons" color="primary" (click)="unirseButton(jam.name)" >
-              <ion-icon *ngIf="!platform.is('desktop')" slot="icon-only" name="add-circle"></ion-icon>
-              <ion-icon *ngIf="platform.is('desktop')" style="padding-right:7px" slot="icon-only" name="add-circle"></ion-icon>
-              <ion-label *ngIf="platform.is('desktop')">Afegir-me</ion-label>
-            </ion-button>
-
-          </ion-item>
-
-          <ion-item *ngIf="jam.dataIntencioString">
-            <ion-label *ngIf="jam.dataIntencioString" style="font-weight: bold">Data: </ion-label>
-            <ion-label *ngIf="jam.dataIntencioString">{{jam.dataIntencioString}}</ion-label>
-          </ion-item>
-
-          <ion-item *ngIf="jam.description">
-            <ion-label style="font-weight: bold">Descripció: </ion-label>
-            <ion-label>{{jam.description}}</ion-label>
-          </ion-item>
-
-          <ion-item *ngIf="jam.localName">
-            <ion-label  style="font-weight: bold">Local: </ion-label>
-            <ion-label>{{jam.localName}}</ion-label>
-            <ion-button *ngIf="jam.localName" class="list-buttons" color="primary" (click)="localButton()" >
-              <ion-icon *ngIf="!platform.is('desktop')" slot="icon-only" name="information-circle"></ion-icon>
-              <ion-icon *ngIf="platform.is('desktop')" style="padding-right:7px" slot="icon-only" name="information-circle"></ion-icon>
-              <ion-label *ngIf="platform.is('desktop')">Informació de la sala</ion-label>
-            </ion-button>
-          </ion-item>
-
-          <div *ngIf="participantsSolistes.length>0||participantsGrups.length>0">
-          <div *ngIf="((participantsSolistes)&&(participantsSolistes.length!=0))&&((participantsGrups)&&(participantsGrups.length!=0))" class="row">
-            <div id="instrumentColumn" *ngIf="((participantsSolistes)&&(participantsSolistes.length!=0))" class="column">
-              <ion-list-header style="padding-left: 20px">
-                <ion-label style="font-weight: bold">Musics Solistes</ion-label>
-              </ion-list-header>
-
-              <ion-list style="padding-left: 5px" *ngFor="let part of participantsSolistes">
-                <ion-item>{{part.username}}</ion-item>
-              </ion-list>
-
-            </div>
-
-            <div *ngIf="((participantsGrups)&&(participantsGrups.length!=0))" id="genreColumn" class="column">
-
-              <ion-list-header style="padding-left: 20px">
-                <ion-label style="font-weight: bold">Grups</ion-label>
-              </ion-list-header>
-
-              <!--<ion-list style="padding-left: 5px" *ngFor="let grup of participantsGrups">
-                <ion-item>{{grup.name}}</ion-item>
-              </ion-list>-->
-
-            </div>
-          </div>
-          <div *ngIf="participantsSolistes.length>0">
-            <div *ngIf="((participantsSolistes)&&(participantsSolistes.length!=0))&&(!(participantsGrups)&&(participantsGrups.length!=0))" >
-              <ion-list-header style="padding-left: 20px">
-                <ion-label style="font-weight: bold">Musics Solistes</ion-label>
-              </ion-list-header>
-
-              <!--<ion-list style="padding-left: 5px" *ngFor="let part of participantsSolistes">
-                <ion-item>{{part.username}}</ion-item>
-              </ion-list>-->
-            </div>
-
-
-            <div *ngIf="(!(participantsSolistes)&&(participantsSolistes.length!=0))&&((participantsGrups)&&(participantsGrups.length!=0))" >
-              <ion-list-header style="padding-left: 20px">
-                <ion-label style="font-weight: bold">Grups</ion-label>
-              </ion-list-header>
-
-              <!--<ion-list style="padding-left: 5px" *ngFor="let grup of participantsGrups">
-                <ion-item>{{grup.name}}</ion-item>
-              </ion-list>-->
-            </div>
           </div>
         </div>
       </div>
-    </div>
   </div>
   </div>
 

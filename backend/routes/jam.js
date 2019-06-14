@@ -8,7 +8,7 @@ const isAdmin = require('../middlewares/admin');
 //apiJam.post('/answerRequest', auth,  jamCtrl.answerRequest);//a jam respond a request
 
 
-
+apiJam.get('/participants/:idJam',jamCtrl.getParticipants);
 
 apiJam.delete('/:idJam/:idMember', auth, jamCtrl.removeMember); //delete a member from a jam
 apiJam.get('/:idJam/:idMemeber', auth, jamCtrl.addMember);//add a member to a jam
@@ -16,7 +16,7 @@ apiJam.get('/:idJam/:idMemeber', auth, jamCtrl.addMember);//add a member to a ja
 
 apiJam.get('/byOwner', auth, jamCtrl.getJamsfromOwner);//get an specific jam
 
-apiJam.get('/participants/:idJam',auth,jamCtrl.getParticipants);
+
 
 
 
