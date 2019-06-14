@@ -387,7 +387,6 @@ function getParticipants(req,res){
 
                 res.status(200).send({users: usuaris, groups: grups});
             })
-
         });
     })
 }
