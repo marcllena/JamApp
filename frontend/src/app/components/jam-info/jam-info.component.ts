@@ -48,6 +48,8 @@ export class JamInfoComponent implements OnInit {
     }
     this.obtainJam();
     this.getParticipants();
+
+    //console.log(this.participantsSolistes); 
   }
 
   unirseButton(jamId){
@@ -137,7 +139,8 @@ export class JamInfoComponent implements OnInit {
           if(response.status==200){
             var result:any;
             result=response.body;
-            this.participantsGrups=result.users;
+            this.participantsSolistes=result.users;
+            console.log(this.participantsSolistes);
             this.participantsGrups=result.groups;
 
 
