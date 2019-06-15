@@ -26,6 +26,7 @@ export class JamInfoComponent implements OnInit {
   participantsGrups: Group[];
   boolJam=false;
   userId: string;
+  requests: Object;
 
   constructor(
     private singleton: DataService,
@@ -34,7 +35,8 @@ export class JamInfoComponent implements OnInit {
     private toolbarService: ToolbarService,
     public platform: Platform,
     private jamService: JamService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private userService: UserServices
   ) { 
     this.userId=localStorage.getItem('id');
   }
@@ -45,6 +47,7 @@ export class JamInfoComponent implements OnInit {
       this.router.navigateByUrl("/api/menu/home")
     }
     this.obtainJam();
+    this.getParticipants();
   }
 
   unirseButton(jamId){
@@ -148,6 +151,25 @@ export class JamInfoComponent implements OnInit {
           console.log("Error del BackEnd"+err);
           //console.log(err);
         });
+  }
+
+  getRequests(){
+    console.log("Operacio de demanar grups realitzada al Backend: ");
+    let token =localStorage.getItem('token');
+    this.userService.obtainMyGroups(token)
+      .subscribe(response =>{
+        console.log("Resposta del backend:  "+JSON.stringify(response.body));
+        if(response.status==200){
+          this.requests = (<any>response.body).selectedGroups;
+          console.log(this.requests)
+        }
+        else{
+          console.log("Error desconegut");
+        }
+      },
+      err=>{
+        console.log("Error del backed: "+ err);
+      });
   }
 
 

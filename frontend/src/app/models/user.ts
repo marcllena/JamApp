@@ -1,3 +1,5 @@
+import {Group } from "../models/group";
+
 export class User {
   _id: string;
   email: string;
@@ -14,6 +16,7 @@ export class User {
   userType:number;
   pass: string;
   descripcio: string;
+  grups: Group[];
 
 
   constructor( email = '', username = '', password = '',edat=0, instrument=[], estils=[], descripcio= '', video='', facebookId = '') {
